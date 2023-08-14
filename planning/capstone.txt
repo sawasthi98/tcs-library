@@ -1,0 +1,25 @@
+what format are they sending us info in?
+if strings, we can choose styles and let user change
+pdf/json? 
+
+6 apis
+internet archive - looks like it requires keys IA-S3, have to sign in to archive.org to get login credentials and it generates a key 
+https://archive.org/developers/index.html
+- given an access key and a secret key 
+Authorization: LOW <s3-access>:<s3-secret>
+ make a backend controller endpoint 
+ backend will take pg 200 and wizard of oz and makes request to internet archive
+ frontend should not see the key 
+- gives tutorials on how to fetch using Python 
+- returns json object
+https://archive.org/developers/iarest.html
+
+
+library of congress
+wikisource
+
+
+store references to material 
+
+
+q2: do apis have a key or not?
