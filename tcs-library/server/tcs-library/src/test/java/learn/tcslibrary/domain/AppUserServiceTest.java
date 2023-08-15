@@ -74,22 +74,17 @@ class AppUserServiceTest {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
         AppUser karen = new AppUser(1, " ","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+        AppUser nullKaren = new AppUser(1, null,"$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
         when(repository.create(karen)).thenReturn(karen);
+        when(repository.create(karen)).thenReturn(nullKaren);
 
         Result result = service.create(karen);
+        Result result = service.create(nullKaren);
 
         assertFalse(result.isSuccess());
         assertNotNull(result.getPayload());
         assertTrue(result.getPayload().contains("Username cannot be blank."));
-
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
-        AppUser nullKaren = new AppUser(1, null,"$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
-
-        when(repository.create(karen)).thenReturn(nullKaren);
-
-        Result result = service.create(nullKaren);
 
         assertFalse(result.isSuccess());
         assertNotNull(result.getPayload());
