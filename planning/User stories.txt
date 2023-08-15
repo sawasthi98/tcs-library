@@ -15,6 +15,6 @@ Click My profile it takes me to a log in page
 **Logged in**
 As a logged in user when I,
 No longer see sign up or sign in links.
-Click search for a book and it takes me to a book search form.
+Click search for a book and it takes me to a book search list.
 Click my profile and it takes me to a user data page with a "bookshelf"
 
