@@ -13,10 +13,13 @@ import java.util.stream.Collectors;
 public class AppUser implements UserDetails {
 
     private int appUserId;
-    private final String username;
-    private final String password;
-    private final boolean enabled;
-    private final Collection<GrantedAuthority> authorities;
+    private String username;
+    private String password;
+    private boolean enabled;
+    private Collection<GrantedAuthority> authorities;
+
+    public AppUser() {
+    }
 
     public AppUser(int appUserId, String username, String password, boolean enabled, List<String> roles) {
         this.appUserId = appUserId;
@@ -26,7 +29,7 @@ public class AppUser implements UserDetails {
         this.authorities = convertRolesToAuthorities(roles);
     }
 
-    private static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
+    public static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
         return roles.stream()
                 .map(r -> new SimpleGrantedAuthority(r))
                 .collect(Collectors.toList());
@@ -76,4 +79,19 @@ public class AppUser implements UserDetails {
         this.appUserId = appUserId;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 }
