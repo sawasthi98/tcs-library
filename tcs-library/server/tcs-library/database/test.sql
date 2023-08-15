@@ -1,0 +1,148 @@
+drop database if exists tcs_library_test;
+create database tcs_library_test;
+use tcs_library_test;
+
+drop table if exists app_user_role;
+drop table if exists app_role;
+drop table if exists app_user;
+drop table if exists comments;
+drop table if exists review;
+drop table if exists item_shelf;
+drop table if exists item;
+
+create table app_user (
+    app_user_id int primary key auto_increment,
+    username varchar(50) not null unique,
+    password_hash varchar(2048) not null,
+    enabled bit not null default(1)
+);
+
+create table app_role (
+    app_role_id int primary key auto_increment,
+    `name` varchar(50) not null unique
+);
+
+create table app_user_role (
+    app_user_id int not null,
+    app_role_id int not null,
+    constraint pk_app_user_role
+        primary key (app_user_id, app_role_id),
+    constraint fk_app_user_role_user_id
+        foreign key (app_user_id)
+        references app_user(app_user_id),
+    constraint fk_app_user_role_role_id
+        foreign key (app_role_id)
+        references app_role(app_role_id)
+);
+
+create table item (
+	item_id int primary key auto_increment,
+    title text,
+    author text,
+    published text,
+    publisher text,
+    topic text,
+    pages int,
+    language text,
+    ia_id text
+);
+
+create table item_shelf (
+	item_shelf_id int primary key auto_increment,
+    page_number int,
+    item_id int,
+    constraint fk_item_shelf_item_id
+		foreign key (item_id)
+		references item(item_id)
+);
+
+create table review (
+	review_id int primary key auto_increment,
+    review text,
+    app_user_id int,
+    item_id int,
+    constraint fk_review_app_user_id
+		foreign key (app_user_id)
+        references app_user(app_user_id),
+	constraint fk_review_item_id
+		foreign key (item_id)
+        references item(item_id)
+);
+
+create table comments (
+	comment_id int primary key auto_increment,
+    comment_text text,
+    app_user_id int, 
+    review_id int,
+    constraint fk_comment_app_user_id
+		foreign key (app_user_id)
+        references app_user(app_user_id),
+	constraint fk_comment_review_id
+		foreign key (review_id)
+        references review(review_id)
+);  
+
+
+delimiter //
+create procedure set_known_good_state()
+begin
+
+set FOREIGN_KEY_CHECKS = 0; -- Disable foreign key checks
+
+   truncate comments;
+   truncate review;
+   truncate item;
+   truncate item_shelf;
+   truncate app_user_role;
+   truncate app_user;
+   truncate app_role;
+
+   set FOREIGN_KEY_CHECKS = 1; -- Re-enable foreign key checks
+
+insert into app_role (`name`) values
+    ('USER'),
+    ('ADMIN');
+
+-- passwords are set to "P@ssw0rd!"
+insert into app_user (username, password_hash, enabled)
+    values
+    ('john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+    ('sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+
+insert into app_user_role
+    values
+    (1, 2),
+    (2, 1);    
+
+    
+insert into item(title, author, published, publisher, topic, pages, language, ia_id)
+	values
+    ("Pride and Prejudice", "Jane Austen", "July 5th, 1920", "Penguin Books", "Horror", 400, "English", "623abcdef"),
+    ("Hucklebery Finn", "Mark Twain", "December 5th, 1913", "Magic Books", "Adventure", 700, "English", "221xyz");
+    
+insert into item_shelf (page_number, item_id)
+	values
+    (303, 1),
+    (500, 2);
+    
+
+insert into review(review, item_id, app_user_id)
+	values
+    ("Book was pretty cool ngl", 1, 1),
+    ("Book was totally rad", 2, 2),
+    ("Book was awful! I want my free money back!", 2, 1);
+
+insert into comments(comment_text, app_user_id, review_id)
+	values
+    ("Yeah I thought so too", 1, 1),
+    ("No way I am the only thing that\'s rad", 2, 2),
+    ("I know you are but what am I?", 2, 2);
+    
+    
+    end //
+delimiter ;
+
+
+
+
+
