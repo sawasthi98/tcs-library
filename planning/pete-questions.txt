@@ -1,0 +1,15 @@
+questions
+
+- so far, haven't needed to use the api access/secret keys when testing it out on postman
+- running into some bad files where they're not downloadable or accessible because either the files display not found or they have limited access bc we're not logged in with the free account
+
+react-pdf for file rendering
+use loading spinner between request start and finish
+can make from react app because they're unkeyed
+fetch from front end
+react-pdf viewing library 
+app.js, useeffect, make request, .then, put in state, display in state (using pdf-test react app)
+ can change css by wrapping in div and control that way 
+find 5 known things that work - pride and prejudice, huckleberry finn, 
+
+access/secret key: need keys for non-read operations 
