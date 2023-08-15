@@ -1,0 +1,20 @@
+**Unregistered**
+As an unregistered user when I,
+Click log in it takes me to a log in page.
+Log in it tells me to create an account.
+Click sign up it takes me to a registry page.
+
+
+**Logged out**
+As a logged out user when I,
+Click sign up it takes to me a register page.
+Click log in it takes me to a log in page.
+Click search for an item, it takes me to a log in page.
+Click My profile it takes me to a log in page
+
+**Logged in**
+As a logged in user when I,
+No longer see sign up or sign in links.
+Click search for a book and it takes me to a book search form.
+Click my profile and it takes me to a user data page with a "bookshelf"
+
