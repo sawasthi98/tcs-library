@@ -11,7 +11,7 @@ import Login from './components/Login';
 
 function App() {
 
-  const [user, setUser] = useState({a: "b"});
+  const [user, setUser] = useState(null);
 
   const login = (token) => {
     
@@ -44,9 +44,6 @@ function App() {
   const auth = {login, logout, user}  
 
 
-
-
-
   useEffect(() => {
     const token = localStorage.getItem("auth-token");
     console.log("Token from useEffect:", token);
@@ -57,10 +54,6 @@ function App() {
     }
     
   }, []);
-
-
-
-
 
 
   return (
@@ -82,9 +75,6 @@ function App() {
         {/* Logged OUT */}
         
         <Route path="/login" element={ user ? <Navigate to="/" /> : <Login />} />
-
-
-
 
 
       </Routes>
