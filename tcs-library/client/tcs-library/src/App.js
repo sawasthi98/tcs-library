@@ -11,7 +11,7 @@ import Login from './components/Login';
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({a: "b"});
 
   const login = (token) => {
     

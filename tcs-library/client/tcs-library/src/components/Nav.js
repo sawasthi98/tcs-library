@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -8,22 +8,38 @@ const Nav = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
 
+  // function SearchBar() {
+  //   const [searchText, setSearchText] = useState('');
+  
+  //   const handleSearchChange = (event) => {
+  //     setSearchText(event.target.value);
+  //   };
+  // }
+
 
   return (
     <nav>
       {/* ALWAYS */}
       <Link to="/">Home</Link>
       {" "}
-      <Link to="/">A different Link</Link>
-      {" "}
 
 
       {/* LOGGED IN */}
       {user &&(
         <>
-        <Link to="/">A Link</Link>
-        {" "}
+        <Link to="/">My Profile</Link>
+        {" "}        
         <button onClick={auth.logout}>Logout</button>
+    <div>
+      <input
+        className="searchBar"
+        type="text"
+        placeholder="Search..."
+        // value={}
+        // onChange={}
+        />
+      <button>Search</button>
+    </div>
 
         </>
       )}
@@ -37,5 +53,6 @@ const Nav = () => {
     </nav>
   )
 }
+
 
 export default Nav;
