@@ -49,7 +49,9 @@ class AppUserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldNotFindNonexistentKareem() {
+
         String username = "kareem@bballer.com";
+
         AppUser user = repository.findByUsername(username);
 
         assertNull(user);
