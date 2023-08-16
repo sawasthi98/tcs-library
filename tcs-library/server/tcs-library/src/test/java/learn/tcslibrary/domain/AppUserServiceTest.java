@@ -40,7 +40,9 @@ class AppUserServiceTest {
     void shouldCreateKareem () {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
-        AppUser kareem = new AppUser(1, "kareem@thatbasketballplayer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+
+        AppUser kareem = new AppUser(1, "kareem@bballer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+
 
         AppUser createdKareem = repository.create(kareem);
 
@@ -57,7 +59,9 @@ class AppUserServiceTest {
     void shouldNotCreateDuplicateKareem () {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
-        AppUser kareem = new AppUser(1, "kareem@thatbasketballplayer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+
+        AppUser kareem = new AppUser(1, "kareem@bballer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+
 
         when(repository.create(kareem)).thenReturn(kareem);
 
