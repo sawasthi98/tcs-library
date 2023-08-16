@@ -15,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-
     private final JwtConverter converter;
 
     public SecurityConfig(JwtConverter converter) {
@@ -23,7 +22,6 @@ public class SecurityConfig {
         this.converter = converter;
     }
 
-    // new... add the parameter: `AuthenticationConfiguration authConfig`
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
 
@@ -33,9 +31,9 @@ public class SecurityConfig {
 
         http.authorizeRequests()
 
+                .antMatchers("/authenticate").permitAll()
                 .antMatchers("/**").permitAll()
                 .and()
-                // New...
                 .addFilter(new JwtRequestFilter(authenticationManager(authConfig), converter))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -83,10 +83,13 @@ public class AuthController {
         }
 
         // happy path...
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("appUserId", result.getPayload().getAppUserId());
 
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        String jwtToken = converter.getTokenFromUser(result.getPayload(), result.getPayload().getAppUserId());
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("jwt_token", jwtToken);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 }

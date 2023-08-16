@@ -67,7 +67,12 @@ public class AppUserService implements UserDetailsService {
     private Result<AppUser> validate(String username, String password) {
         Result<AppUser> result = new Result<>();
         if (username == null || username.isBlank()) {
-            result.addErrorMessage("username is required", ResultType.INVALID);
+            result.addErrorMessage("Username is required.", ResultType.INVALID);
+            return result;
+        }
+
+        if (repository.findByUsername(username) != null) {
+            result.addErrorMessage("Username already exists. Choose another one.", ResultType.INVALID);
             return result;
         }
 
