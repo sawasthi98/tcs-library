@@ -18,7 +18,6 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class AppUserServiceTest {
 
-    // validation
     @Autowired
     AppUserService service;
 
@@ -38,16 +37,18 @@ class AppUserServiceTest {
     }
 
     @Test
-    void shouldCreateKaren () {
+    void shouldCreateKareem () {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
-        AppUser karen = new AppUser(1, "karen@getmethemanager.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-        AppUser createdKaren = repository.create(karen);
+        AppUser kareem = new AppUser(1, "kareem@bballer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-        when(repository.create(createdKaren)).thenReturn(karen);
 
-        Result result = service.create(karen.getUsername(),karen.getPassword());
+        AppUser createdKareem = repository.create(kareem);
+
+        when(repository.create(createdKareem)).thenReturn(kareem);
+
+        Result result = service.create(kareem.getUsername(),kareem.getPassword());
 
         assertTrue(result.isSuccess());
         assertNotNull(result.getErrorMessages());
@@ -55,14 +56,15 @@ class AppUserServiceTest {
     }
 
     @Test
-    void shouldNotCreateDuplicateKaren () {
+    void shouldNotCreateDuplicateKareem () {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
-        AppUser karen = new AppUser(1, "karen@getmethemanager.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-        when(repository.create(karen)).thenReturn(karen);
+        AppUser kareem = new AppUser(1, "kareem@bballer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-        Result result = service.create(karen.getUsername(), karen.getPassword());
+        when(repository.findByUsername(kareem.getUsername())).thenReturn(kareem);
+
+        Result result = service.create(kareem.getUsername(), kareem.getPassword());
 
         assertFalse(result.isSuccess());
         assertNotNull(result.getErrorMessages());
@@ -73,22 +75,22 @@ class AppUserServiceTest {
     void shouldNotCreateWithBlankOrNull () {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
-        AppUser karen = new AppUser(1, " ","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
-        AppUser nullKaren = new AppUser(1, null,"$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+        AppUser kareem = new AppUser(1, " ","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
+        AppUser nullKareem = new AppUser(1, null,"$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-        when(repository.create(karen)).thenReturn(karen);
-        when(repository.create(karen)).thenReturn(nullKaren);
+        when(repository.create(kareem)).thenReturn(kareem);
+        when(repository.create(kareem)).thenReturn(nullKareem);
 
-        Result result = service.create(karen.getUsername(),karen.getPassword());
-        Result result1 = service.create(nullKaren.getUsername(),nullKaren.getPassword());
+        Result result = service.create(kareem.getUsername(),kareem.getPassword());
+        Result result1 = service.create(nullKareem.getUsername(),nullKareem.getPassword());
 
         assertFalse(result.isSuccess());
         assertNotNull(result.getErrorMessages());
-        assertTrue(result.getErrorMessages().contains("Username cannot be blank."));
+        assertTrue(result.getErrorMessages().contains("Username is required."));
 
         assertFalse(result1.isSuccess());
-        assertNotNull(result1.getPayload());
-        assertTrue(result1.getErrorMessages().contains("Username cannot be null."));
+        assertNotNull(result1.getErrorMessages());
+        assertTrue(result1.getErrorMessages().contains("Username is required."));
     }
 
 }

@@ -13,3 +13,11 @@ app.js, useeffect, make request, .then, put in state, display in state (using pd
 find 5 known things that work - pride and prejudice, huckleberry finn, 
 
 access/secret key: need keys for non-read operations 
+
+
+
+controller method in our own backend that is hardcoded to request huckleberry finn
+hit that endpoint from rest client or postman 
+test-drive the java code that makes the request
+then modify that route to take in parameters so it can make a request for any book
+then hook it onto our frontend
