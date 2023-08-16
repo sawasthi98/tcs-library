@@ -56,10 +56,10 @@ class AppUserJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldCreateNewUser () {
-        // had some difficulty writing this test for the authorities portion where I instantiated a roles List
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+   void shouldCreateNewUser () {
+       // had some difficulty writing this test for the authorities portion where I instantiated a roles List
+       List<String> roles = new ArrayList<>();
+    roles.add("USER");
 
         AppUser testUser = new AppUser(3,"Test User","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
@@ -67,7 +67,7 @@ class AppUserJdbcTemplateRepositoryTest {
 
         assertNotNull(createdUser);
         assertEquals(createdUser.getUsername(),testUser.getUsername());
-    }
+   }
 
 //    @Test
 //    void shouldUpdatePassword() {
