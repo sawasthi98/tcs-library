@@ -1,6 +1,6 @@
 package learn.tcslibrary.controllers;
 
-import learn.tcslibrary.domain.ItemService;
+//import learn.tcslibrary.domain.ItemService;
 import learn.tcslibrary.models.Item;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 
 @RestController
@@ -18,19 +19,19 @@ import java.net.URL;
 public class ItemsController {
 
     @GetMapping
-    public ResponseEntity<> findByTitle(@PathVariable String title) {
-        String document = "Adventures of Huckleberry Finn.pdf";
+    public ResponseEntity<Object> findByTitle() throws IOException {
+        String document = "jane-austen_pride-and-prejudice_advanced.pdf";
         // Replace spaces with %20
         document = document.replaceAll(" ", "%20");
 
-        String fetchUrl = "https://archive.org/download/adventures-of-huckleberry-finn/" + document;
+        String fetchUrl = "https://archive.org/download/jane-austen_pride-and-prejudice_202302/" + document;
 
-        try {
+//        try {
             URL url = new URL(fetchUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
+            conn.setConnectTimeout(500000);
+            conn.setReadTimeout(500000);
             conn.setRequestMethod("GET");
 
             InputStream inputStream = conn.getInputStream();
@@ -38,18 +39,18 @@ public class ItemsController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDisposition(ContentDisposition.parse("inline; filename=\"" + title + "\""));
-
+//            headers.setContentDisposition(ContentDisposition.parse("inline; filename=\""));
+            inputStream.close();
             return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
 
             // return bytearray in response entity
             // get to postman before react
             // accept app/pdf
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
 
-            inputStream.close();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+//        return null;
     }
 
     private static byte[] readInputStream(InputStream inputStream) throws IOException {
