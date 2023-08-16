@@ -67,6 +67,7 @@ public class AuthController {
 
     private int retrieveAppUserIdByUsername(String username) {
         return repository.findAppIdByUsername(username);
+        return 0;
     }
 
     @PostMapping("/create_account")
