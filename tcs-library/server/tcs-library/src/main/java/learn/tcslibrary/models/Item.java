@@ -1,12 +1,14 @@
 package learn.tcslibrary.models;
 
+import java.util.List;
+
 public class Item {
 
     private String title;
     private String author;
     private String publishedDate;
     private String publisher;
-    private String topic;
+    private List<String> topic;
     private int pageAmount;
     private String language;
     private String internetArchiveIdentifier;
@@ -15,7 +17,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(String title, String author, String publishedDate, String publisher, String topic, int pageAmount, String language, String internetArchiveIdentifier, int itemId) {
+    public Item(String title, String author, String publishedDate, String publisher, List<String> topic, int pageAmount, String language, String internetArchiveIdentifier, int itemId) {
         this.title = title;
         this.author = author;
         this.publishedDate = publishedDate;
@@ -59,14 +61,6 @@ public class Item {
         this.publisher = publisher;
     }
 
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
     public int getPageAmount() {
         return pageAmount;
     }
@@ -97,5 +91,13 @@ public class Item {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    public List<String> getTopic() {
+        return topic;
+    }
+
+    public void setTopic(List<String> topic) {
+        this.topic = topic;
     }
 }
