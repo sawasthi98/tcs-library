@@ -50,22 +50,6 @@ public class JwtConverter {
                 .compact();
     }
 
-//    public String getTokenFromUser(UserDetails user) {
-//
-//        String authorities = user.getAuthorities().stream()
-//                .map(i -> i.getAuthority())
-//                .collect(Collectors.joining(AUTHORITIES_DELIMITER));
-//
-//        // 3. Use JJWT classes to build a token.
-//        return Jwts.builder()
-//                .setIssuer(ISSUER)
-//                .setSubject(user.getUsername())
-//                .claim(AUTHORITIES_KEY, authorities)
-//                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MILLIS))
-//                .signWith(key)
-//                .compact();
-//    }
-
     public UserDetails getUserFromToken(String token) {
 
         if (token == null || !token.startsWith(BEARER_PREFIX)) {
