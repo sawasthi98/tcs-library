@@ -48,15 +48,70 @@ class ItemJdbcTemplateRepositoryTest {
 
         assertEquals(foundItem.getItemId(),2);
         assertEquals(foundItem.getTitle(),item.getTitle());
-
-
+        assertEquals(foundItem.getAuthor(),item.getAuthor());
+        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
+        assertEquals(foundItem.getTopic(),item.getTopic());
     }
 
     @Test
     void findByTopic() {
+        List<String> topics = new ArrayList<>();
+        topics.add("Adventure");
+
+        Item item = new Item();
+        item.setItemId(2);
+        item.setAuthor("Mark Twain");
+        item.setLanguage("English");
+        item.setPublisher("Magic Books");
+        item.setTitle("Huckleberry Finn");
+        item.setInternetArchiveIdentifier("221xyz");
+        item.setPublishedDate("December 5th, 1913");
+        item.setTopic(topics);
+
+        Item foundItem = repository.findByTopic("adventure");
+        // will there be an issue with casing here?
+
+        assertEquals(foundItem.getItemId(),2);
+        assertEquals(foundItem.getTitle(),item.getTitle());
+        assertEquals(foundItem.getAuthor(),item.getAuthor());
+        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
+        assertEquals(foundItem.getTopic(),item.getTopic());
     }
 
     @Test
     void findByTitle() {
+        List<String> topics = new ArrayList<>();
+        topics.add("Adventure");
+
+        Item item = new Item();
+        item.setItemId(2);
+        item.setAuthor("Mark Twain");
+        item.setLanguage("English");
+        item.setPublisher("Magic Books");
+        item.setTitle("Huckleberry Finn");
+        item.setInternetArchiveIdentifier("221xyz");
+        item.setPublishedDate("December 5th, 1913");
+        item.setTopic(topics);
+
+        Item foundItem = repository.findByTitle("huckleberry finn");
+        // will there be an issue with casing here?
+
+        assertEquals(foundItem.getItemId(),2);
+        assertTrue(foundItem.getTitle().contains(item.getTitle()));
+        assertEquals(foundItem.getAuthor(),item.getAuthor());
+        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
+        assertEquals(foundItem.getTopic(),item.getTopic());
+    }
+
+    @Test
+    void shouldNotFindNonexistentItem () {
+        Item nonexistentTitle = repository.findByTitle("test item");
+        Item nonexistentItemId = repository.findByItemId(3);
+        Item nonexistentTopic = repository.findByTopic("test topic");
+
+        assertNull(nonexistentTitle);
+        assertNull(nonexistentItemId);
+        assertNull(nonexistentTopic);
+        // is more necessary here?
     }
 }
