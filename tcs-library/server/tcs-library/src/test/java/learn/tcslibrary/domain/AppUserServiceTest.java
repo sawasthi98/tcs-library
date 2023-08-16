@@ -62,8 +62,7 @@ class AppUserServiceTest {
 
         AppUser kareem = new AppUser(1, "kareem@bballer.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles);
 
-
-        when(repository.create(kareem)).thenReturn(kareem);
+        when(repository.findByUsername(kareem.getUsername())).thenReturn(kareem);
 
         Result result = service.create(kareem.getUsername(), kareem.getPassword());
 
@@ -87,11 +86,11 @@ class AppUserServiceTest {
 
         assertFalse(result.isSuccess());
         assertNotNull(result.getErrorMessages());
-        assertTrue(result.getErrorMessages().contains("Username cannot be blank."));
+        assertTrue(result.getErrorMessages().contains("Username is required."));
 
         assertFalse(result1.isSuccess());
-        assertNotNull(result1.getPayload());
-        assertTrue(result1.getErrorMessages().contains("Username cannot be null."));
+        assertNotNull(result1.getErrorMessages());
+        assertTrue(result1.getErrorMessages().contains("Username is required."));
     }
 
 }
