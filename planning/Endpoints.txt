@@ -1,0 +1,63 @@
+**AppUser**
+GET username
+
+POST authenticate
+POST create_user
+
+PUT update_username
+PUT update_password
+
+DELETE user
+
+
+**Item**
+GET random_5
+GET topic
+GET author
+GET language
+GET title
+GET item+page_number
+GET ex_id
+
+**Item Shelf**
+GET item_shelf_all
+GET incomplete_item_shelf  (is this a sort feature?) 
+
+POST item_to_shelf
+
+PUT item_shelf?!
+
+DELETE item_from_shelf
+
+
+**Reviews**
+GET all_reviews_one_item
+GET review_item_id
+GET review_app_user_id
+
+POST review
+
+PUT edit_review
+
+**Comment**
+GET comment (attached to reviews only?)
+
+POST comment
+
+PUT comment
+
+**Admin**
+GET all_users (ADMIN)
+
+DELETE review
+DELETE comment
+
+
+
+
+
+
+
+
+
+
