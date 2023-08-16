@@ -26,5 +26,8 @@ public interface AppUserRepository {
 
     public List<AppUser>findAll();
 
+    @Transactional
+    public int findAppIdByUsername(String username);
+
 
 }

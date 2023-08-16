@@ -90,6 +90,12 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
+    @Override
+    public int findAppIdByUsername(String username){
+        AppUser user = findByUsername(username);
+        return user.getAppUserId();
+    }
+
 
 
 
