@@ -30,11 +30,11 @@ class AppUserServiceTest {
         List<String> roles = new ArrayList<>();
         roles.add("USER");
         String username = "john@smith.com";
-        when(repository.findByUsername(username)).thenReturn(new AppUser(1,"john@smith.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles))
+        when(repository.findByUsername(username)).thenReturn(new AppUser(1,"john@smith.com","$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa",true,roles));
 
         AppUser foundUser = service.loadUserByUsername(username);
 
-        assertEquals(foundUser.getAppUserId(),username);
+        assertEquals(foundUser.getUsername(),username);
     }
 
     @Test
@@ -47,10 +47,10 @@ class AppUserServiceTest {
 
         when(repository.create(createdKaren)).thenReturn(karen);
 
-        Result result = service.create(karen);
+        Result result = service.create(karen.getUsername(),karen.getPassword());
 
         assertTrue(result.isSuccess());
-        assertNotNull(result.getPayload());
+        assertNotNull(result.getErrorMessages());
 
     }
 
@@ -62,11 +62,11 @@ class AppUserServiceTest {
 
         when(repository.create(karen)).thenReturn(karen);
 
-        Result result = service.create(karen);
+        Result result = service.create(karen.getUsername(), karen.getPassword());
 
         assertFalse(result.isSuccess());
-        assertNotNull(result.getPayload());
-        assertTrue(result.getPayload().contains("Username already exists. Choose another one."));
+        assertNotNull(result.getErrorMessages());
+        assertTrue(result.getErrorMessages().contains("Username already exists. Choose another one."));
     }
 
     @Test
@@ -79,16 +79,16 @@ class AppUserServiceTest {
         when(repository.create(karen)).thenReturn(karen);
         when(repository.create(karen)).thenReturn(nullKaren);
 
-        Result result = service.create(karen);
-        Result result = service.create(nullKaren);
+        Result result = service.create(karen.getUsername(),karen.getPassword());
+        Result result1 = service.create(nullKaren.getUsername(),nullKaren.getPassword());
 
         assertFalse(result.isSuccess());
-        assertNotNull(result.getPayload());
-        assertTrue(result.getPayload().contains("Username cannot be blank."));
+        assertNotNull(result.getErrorMessages());
+        assertTrue(result.getErrorMessages().contains("Username cannot be blank."));
 
-        assertFalse(result.isSuccess());
-        assertNotNull(result.getPayload());
-        assertTrue(result.getPayload().contains("Username cannot be null."));
+        assertFalse(result1.isSuccess());
+        assertNotNull(result1.getPayload());
+        assertTrue(result1.getErrorMessages().contains("Username cannot be null."));
     }
 
 }

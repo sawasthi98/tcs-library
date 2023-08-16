@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class AppUserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser appUser = repository.findByUsername(username);
 
         if (appUser == null || !appUser.isEnabled()) {
@@ -46,9 +47,16 @@ public class AppUserService implements UserDetailsService {
         password = encoder.encode(password);
 
         AppUser appUser = new AppUser(0, username, password, true, List.of("USER"));
+        List<AppUser> allUsers=findAll();
 
         try {
             appUser = repository.create(appUser);
+            for(AppUser appUser1:allUsers){
+                if(appUser1.getUsername().equals(appUser.getUsername())){
+                    result.addErrorMessage("duplicate username",ResultType.INVALID);
+                    return result;
+                }
+            }
             result.setPayload(appUser);
         } catch (DuplicateKeyException e) {
             result.addErrorMessage("The provided username already exists", ResultType.INVALID);
@@ -100,5 +108,9 @@ public class AppUserService implements UserDetailsService {
         }
 
         return digits > 0 && letters > 0 && others > 0;
+    }
+
+    public List<AppUser> findAll(){
+        return repository.findAll();
     }
 }
