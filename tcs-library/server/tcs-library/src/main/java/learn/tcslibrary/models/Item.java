@@ -13,6 +13,7 @@ public class Item {
     private String language;
     private String internetArchiveIdentifier;
     private int itemId;
+    // add item description
 
     public Item() {
     }
