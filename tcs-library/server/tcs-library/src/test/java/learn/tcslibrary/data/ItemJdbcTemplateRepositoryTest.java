@@ -4,6 +4,7 @@ import learn.tcslibrary.models.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ItemJdbcTemplateRepositoryTest {
 
     @Autowired
@@ -39,12 +41,12 @@ class ItemJdbcTemplateRepositoryTest {
         item.setAuthor("Mark Twain");
         item.setLanguage("English");
         item.setPublisher("Magic Books");
-        item.setTitle("Huckleberry Finn");
+        item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
         item.setPublishedDate("December 5th, 1913");
         item.setTopic(topics);
 
-        Item foundItem = repository.findByItemId(1);
+        Item foundItem = repository.findByItemId(2);
 
         assertEquals(foundItem.getItemId(),2);
         assertEquals(foundItem.getTitle(),item.getTitle());
@@ -63,7 +65,7 @@ class ItemJdbcTemplateRepositoryTest {
         item.setAuthor("Mark Twain");
         item.setLanguage("English");
         item.setPublisher("Magic Books");
-        item.setTitle("Huckleberry Finn");
+        item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
         item.setPublishedDate("December 5th, 1913");
         item.setTopic(topics);
@@ -88,13 +90,13 @@ class ItemJdbcTemplateRepositoryTest {
         item.setAuthor("Mark Twain");
         item.setLanguage("English");
         item.setPublisher("Magic Books");
-        item.setTitle("Huckleberry Finn");
+        item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
         item.setPublishedDate("December 5th, 1913");
         item.setTopic(topics);
 
-        Item foundItem = repository.findByTitle("huckleberry finn");
-        // will there be an issue with casing here?
+        Item foundItem = repository.findByTitle("Hucklebery Finn");
+        // will there be an issue with casing here? cn says: its case sensitive unfortunately, we can work on that tho
 
         assertEquals(foundItem.getItemId(),2);
         assertTrue(foundItem.getTitle().contains(item.getTitle()));
