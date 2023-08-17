@@ -12,6 +12,7 @@ public class Item {
     private int itemId;
     private String description;
     private String subject;
+    private String fileName;
     public Item() {
     }
 
@@ -22,7 +23,7 @@ public class Item {
         this.subject = subject;
     }
 
-    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject) {
+    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName) {
         this.title = title;
         this.author = author;
         this.topic = topic;
@@ -30,6 +31,7 @@ public class Item {
         this.itemId = itemId;
         this.description = description;
         this.subject = subject;
+        this.fileName = fileName;
     }
 
     public String getTitle() {
@@ -56,6 +58,31 @@ public class Item {
 //    public void setPageAmount(int pageAmount) {
 //        this.pageAmount = pageAmount;
 //    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getInternetArchiveIdentifier() {
         return internetArchiveIdentifier;
