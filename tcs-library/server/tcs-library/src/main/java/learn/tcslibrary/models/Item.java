@@ -6,27 +6,32 @@ public class Item {
 
     private String title;
     private String author;
-    private String publishedDate;
-    private String publisher;
-    private List<String> topic;
-    private int pageAmount;
-    private String language;
+    private List<String> topic; // maybe if they want to search for a collection of specific genres?
+//    private int pageAmount;
     private String internetArchiveIdentifier;
     private int itemId;
-
+    private String description;
+    private String subject;
+    private String fileName;
     public Item() {
     }
 
-    public Item(String title, String author, String publishedDate, String publisher, List<String> topic, int pageAmount, String language, String internetArchiveIdentifier, int itemId) {
+    public Item(String title, String internetArchiveIdentifier, String description, String subject) {
+        this.title = title;
+        this.internetArchiveIdentifier = internetArchiveIdentifier;
+        this.description = description;
+        this.subject = subject;
+    }
+
+    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName) {
         this.title = title;
         this.author = author;
-        this.publishedDate = publishedDate;
-        this.publisher = publisher;
         this.topic = topic;
-        this.pageAmount = pageAmount;
-        this.language = language;
         this.internetArchiveIdentifier = internetArchiveIdentifier;
         this.itemId = itemId;
+        this.description = description;
+        this.subject = subject;
+        this.fileName = fileName;
     }
 
     public String getTitle() {
@@ -45,36 +50,38 @@ public class Item {
         this.author = author;
     }
 
-    public String getPublishedDate() {
-        return publishedDate;
+
+//    public int getPageAmount() {
+//        return pageAmount;
+//    }
+//
+//    public void setPageAmount(int pageAmount) {
+//        this.pageAmount = pageAmount;
+//    }
+
+
+    public String getDescription() {
+        return description;
     }
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPublisher() {
-        return publisher;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
-    public int getPageAmount() {
-        return pageAmount;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setPageAmount(int pageAmount) {
-        this.pageAmount = pageAmount;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getInternetArchiveIdentifier() {
