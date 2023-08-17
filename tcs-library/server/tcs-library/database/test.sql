@@ -51,9 +51,13 @@ create table item_shelf (
 	item_shelf_id int primary key auto_increment,
     page_number int,
     item_id int,
+    app_user_id int,
     constraint fk_item_shelf_item_id
 		foreign key (item_id)
-		references item(item_id)
+		references item(item_id),
+	constraint fk_item__shelf_app_user_id
+		foreign key (app_user_id)
+        references app_user(app_user_id)
 );
 
 create table review (
@@ -120,10 +124,10 @@ insert into item(title, author, published, publisher, topic, pages, language, ia
     ("Pride and Prejudice", "Jane Austen", "July 5th, 1920", "Penguin Books", "Horror", 400, "English", "623abcdef"),
     ("Hucklebery Finn", "Mark Twain", "December 5th, 1913", "Magic Books", "Adventure", 700, "English", "221xyz");
     
-insert into item_shelf (page_number, item_id)
+insert into item_shelf (page_number, item_id, app_user_id)
 	values
-    (303, 1),
-    (500, 2);
+    (303, 1, 1),
+    (500, 2, 2);
     
 
 insert into review(review, item_id, app_user_id)
@@ -138,7 +142,7 @@ insert into comments(comment_text, app_user_id, review_id)
     ("No way I am the only thing that\'s rad", 2, 2),
     ("I know you are but what am I?", 2, 2);
     
-    
+    select * from item_shelf;
     end //
 delimiter ;
 

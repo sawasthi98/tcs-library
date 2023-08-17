@@ -9,7 +9,7 @@ public interface ItemShelfRepository {
     public Item findByitemId(int itemId);
     // sorting purposes
     public List<Item> findByIncomplete();
-    public Item addItemToShelf(int itemId);
+    public Item addItemToShelf(int itemId, int appUserId);
     public boolean deleteItemFromShelf(int itemId);
     public List<Item> findAll();
 
