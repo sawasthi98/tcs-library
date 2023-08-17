@@ -9,10 +9,12 @@ import AuthContext from './contexts/AuthContext';
 import Nav from './components/Nav';
 import Login from './components/Login';
 import ReadingItem from './components/ReadingItem';
+import PageNumber from './components/PageNumber';
 
 function App() {
 
   const [user, setUser] = useState(null);
+  
 
   const login = (token) => {
     
@@ -57,6 +59,10 @@ function App() {
   }, []);
 
 
+  
+
+
+
   return (
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
@@ -72,15 +78,20 @@ function App() {
         {/* Add the My profile and search bar functionality here
             also add the log out here */}
         <Route path="/readingitem" element={<ReadingItem />} />
+        
 
 
         {/* Logged OUT */}
         
         <Route path="/login" element={ user ? <Navigate to="/" /> : <Login />} />
 
+        
+
 
       </Routes>
     </BrowserRouter>
+
+    
     </AuthContext.Provider>
   );
 }
