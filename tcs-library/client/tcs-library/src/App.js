@@ -77,7 +77,7 @@ function App() {
         {/* Logged IN */}
         {/* Add the My profile and search bar functionality here
             also add the log out here */}
-        <Route path="/readingitem" element={<ReadingItem />} />
+        <Route path="/readingitem/:itemId" element={<ReadingItem />} />
         
 
 
