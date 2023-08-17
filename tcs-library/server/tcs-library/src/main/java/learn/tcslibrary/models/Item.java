@@ -6,28 +6,30 @@ public class Item {
 
     private String title;
     private String author;
-    private String publishedDate;
-    private String publisher;
-    private List<String> topic;
-    private int pageAmount;
-    private String language;
+    private List<String> topic; // maybe if they want to search for a collection of specific genres?
+//    private int pageAmount;
     private String internetArchiveIdentifier;
     private int itemId;
-    // add item description
-
+    private String description;
+    private String subject;
     public Item() {
     }
 
-    public Item(String title, String author, String publishedDate, String publisher, List<String> topic, int pageAmount, String language, String internetArchiveIdentifier, int itemId) {
+    public Item(String title, String internetArchiveIdentifier, String description, String subject) {
+        this.title = title;
+        this.internetArchiveIdentifier = internetArchiveIdentifier;
+        this.description = description;
+        this.subject = subject;
+    }
+
+    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject) {
         this.title = title;
         this.author = author;
-        this.publishedDate = publishedDate;
-        this.publisher = publisher;
         this.topic = topic;
-        this.pageAmount = pageAmount;
-        this.language = language;
         this.internetArchiveIdentifier = internetArchiveIdentifier;
         this.itemId = itemId;
+        this.description = description;
+        this.subject = subject;
     }
 
     public String getTitle() {
@@ -46,37 +48,14 @@ public class Item {
         this.author = author;
     }
 
-    public String getPublishedDate() {
-        return publishedDate;
-    }
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public int getPageAmount() {
-        return pageAmount;
-    }
-
-    public void setPageAmount(int pageAmount) {
-        this.pageAmount = pageAmount;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+//    public int getPageAmount() {
+//        return pageAmount;
+//    }
+//
+//    public void setPageAmount(int pageAmount) {
+//        this.pageAmount = pageAmount;
+//    }
 
     public String getInternetArchiveIdentifier() {
         return internetArchiveIdentifier;

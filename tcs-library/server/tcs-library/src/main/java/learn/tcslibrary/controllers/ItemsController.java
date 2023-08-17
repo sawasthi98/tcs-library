@@ -1,17 +1,14 @@
 package learn.tcslibrary.controllers;
 
 //import learn.tcslibrary.domain.ItemService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.tcslibrary.models.Item;
-import learn.tcslibrary.models.Metadata;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,13 +85,21 @@ public class ItemsController {
         // Process the metadata, for example:
         JsonNode items = jsonResponse.get("response").get("docs");
         List<Object> metadataList = new ArrayList<>();
-        for (JsonNode item : items) {
-            String identifier = item.get("identifier").asText();
-            String titleOfSearch = item.get("title").asText();
+        int idx = 0;
+            for (JsonNode item : items) {
+                String identifier = item.get("identifier").asText();
+                String titleOfSearch = item.get("title").asText();
+                String description = item.get("description").asText();
+                String subject = item.get("subject").asText();
 
-            // Create your metadata object and add it to the list
-             metadataList.add(new Item(identifier, titleOfSearch)); // insteawd of Metadata, use Item
+                // Create your metadata object and add it to the list
+                metadataList.add(new Item(titleOfSearch,identifier,description,subject));
+                idx++;
+                if (idx > 8) { // grabbed the first 9 listings
+                    break;
+                }
         }
+
 
         // Return the metadata list
         return new ResponseEntity<>(metadataList, HttpStatus.OK);
