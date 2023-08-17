@@ -129,5 +129,5 @@ FROM review r
 JOIN item i ON r.item_id = i.item_id;
 
 
-
+SELECT * FROM app_user;
 

@@ -1,0 +1,18 @@
+#landing-book-collection{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+
+.sherlock {
+  height: 40px;
+}
+.landing-book{
+  margin-right: 90px;
+}
+
+#dracula {
+  height: 400px;
+  width: 400px;
+}
