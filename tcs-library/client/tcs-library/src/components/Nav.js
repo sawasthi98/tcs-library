@@ -28,8 +28,12 @@ const Nav = () => {
       {user &&(
         <>
         <Link to="/">My Profile</Link>
-        {" "}        
+        {" "}
+        <Link to="/readingitem">BOOK TEST</Link>
+        {" "}
         <button onClick={auth.logout}>Logout</button>
+
+        {/* Search bar */}
     <div>
       <input
         className="searchBar"
