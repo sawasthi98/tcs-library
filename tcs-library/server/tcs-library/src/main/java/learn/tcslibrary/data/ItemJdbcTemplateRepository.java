@@ -22,8 +22,8 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
         final String sql = "select item_id, title, author, published, publisher, " +
                 "topic, pages, `language`, ia_id " +
                 "from item where item_id= ? ;";
-        List<String>topics=findTopicsByItemId(itemId);
-        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(topics),itemId);
+        //List<String>topics=findTopicsByItemId(itemId);
+        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),itemId);
         return(itemList == null||itemList.size()==0 ? null : itemList.get(0));
     }
     public List<String> findTopicsByItemId(int itemId){
@@ -35,8 +35,8 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
     public Item findByTopic(String topic) {
         final String sql="select item_id, title, author, published, publisher, topic, " +
                 "pages, `language`, ia_id from item where topic=?;";
-        List<String>topics=findTopicsByTopic(topic);
-        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(topics),topic);
+        //List<String>topics=findTopicsByTopic(topic);
+        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),topic);
         return(itemList == null||itemList.size()==0 ? null : itemList.get(0));
     }
 
@@ -49,8 +49,8 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
     public Item findByTitle(String title) {
         final String sql = "select item_id, title, author, published, publisher, topic, " +
                 "pages, `language`, ia_id from item where title= ?;";
-        List<String>topics=findTopicsByTitle(title);
-        List<Item>items=jdbcTemplate.query(sql,new ItemMapper(topics),title);
+        //List<String>topics=findTopicsByTitle(title);
+        List<Item>items=jdbcTemplate.query(sql,new ItemMapper(jdbcTemplate),title);
         return(items == null||items.size()==0 ? null : items.get(0));
     }
     public List<String>findTopicsByTitle(String title){
