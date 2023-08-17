@@ -119,7 +119,7 @@ public class ItemsController {
     @GetMapping("/potato/{identifier}")
     public ResponseEntity<Object> getPdf(@PathVariable String identifier) throws IOException {
 
-        Item item = repository.findByInternetArchiveIdentifier(identifier);
+        Item item = repository.findByTitle("Huckleberry Finn");
 
         String fetchUrl = "https://archive.org/details/" + item.getInternetArchiveIdentifier() + "&output=json";
 
