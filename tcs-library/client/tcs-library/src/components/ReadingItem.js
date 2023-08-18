@@ -9,13 +9,18 @@ const ReadingItem = () => {
   const params = useParams();
 
   // use that to findByTitle on backend
+  // This will request back end with doc and id
+  // find or create ITem in the back
+  // and item shelf for user
+  // request IA with doc and id
+  // Then send back the PDF
 
   useEffect(() => {
     const fetchPdf = async () => {
       try {
         const response = await fetch(
 
-          `http://localhost:8080/tcslibrary/reading-item/${params.itemId}`,
+          `http://localhost:8080/tcslibrary/reading-item/${params.identifier}/filename/${params.filename}`,
 
           {
             method: "GET",
