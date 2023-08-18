@@ -64,4 +64,6 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository{
         int rowsChanged = jdbcTemplate.update(sql, review.getAppUserId(), review.getItemId());
         return rowsChanged>0;
     }
+
 }
+
