@@ -21,7 +21,11 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-    private ItemJdbcTemplateRepository repository;
+    private ItemRepository repository;
+
+    public ItemsController(ItemRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/reading-item/{itemId}")
     public ResponseEntity<Object> findByTitle(@PathVariable int itemId) throws IOException {
@@ -36,8 +40,7 @@ public class ItemsController {
 //        run through service method findOrCreate
 //        if exists in database, fetch using identifier and document name
 //        if does not exist, grab identifier based on which one was clicked as well as the file name ending in .pdf
-
-
+        
         URL url = new URL(fetchUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
@@ -86,6 +89,7 @@ public class ItemsController {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonResponse = objectMapper.readTree(responseContent.toString());
 
+
         // Process the metadata, for example:
         JsonNode items = jsonResponse.get("response").get("docs");
         List<Object> metadataList = new ArrayList<>();
@@ -96,13 +100,51 @@ public class ItemsController {
                 String description = item.get("description").asText();
                 String subject = item.get("subject").asText();
 
+                String pdfFetch = "https://archive.org/details/" + identifier + "&output=json";
+
+                URL urlPdf = new URL(pdfFetch);
+                HttpURLConnection connPdf = (HttpURLConnection) urlPdf.openConnection();
+                connPdf.setDoOutput(true);
+                connPdf.setConnectTimeout(500000);
+                connPdf.setReadTimeout(500000);
+                connPdf.setRequestMethod("GET");
+
+                // Read response using BufferedReader
+                BufferedReader reader2 = new BufferedReader(new InputStreamReader(connPdf.getInputStream()));
+                String line2;
+                StringBuilder responseContent2 = new StringBuilder();
+                while ((line2 = reader2.readLine()) != null) {
+                    responseContent2.append(line2);
+                }
+                reader2.close();
+
+                // Parse JSON response
+                ObjectMapper objectMapper2 = new ObjectMapper();
+                JsonNode jsonResponse2 = objectMapper2.readTree(responseContent2.toString());
+
+                // loop through the items to find the ones that contain .pdf
+                JsonNode listOfItems = jsonResponse2.get("files");
+//                List<String> files = new ArrayList<>();
+                String filename = null;
+                Iterator<String> fieldNames = listOfItems.fieldNames();
+                while (fieldNames.hasNext()) {
+                    String fieldName = fieldNames.next();
+                    if (fieldName.contains(".pdf")) {
+                        filename = fieldName;
+                        break;
+                    }
+                }
+
                 // Create your metadata object and add it to the list
-                metadataList.add(new Item(titleOfSearch,identifier,description,subject));
+                metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename));
                 idx++;
                 if (idx > 8) { // grabbed the first 9 listings
                     break;
                 }
         }
+
+            // send to front end
+            // links go to read items
 
             // save it to our database under Items to save the metadata info
             // next time to be searched, we have the identifier saved and need only grab the pdf name
@@ -115,80 +157,6 @@ public class ItemsController {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-
-    @GetMapping("/potato/{identifier}")
-    public ResponseEntity<Object> getPdf(@PathVariable String identifier) throws IOException {
-
-        Item item = repository.findByTitle("Huckleberry Finn");
-
-        String fetchUrl = "https://archive.org/details/" + item.getInternetArchiveIdentifier() + "&output=json";
-
-        try {
-            URL url = new URL(fetchUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setConnectTimeout(500000);
-            conn.setReadTimeout(500000);
-            conn.setRequestMethod("GET");
-
-            // Read response using BufferedReader
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            StringBuilder responseContent = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                responseContent.append(line);
-            }
-            reader.close();
-
-            // Parse JSON response
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonResponse = objectMapper.readTree(responseContent.toString());
-
-            // loop through the items to find the ones that contain .pdf
-            JsonNode items = jsonResponse.get("files");
-            List<String> files = new ArrayList<>();
-            String filename = null;
-            Iterator<String> fieldNames = items.fieldNames();
-            while (fieldNames.hasNext()) {
-                String fieldName = fieldNames.next();
-                if (fieldName.contains(".pdf")) {
-                    filename = fieldName;
-                    break;
-                }
-            }
-
-            String readBookUrl = "https://archive.org/download/" + identifier + "/" + filename;
-            // render the pdf to frontend after fetch
-
-            URL readingUrl = new URL(readBookUrl);
-            HttpURLConnection conn2 = (HttpURLConnection) url.openConnection();
-            conn2.setDoOutput(true);
-            conn2.setConnectTimeout(500000);
-            conn2.setReadTimeout(500000);
-            conn2.setRequestMethod("GET");
-
-            InputStream inputStream = conn2.getInputStream();
-            byte[] pdfContent = readInputStream(inputStream); // Read PDF content from input stream
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            inputStream.close();
-            return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
-
-
-//            save filename to repo/database so when the first getmapping method is called, using the itemId, it fills in the information
-//            and makes the fetch request to render the pdf on frontend
-//            find item by identifier id -> use setters to add in the filename info
-//            have to do another fetch request with findByTitle????
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-
-
 
     private static byte[] readInputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

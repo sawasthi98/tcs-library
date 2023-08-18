@@ -8,13 +8,14 @@ const Nav = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
 
-  // function SearchBar() {
-  //   const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('');
   
-  //   const handleSearchChange = (event) => {
-  //     setSearchText(event.target.value);
-  //   };
-  // }
+    const handleSearch = (event) => {
+      
+      
+
+    };
+  
 
 
   return (
@@ -38,11 +39,11 @@ const Nav = () => {
       <input
         className="searchBar"
         type="text"
-        placeholder="Search..."
+        placeholder="Search for a book"
         // value={}
         // onChange={}
         />
-      <button>Search</button>
+      <button onClick={handleSearch}>Search</button>
     </div>
 
         </>
