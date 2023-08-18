@@ -37,10 +37,7 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
                 "FROM item " +
                 "WHERE title IS NULL OR title = '' " +
                 "   OR author IS NULL OR author = ''" +
-                "   OR published IS NULL OR published = ''" +
-                "   OR publisher IS NULL OR publisher = ''" +
                 "   OR topic IS NULL OR topic = ''" +
-                "   OR pages IS NULL OR pages = ''" +
                 "   OR `language` IS NULL OR `language` = ''" +
                 "   OR ia_id IS NULL OR ia_id = '';";
        List<Item> items= jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate));
@@ -51,14 +48,14 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     public Item addItemToShelf(int itemId,int appUserId) {
         //get an item and assign it to the shelf of an app user
         Item item = findByitemId(itemId);
-        final String sql = "insert into item_shelf values (page_number, item_id, app_user_id)" +
-                "values (?, ?, ?);";
+        final String sql = "insert into item_shelf values (item_id, app_user_id)" +
+                "values (?, ?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, item.getPageAmount());
-            ps.setInt(2, itemId);
-            ps.setInt(3,appUserId);
+            //ps.setInt(1, item.getPageAmount());
+            ps.setInt(1, itemId);
+            ps.setInt(2,appUserId);
             return ps;
         }, keyHolder);
         return (rowsAffected >0 ? item : null);
