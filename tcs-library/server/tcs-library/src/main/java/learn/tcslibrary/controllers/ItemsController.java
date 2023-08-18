@@ -22,13 +22,13 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-    private ItemRepository itemRepository;
-    private ItemShelfRepository itemShelfRepository;
+//    private ItemRepository itemRepository;
+//    private ItemShelfRepository itemShelfRepository;
 
-    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository) {
-        this.itemRepository = itemRepository;
-        this.itemShelfRepository = itemShelfRepository;
-    }
+//    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository) {
+//        this.itemRepository = itemRepository;
+//        this.itemShelfRepository = itemShelfRepository;
+//    }
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
     public ResponseEntity<Object> getBookPdf(@PathVariable String iaIdentifier, @PathVariable String filename) throws IOException {
@@ -102,6 +102,7 @@ public class ItemsController {
                 String titleOfSearch = item.get("title").asText();
                 String description = item.get("description").asText();
                 String subject = item.get("subject").asText();
+                String imgLink = "https://archive.org/services/img/" + identifier;
 
                 String pdfFetch = "https://archive.org/details/" + identifier + "&output=json";
 
@@ -139,7 +140,7 @@ public class ItemsController {
                 }
 
                 // Create your metadata object and add it to the list
-                metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename));
+                metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename,imgLink));
                 idx++;
                 if (idx > 8) { // grabbed the first 9 listings
                     break;
