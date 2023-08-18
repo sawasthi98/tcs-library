@@ -9,7 +9,7 @@ import AuthContext from './contexts/AuthContext';
 import Nav from './components/Nav';
 import Login from './components/Login';
 import ReadingItem from './components/ReadingItem';
-import PageNumber from './components/PageNumber';
+
 
 function App() {
 
@@ -56,10 +56,7 @@ function App() {
       // loadAnswers(token); Load effect for what we need to load to the front
     }
     
-  }, []);
-
-
-  
+  }, []);  
 
 
 
