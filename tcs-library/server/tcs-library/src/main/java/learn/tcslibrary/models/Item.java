@@ -16,11 +16,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(String title, String internetArchiveIdentifier, String description, String subject) {
+    public Item(String title, String internetArchiveIdentifier, String description, String subject, String filename) {
         this.title = title;
         this.internetArchiveIdentifier = internetArchiveIdentifier;
         this.description = description;
         this.subject = subject;
+        this.fileName = filename;
     }
 
     public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName) {
