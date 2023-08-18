@@ -10,8 +10,6 @@ const CommentForm = (props) => {
   const auth = useContext(AuthContext);
 
   const [errors, setErrors] = useState([]);
-
-  
   const [comment, setComment] = useState("");
 
   const resetState = () => {

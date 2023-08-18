@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from "react";
-import pdfjsLib from "pdfjs-dist";
+import { Document, Page } from "react-pdf";
+import { useParams } from "react-router-dom";
+import { pdfjs } from "react-pdf";
+
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 
 const ReadingItem = () => {
   const [pdfUrl, setPdfUrl] = useState("");
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-
+  const [numPages, setNumPages] = useState(null);
+	const [pageNumber, setPageNumber] = useState(1);
+  
   const params = useParams();
+
+	const onDocumentLoadSuccess = ({ numPages }) => {
+		setNumPages(numPages);
+	};
+
+  const goToPrevPage = () =>
+		setPageNumber(pageNumber - 1 <= 1 ? 1 : pageNumber - 1);
+
+	const goToNextPage = () =>
+		setPageNumber(
+			pageNumber + 1 >= numPages ? numPages : pageNumber + 1,
+		);
+
 
   // use that to findByTitle on backend
   // This will request back end with doc and id
@@ -21,9 +40,7 @@ const ReadingItem = () => {
       try {
         const response = await fetch(
 
-
           `http://localhost:8080/tcslibrary/reading-item/${params.identifier}/filename/${params.filename}`,
-
 
           {
             method: "GET",
@@ -40,10 +57,7 @@ const ReadingItem = () => {
         const pdfBlob = await response.blob();
         const pdfBlobUrl = URL.createObjectURL(pdfBlob);
         setPdfUrl(pdfBlobUrl);
-
-        // Get total pages using PDF.js
-        const pdfDoc = await pdfjsLib.getDocument(pdfBlobUrl).promise;
-        setTotalPages(pdfDoc.numPages);
+        console.log("pdfUrl:", pdfBlobUrl);
       } catch (error) {
         console.error("Request error:", error);
         // Handle error here
@@ -51,36 +65,29 @@ const ReadingItem = () => {
     };
 
     fetchPdf();
-  }, []);
+  }, [params.identifier, params.filename]);
 
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
+  console.log("numPages:", numPages);
 
   return (
     <div>
-      <div>
-        <h2>PDF Viewer</h2>
+      <nav>
+        <button onClick={goToPrevPage}>Prev</button>
+        <button onClick={goToNextPage}>Next</button>
         <p>
-          Page {currentPage} of {totalPages}
+          Page {pageNumber} of {numPages}
         </p>
-        <button onClick={() => handlePageChange(currentPage - 1)}>
-          Previous
-        </button>
-        <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
-      </div>
-      <div>
-        {pdfUrl && (
-          <iframe
-            src={pdfUrl + `#page=${currentPage}`}
-            width="99%"
-            height="1000px"
-            title="PDF Viewer"
-          />
-        )}
-      </div>
+      </nav>
+
+      {pdfUrl && (
+        <Document
+          file={pdfUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+          loading={<div>Loading...</div>}
+        >
+          <Page pageNumber={pageNumber} />
+        </Document>
+      )}
     </div>
   );
 };

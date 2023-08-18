@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Document, Page } from 'react-pdf';
 
 import './App.css';
 import Landing from './components/Landing';
@@ -15,6 +16,7 @@ import SearchResults from './components/SearchResults';
 function App() {
 
   const [user, setUser] = useState(null);
+  
   
 
   const login = (token) => {
@@ -64,7 +66,7 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
-    <h1>Title of the website</h1>
+    <h1>Byte Sized Books</h1>
     <Nav />
       
       <Routes>

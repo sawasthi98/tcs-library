@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SearchResults = () => {
 
@@ -42,18 +42,21 @@ const SearchResults = () => {
 
 
   return (
-
-    <div>
+    
+    <>
+    <div id='searchResult'>
       {results.map((result) => (
-        <div key={result.id}>
+        <div className="book" key={result.id}>
+          <Link to={`/readingitem/${result.internetArchiveIdentifier}/filename/${result.fileName}`}>
+            <img src={result.imgLink} alt='Cover art for selected book' />
+          </Link>
           <h2>{result.title}</h2>
           <p>{result.description}</p>
           {/* Capital links, take you to reading item page */}
-          
-          
         </div>
       ))}
     </div>
+    </>
   )
 }
 
