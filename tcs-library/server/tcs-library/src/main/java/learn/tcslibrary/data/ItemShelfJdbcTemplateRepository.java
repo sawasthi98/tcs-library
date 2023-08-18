@@ -48,12 +48,16 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     public Item addItemToShelf(int itemId,int appUserId) {
         //get an item and assign it to the shelf of an app user
         Item item = findByitemId(itemId);
-        final String sql = "insert into item_shelf values (item_id, app_user_id)" +
+
+        final String sql = "insert into item_shelf values (page_number, item_id, app_user_id)" +
+
                 "values (?, ?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            //ps.setInt(1, item.getPageAmount());
+
+          //  ps.setInt(1, item.getPageAmount());
+
             ps.setInt(1, itemId);
             ps.setInt(2,appUserId);
             return ps;

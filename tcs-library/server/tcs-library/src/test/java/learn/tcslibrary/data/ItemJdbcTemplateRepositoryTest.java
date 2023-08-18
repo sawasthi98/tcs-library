@@ -39,11 +39,13 @@ class ItemJdbcTemplateRepositoryTest {
         Item item = new Item();
         item.setItemId(2);
         item.setAuthor("Mark Twain");
-        //item.setLanguage("English");
-      //  item.setPublisher("Magic Books");
+
+       // item.setLanguage("English");
+       // item.setPublisher("Magic Books");
         item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
-      //  item.setPublishedDate("December 5th, 1913");
+       // item.setPublishedDate("December 5th, 1913");
+
         item.setTopic(topics);
 
         Item foundItem = repository.findByItemId(2);
@@ -64,8 +66,10 @@ class ItemJdbcTemplateRepositoryTest {
         item.setItemId(2);
         item.setAuthor("Mark Twain");
 
+
         item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
+
 
         item.setTopic(topics);
 
@@ -87,8 +91,10 @@ class ItemJdbcTemplateRepositoryTest {
         Item item = new Item();
         item.setItemId(2);
         item.setAuthor("Mark Twain");
+
         item.setTitle("Hucklebery Finn");
         item.setInternetArchiveIdentifier("221xyz");
+
         item.setTopic(topics);
 
         Item foundItem = repository.findByTitle("Hucklebery Finn");

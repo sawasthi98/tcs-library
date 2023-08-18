@@ -1,20 +1,28 @@
 import { useContext, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SearchResults from "./SearchResults";
 
 
 
 const Nav = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
+  const navigate = useNavigate();
 
-  // function SearchBar() {
-  //   const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('');
+
   
-  //   const handleSearchChange = (event) => {
-  //     setSearchText(event.target.value);
-  //   };
-  // }
+    const handleSearch = (event) => {
+
+      navigate(`/search/${searchText}`)
+
+      
+      
+      // map each one into links
+
+    };
+  
 
 
   return (
@@ -38,11 +46,11 @@ const Nav = () => {
       <input
         className="searchBar"
         type="text"
-        placeholder="Search..."
-        // value={}
-        // onChange={}
+        placeholder="Search for a book"
+        value={searchText}
+        onChange={(evt) => setSearchText(evt.target.value)}
         />
-      <button>Search</button>
+      <button onClick={handleSearch}>Search</button>
     </div>
 
         </>
