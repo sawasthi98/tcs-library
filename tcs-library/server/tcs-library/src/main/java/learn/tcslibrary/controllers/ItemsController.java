@@ -40,8 +40,7 @@ public class ItemsController {
 //        run through service method findOrCreate
 //        if exists in database, fetch using identifier and document name
 //        if does not exist, grab identifier based on which one was clicked as well as the file name ending in .pdf
-
-
+        
         URL url = new URL(fetchUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
