@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.tcslibrary.data.ItemJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemRepository;
+import learn.tcslibrary.data.ItemShelfRepository;
 import learn.tcslibrary.models.Item;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -21,26 +22,27 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-    private ItemRepository repository;
+    private ItemRepository itemRepository;
+    private ItemShelfRepository itemShelfRepository;
 
-    public ItemsController(ItemRepository repository) {
-        this.repository = repository;
+    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository) {
+        this.itemRepository = itemRepository;
+        this.itemShelfRepository = itemShelfRepository;
     }
 
-    @GetMapping("/reading-item/{itemId}")
-    public ResponseEntity<Object> findByTitle(@PathVariable int itemId) throws IOException {
-        String document = "jane-austen_pride-and-prejudice_advanced.pdf";
+    @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
+    public ResponseEntity<Object> getBookPdf(@PathVariable String iaIdentifier, @PathVariable String filename) throws IOException {
+        String document = filename;
         // Replace spaces with %20
         document = document.replaceAll(" ", "%20");
 
-        String fetchUrl = "https://archive.org/download/jane-austen_pride-and-prejudice_202302/" + document;
+        String fetchUrl = "https://archive.org/download/" + iaIdentifier + "/" + document;
 //        String fetchUrl = "link/" + identifier + "/" + document;
 //        https://archive.org/download/to-kill-a-mockingbird_202102/To Kill a Mockingbird.pdf
 //        https://archive.org/download/deysayan844_gmail_Cano/cano.pdf
 //        run through service method findOrCreate
 //        if exists in database, fetch using identifier and document name
 //        if does not exist, grab identifier based on which one was clicked as well as the file name ending in .pdf
-
 
         URL url = new URL(fetchUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -146,9 +148,6 @@ public class ItemsController {
 
             // send to front end
             // links go to read items
-
-            // save it to our database under Items to save the metadata info
-            // next time to be searched, we have the identifier saved and need only grab the pdf name
 
         // Return the metadata list
         return new ResponseEntity<>(metadataList, HttpStatus.OK);

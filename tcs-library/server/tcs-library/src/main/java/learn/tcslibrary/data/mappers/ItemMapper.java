@@ -22,10 +22,9 @@ public class ItemMapper implements RowMapper<Item> {
         item.setItemId(rs.getInt("item_id"));
         item.setTitle(rs.getString("title"));
         item.setAuthor(rs.getString("author"));
-
         List<String> topics = findTopicsByItemId(item.getItemId());
         item.setTopic(topics);
-//        item.setPageAmount(rs.getInt("pages"));
+        item.setPageAmount(rs.getInt("pages"));
         item.setInternetArchiveIdentifier(rs.getString("ia_id"));
         return item;
     }
