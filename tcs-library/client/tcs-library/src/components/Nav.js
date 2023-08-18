@@ -35,9 +35,7 @@ const Nav = () => {
       {/* LOGGED IN */}
       {user &&(
         <>
-        <Link to="/">My Profile</Link>
-        {" "}
-        <Link to="/readingitem">BOOK TEST</Link>
+        <Link to="/">My Profile</Link>        
         {" "}
         <button onClick={auth.logout}>Logout</button>
 

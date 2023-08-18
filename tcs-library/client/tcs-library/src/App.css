@@ -5,6 +5,18 @@
   
 }
 
+#searchResult {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.book {
+  width: 33%;
+}
+
 .sherlock {
   height: 40px;
 }

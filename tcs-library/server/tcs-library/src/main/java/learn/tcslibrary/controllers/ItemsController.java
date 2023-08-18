@@ -134,10 +134,15 @@ public class ItemsController {
                 while (fieldNames.hasNext()) {
                     String fieldName = fieldNames.next();
                     if (fieldName.contains(".pdf")) {
-                        filename = fieldName;
+                        if (fieldName.startsWith("/")) {
+                            filename = fieldName.substring(1); // Remove the leading '/'
+                        } else {
+                            filename = fieldName;
+                        }
                         break;
                     }
                 }
+
 
                 // Create your metadata object and add it to the list
                 metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename,imgLink));
