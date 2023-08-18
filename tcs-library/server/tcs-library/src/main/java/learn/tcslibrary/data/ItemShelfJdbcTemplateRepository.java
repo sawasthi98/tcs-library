@@ -56,7 +56,7 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, item.getPageAmount());
+//            ps.setInt(1, item.getPageAmount());
             ps.setInt(2, itemId);
             ps.setInt(3,appUserId);
             return ps;

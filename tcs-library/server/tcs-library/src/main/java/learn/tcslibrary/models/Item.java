@@ -13,18 +13,20 @@ public class Item {
     private String description;
     private String subject;
     private String fileName;
+    private String imgLink;
     public Item() {
     }
 
-    public Item(String title, String internetArchiveIdentifier, String description, String subject, String filename) {
+    public Item(String title, String internetArchiveIdentifier, String description, String subject, String filename, String imgLink) {
         this.title = title;
         this.internetArchiveIdentifier = internetArchiveIdentifier;
         this.description = description;
         this.subject = subject;
         this.fileName = filename;
+        this.imgLink = imgLink;
     }
 
-    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName) {
+    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName, String imgLink) {
         this.title = title;
         this.author = author;
         this.topic = topic;
@@ -33,6 +35,7 @@ public class Item {
         this.description = description;
         this.subject = subject;
         this.fileName = fileName;
+        this.imgLink = imgLink;
     }
 
     public String getTitle() {
@@ -107,5 +110,13 @@ public class Item {
 
     public void setTopic(List<String> topic) {
         this.topic = topic;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
     }
 }
