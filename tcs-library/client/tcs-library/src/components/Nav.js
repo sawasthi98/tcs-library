@@ -1,18 +1,25 @@
 import { useContext, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SearchResults from "./SearchResults";
 
 
 
 const Nav = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
+  const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState('');
+
   
     const handleSearch = (event) => {
+
+      navigate(`/search/${searchText}`)
+
       
       
+      // map each one into links
 
     };
   
@@ -40,8 +47,8 @@ const Nav = () => {
         className="searchBar"
         type="text"
         placeholder="Search for a book"
-        // value={}
-        // onChange={}
+        value={searchText}
+        onChange={(evt) => setSearchText(evt.target.value)}
         />
       <button onClick={handleSearch}>Search</button>
     </div>
