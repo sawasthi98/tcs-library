@@ -9,7 +9,8 @@ import AuthContext from './contexts/AuthContext';
 import Nav from './components/Nav';
 import Login from './components/Login';
 import ReadingItem from './components/ReadingItem';
-import PageNumber from './components/PageNumber';
+import SearchResults from './components/SearchResults';
+
 
 function App() {
 
@@ -56,10 +57,7 @@ function App() {
       // loadAnswers(token); Load effect for what we need to load to the front
     }
     
-  }, []);
-
-
-  
+  }, []);  
 
 
 
@@ -77,7 +75,12 @@ function App() {
         {/* Logged IN */}
         {/* Add the My profile and search bar functionality here
             also add the log out here */}
-        <Route path="/readingitem/:itemId" element={<ReadingItem />} />
+
+        <Route path="/readingitem/:identifier/filename/:filename" element={<ReadingItem />} />
+        <Route path="/search/:searchText" element={<SearchResults />} />
+
+        {/* Search results wild card for search term */}
+
         
 
 

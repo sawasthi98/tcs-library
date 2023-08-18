@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
 import pdfjsLib from "pdfjs-dist";
-import { useParams } from "react-router-dom";
 
 const ReadingItem = () => {
   const [pdfUrl, setPdfUrl] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
   const params = useParams();
 
   // use that to findByTitle on backend
+  // This will request back end with doc and id
+  // find or create ITem in the back
+  // and item shelf for user
+  // request IA with doc and id
+  // Then send back the PDF
+
 
   useEffect(() => {
     const fetchPdf = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/tcslibrary/reading-item/${params.itemId}`,
+
+
+          `http://localhost:8080/tcslibrary/reading-item/${params.identifier}/filename/${params.filename}`,
+
+
           {
             method: "GET",
             headers: {
