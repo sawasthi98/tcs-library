@@ -14,7 +14,9 @@ const ReadingItem = () => {
     const fetchPdf = async () => {
       try {
         const response = await fetch(
+
           `http://localhost:8080/tcslibrary/reading-item/${params.itemId}`,
+
           {
             method: "GET",
             headers: {
