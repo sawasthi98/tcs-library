@@ -10,7 +10,7 @@ const ReadingItem = () => {
     const fetchPdf = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/tcslibrary/potato",
+          "http://localhost:8080/tcslibrary/readingitem/1",
           {
             method: "GET",
             headers: {
