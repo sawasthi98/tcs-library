@@ -2,6 +2,7 @@ package learn.tcslibrary.models;
 
 public class Review {
 
+    private int reviewId;
     private String reviewText;
     private int itemId;
     private int appUserId;
@@ -9,10 +10,19 @@ public class Review {
     public Review() {
     }
 
-    public Review(String reviewText, int itemId, int appUserId) {
+    public Review(int reviewId, String reviewText, int itemId, int appUserId) {
+        this.reviewId = reviewId;
         this.reviewText = reviewText;
         this.itemId = itemId;
         this.appUserId = appUserId;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     public String getReviewText() {

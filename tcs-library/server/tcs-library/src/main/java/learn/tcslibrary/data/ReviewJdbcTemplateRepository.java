@@ -18,6 +18,8 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // do we need a findAll() if we never want to see reviews unless they are connected to the book?
+    // i think we should also include a findByReviewId method
     @Override
     public List<Review> findAll() {
         final String sql= "select review, app_user_id,item_id from review;";
