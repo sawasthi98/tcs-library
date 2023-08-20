@@ -1,7 +1,6 @@
 package learn.tcslibrary.domain;
 
 import learn.tcslibrary.data.ReviewRepository;
-import learn.tcslibrary.models.AppUser;
 import learn.tcslibrary.models.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

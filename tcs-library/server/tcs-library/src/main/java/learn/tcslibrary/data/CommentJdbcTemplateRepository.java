@@ -16,6 +16,11 @@ public class CommentJdbcTemplateRepository implements CommentRepository {
     }
 
     @Override
+    public List<Comment> findByAppUserId(int appUserId) {
+        return null;
+    }
+
+    @Override
     public Comment addComment(Comment comment) {
         return null;
     }
