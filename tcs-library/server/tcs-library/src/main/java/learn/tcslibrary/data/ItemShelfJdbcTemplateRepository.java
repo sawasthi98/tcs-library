@@ -6,11 +6,13 @@ import learn.tcslibrary.models.ItemShelf;
 import org.springframework.jdbc.core.JdbcTemplate;
 import learn.tcslibrary.data.mappers.ItemMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
 
     private JdbcTemplate jdbcTemplate;
@@ -21,12 +23,11 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
 
     @Override
     public Item findByitemId(int itemId) {
-        final String sql = "select page_number,item_id,app_user_id" +
-                "from item_shelf where item_id= ? ;";
-        //List<String>topics=findTopicsByItemId(itemId);
-        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),itemId);
-        return(itemList == null||itemList.size()==0 ? null : itemList.get(0));
+        final String sql = " select i.item_id, i.title, i.author, i.topic, i.ia_id from item i inner join item_shelf shelf on i.item_id=shelf.item_id where shelf.item_id=?;";
+        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate), itemId);
+        return (itemList == null || itemList.isEmpty()) ? null : itemList.get(0);
     }
+
 
     // for sorting purposes
     // will need an order by in the sql?
@@ -45,29 +46,20 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     }
 
     @Override
-    public Item addItemToShelf(int itemId,int appUserId) {
-        //get an item and assign it to the shelf of an app user
+    public Item addItemToShelf(int itemId, int appUserId) {
         Item item = findByitemId(itemId);
 
-        final String sql = "insert into item_shelf values (page_number, item_id, app_user_id)" +
+        final String sql = "insert into item_shelf (item_id, app_user_id) VALUES (?, ?)";
+        int rowsAffected = jdbcTemplate.update(sql, itemId, appUserId);
 
-                "values (?, ?);";
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        int rowsAffected = jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//            ps.setInt(1, item.getPageAmount());
-            ps.setInt(2, itemId);
-            ps.setInt(3,appUserId);
-
-            return ps;
-        }, keyHolder);
         return (rowsAffected >0 ? item : null);
     }
 
+
     @Override
-    public boolean deleteItemFromShelf(int itemId) {
-        final String sql = "DELETE FROM item_shelf WHERE item_id = ?";
-        int isDeleted=jdbcTemplate.update(sql, itemId);
+    public boolean deleteItemFromShelf(int itemId, int appUserId) {
+        final String sql = "DELETE FROM item_shelf WHERE item_id = ? and app_user_id=?";
+        int isDeleted=jdbcTemplate.update(sql, itemId,appUserId);
         return isDeleted >0;
     }
 
@@ -78,4 +70,14 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
         List<Item> items= jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate));
         return(items==null||items.size()==0 ? null : items);
     }
+
+    public List<Item>findByAppUserId(int appUserId){
+        final String sql = "select i.item_id, i.title, i.author, i.topic, i.ia_id " +
+                "from item i inner join item_shelf shelf on " +
+                "i.item_id=shelf.item_id where shelf.app_user_id= ? ; ";
+        List<Item> items= jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),appUserId);
+        return(items==null||items.size()==0 ? null : items);
+    }
+
+
 }
