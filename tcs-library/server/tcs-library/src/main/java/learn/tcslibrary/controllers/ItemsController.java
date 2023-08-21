@@ -62,6 +62,16 @@ public class ItemsController {
         // return bytearray in response entity
         // get to postman before react
         // accept app/pdf
+
+        // Use a token to see who is making request
+        // IA ID should be able to find the item in our item DB "find by IA ID"
+        // Item shelf repo method find or create by IA ID and User ID
+
+        // Pull user ID from token, pass the IA ID and User ID into service method that will find or create
+        // item shelf, then we have page number
+
+        // Might belong in its own method two sep methods, two sep fetches on page load
+        // one to get PDF one to get last read page
     }
 
     @GetMapping("/search/{title}")

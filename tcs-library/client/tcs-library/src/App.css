@@ -20,6 +20,10 @@
   width: 33%;
 }
 
+.react-pdf__Page__textContent{
+  /* display: none; */
+}
+
 .sherlock {
   height: 40px;
 }
