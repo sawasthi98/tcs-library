@@ -48,7 +48,7 @@ const Nav = () => {
         value={searchText}
         onChange={(evt) => setSearchText(evt.target.value)}
         />
-      <button onClick={handleSearch}>Search</button>
+      <button type="submit" onClick={handleSearch}>Search</button>
     </div>
 
         </>
