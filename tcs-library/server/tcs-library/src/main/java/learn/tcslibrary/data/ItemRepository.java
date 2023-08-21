@@ -8,10 +8,10 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository {
-
     public Item findByItemId(int itemId);
-    public Item findByTopic(String topic);
     public Item findByTitle(String title);
+    public Item findByInternetArchiveId(String iaId);
     public List<Item> findItemsByItemShelf(ItemShelf itemShelf);
+    public Item addItemMetadata (String internetArchiveId, String filename);
 
 }

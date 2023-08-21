@@ -33,89 +33,46 @@ class ItemJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByItemId() {
-        List<String> topics = new ArrayList<>();
-        topics.add("Adventure");
-
         Item item = new Item();
-        item.setItemId(2);
-        item.setAuthor("Mark Twain");
+        item.setItemId(1);
 
-       // item.setLanguage("English");
-       // item.setPublisher("Magic Books");
-        item.setTitle("Hucklebery Finn");
-        item.setInternetArchiveIdentifier("221xyz");
-       // item.setPublishedDate("December 5th, 1913");
+        item.setTitle("Pride and Prejudice");
+        item.setInternetArchiveIdentifier("623abcdef");
+        item.setSubject("literature");
+        item.setDescription("a classic");
 
-        item.setTopic(topics);
+        Item foundItem = repository.findByItemId(1);
 
-        Item foundItem = repository.findByItemId(2);
-
-        assertEquals(foundItem.getItemId(),2);
+        assertEquals(foundItem.getItemId(),1);
         assertEquals(foundItem.getTitle(),item.getTitle());
-        assertEquals(foundItem.getAuthor(),item.getAuthor());
         assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
-        assertEquals(foundItem.getTopic(),item.getTopic());
-    }
-
-    @Test
-    void findByTopic() {
-        List<String> topics = new ArrayList<>();
-        topics.add("Adventure");
-
-        Item item = new Item();
-        item.setItemId(2);
-        item.setAuthor("Mark Twain");
-
-
-        item.setTitle("Hucklebery Finn");
-        item.setInternetArchiveIdentifier("221xyz");
-
-
-        item.setTopic(topics);
-
-        Item foundItem = repository.findByTopic("adventure");
-        // will there be an issue with casing here?
-
-        assertEquals(foundItem.getItemId(),2);
-        assertEquals(foundItem.getTitle(),item.getTitle());
-        assertEquals(foundItem.getAuthor(),item.getAuthor());
-        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
-        assertEquals(foundItem.getTopic(),item.getTopic());
     }
 
     @Test
     void findByTitle() {
-        List<String> topics = new ArrayList<>();
-        topics.add("Adventure");
-
         Item item = new Item();
-        item.setItemId(2);
-        item.setAuthor("Mark Twain");
+        item.setItemId(1);
 
-        item.setTitle("Hucklebery Finn");
-        item.setInternetArchiveIdentifier("221xyz");
+        item.setTitle("Pride and Prejudice");
+        item.setInternetArchiveIdentifier("623abcdef");
+        item.setSubject("literature");
+        item.setDescription("a classic");
 
-        item.setTopic(topics);
-
-        Item foundItem = repository.findByTitle("Hucklebery Finn");
+        Item foundItem = repository.findByTitle("Pride and Prejudice");
         // will there be an issue with casing here? cn says: its case sensitive unfortunately, we can work on that tho
 
-        assertEquals(foundItem.getItemId(),2);
+        assertEquals(foundItem.getItemId(),1);
         assertTrue(foundItem.getTitle().contains(item.getTitle()));
-        assertEquals(foundItem.getAuthor(),item.getAuthor());
         assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
-        assertEquals(foundItem.getTopic(),item.getTopic());
     }
 
     @Test
     void shouldNotFindNonexistentItem () {
         Item nonexistentTitle = repository.findByTitle("test item");
-        Item nonexistentItemId = repository.findByItemId(3);
-        Item nonexistentTopic = repository.findByTopic("test topic");
+        Item nonexistentItemId = repository.findByItemId(7);
 
         assertNull(nonexistentTitle);
         assertNull(nonexistentItemId);
-        assertNull(nonexistentTopic);
         // is more necessary here?
     }
 }

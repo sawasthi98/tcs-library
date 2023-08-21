@@ -38,14 +38,13 @@ create table app_user_role (
 create table item (
 	item_id int primary key auto_increment,
     title text,
-    author text,
-    published text,
-    publisher text,
-    topic text,
-    pages int,
-    language text,
-    ia_id text
+    identifier text,
+    `description` text,
+    `subject` text,
+    filename text,
+    imgLink text
 );
+
 
 create table item_shelf (
 	item_shelf_id int primary key auto_increment,
@@ -116,31 +115,24 @@ insert into app_user (username, password_hash, enabled)
 insert into app_user_role
     values
     (1, 2),
-    (2, 1);    
-
+    (2, 1);   
     
-insert into item(title, author, published, publisher, topic, pages, language, ia_id)
+insert into item (title, identifier, `description`, `subject`, filename, imgLink) 
 	values
-    ("Pride and Prejudice", "Jane Austen", "July 5th, 1920", "Penguin Books", "Horror", 400, "English", "623abcdef"),
-    ("Hucklebery Finn", "Mark Twain", "December 5th, 1913", "Magic Books", "Adventure", 700, "English", "221xyz");
+    ("Pride and Prejudice", "623abcdef", "a classic", "literature", "book.pdf", "images.com/p&p"),
+    ("Sherlock Holmes Mysteries", "asdflkj", "cool description", "mystery", "book.pdf", "picture of sherlock holmes.com");
     
-insert into item_shelf (page_number, item_id, app_user_id)
+insert into item_shelf (page_number, item_id)
 	values
-    (303, 1, 1),
-    (500, 2, 2);
-    
+    (303, 1);    
 
 insert into review(review, item_id, app_user_id)
 	values
-    ("Book was pretty cool ngl", 1, 1),
-    ("Book was totally rad", 2, 2),
-    ("Book was awful! I want my free money back!", 2, 1);
+    ("Book was pretty cool ngl", 1, 1);
 
 insert into comments(comment_text, app_user_id, review_id)
 	values
-    ("Yeah I thought so too", 1, 1),
-    ("No way I am the only thing that\'s rad", 2, 2),
-    ("I know you are but what am I?", 2, 2);
+    ("Yeah I thought so too", 1, 1);
     
     select * from item_shelf;
     end //

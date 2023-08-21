@@ -1,11 +1,12 @@
 package learn.tcslibrary.controllers;
 
-//import learn.tcslibrary.domain.ItemService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.tcslibrary.data.ItemJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemRepository;
 import learn.tcslibrary.data.ItemShelfRepository;
+import learn.tcslibrary.domain.ItemService;
+import learn.tcslibrary.domain.ItemShelfService;
 import learn.tcslibrary.models.Item;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +23,33 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-//    private ItemRepository itemRepository;
-//    private ItemShelfRepository itemShelfRepository;
+    private ItemRepository itemRepository;
+    private ItemShelfRepository itemShelfRepository;
 
-//    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository) {
-//        this.itemRepository = itemRepository;
-//        this.itemShelfRepository = itemShelfRepository;
-//    }
+    private ItemService itemService;
+    private ItemShelfService itemShelfService;
+
+    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository, ItemService itemService, ItemShelfService itemShelfService) {
+        this.itemRepository = itemRepository;
+        this.itemShelfRepository = itemShelfRepository;
+        this.itemService = itemService;
+        this.itemShelfService = itemShelfService;
+    }
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
     public ResponseEntity<Object> getBookPdf(@PathVariable String iaIdentifier, @PathVariable String filename) throws IOException {
+
+        itemService.findOrCreate(iaIdentifier,filename);
+        // after creating, then add itme to shelf with usertoken
+        // we're not really doing anything with this in this method...
+        // do we need to do something else? this method is purely for fetching the pdf and read it
+        // we want to make sure it gets saved everytime to db
+
         String document = filename;
         // Replace spaces with %20
         document = document.replaceAll(" ", "%20");
 
         String fetchUrl = "https://archive.org/download/" + iaIdentifier + "/" + document;
-//        String fetchUrl = "link/" + identifier + "/" + document;
-//        https://archive.org/download/to-kill-a-mockingbird_202102/To Kill a Mockingbird.pdf
-//        https://archive.org/download/deysayan844_gmail_Cano/cano.pdf
 //        run through service method findOrCreate
 //        if exists in database, fetch using identifier and document name
 //        if does not exist, grab identifier based on which one was clicked as well as the file name ending in .pdf
@@ -57,6 +67,7 @@ public class ItemsController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         inputStream.close();
+
         return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
 
         // return bytearray in response entity
@@ -150,6 +161,10 @@ public class ItemsController {
                 if (idx > 8) { // grabbed the first 9 listings
                     break;
                 }
+
+                // items saved in database
+                // send to service findOrCreate
+
         }
 
             // send to front end
