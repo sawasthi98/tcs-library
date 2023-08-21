@@ -17,20 +17,27 @@ public class ItemService {
     }
 
     public Item findItemByItemId(int itemId){
-        Item item= repository.findByItemId(itemId);
-        Result result=validate(item);
-        return (result.isSuccess() ? item : null);
-    }
-    public Item findByTopic(String topic){
-        Item item =repository.findByTopic(topic);
-        Result result=validate(item);
+        Item item = repository.findByItemId(itemId);
+        Result result = validate(item);
         return (result.isSuccess() ? item : null);
     }
 
     public Item findByTitle(String title){
-        Item item =repository.findByTitle(title);
-        Result result=validate(item);
+        Item item = repository.findByTitle(title);
+        Result result = validate(item);
         return (result.isSuccess() ? item : null);
+    }
+
+    public Item findOrCreate(String internetArchiveId, String filename) {
+        // check if exists
+        Item item = repository.findByInternetArchiveId(internetArchiveId);
+
+        if (item != null) {
+            // send to frontend
+            return item;
+        }
+            // save to database
+           return repository.addItemMetadata(internetArchiveId, filename);
     }
 
     public Result validate(Item item){

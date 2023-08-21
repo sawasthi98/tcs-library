@@ -5,9 +5,6 @@ import java.util.List;
 public class Item {
 
     private String title;
-    private String author;
-    private List<String> topic; // maybe if they want to search for a collection of specific genres?
-//    private int pageAmount;
     private String internetArchiveIdentifier;
     private int itemId;
     private String description;
@@ -26,10 +23,8 @@ public class Item {
         this.imgLink = imgLink;
     }
 
-    public Item(String title, String author, List<String> topic, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName, String imgLink) {
+    public Item(String title, String internetArchiveIdentifier, int itemId, String description, String subject, String fileName, String imgLink) {
         this.title = title;
-        this.author = author;
-        this.topic = topic;
         this.internetArchiveIdentifier = internetArchiveIdentifier;
         this.itemId = itemId;
         this.description = description;
@@ -45,24 +40,6 @@ public class Item {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-
-//    public int getPageAmount() {
-//        return pageAmount;
-//    }
-//
-//    public void setPageAmount(int pageAmount) {
-//        this.pageAmount = pageAmount;
-//    }
-
 
     public String getDescription() {
         return description;
@@ -102,14 +79,6 @@ public class Item {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
-    }
-
-    public List<String> getTopic() {
-        return topic;
-    }
-
-    public void setTopic(List<String> topic) {
-        this.topic = topic;
     }
 
     public String getImgLink() {
