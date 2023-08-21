@@ -1,15 +1,25 @@
 package learn.tcslibrary.models;
 
 public class ItemShelf {
+    private int itemShelfId;
     private int itemId;
     private int pageNumber;
 
     public ItemShelf() {
     }
 
-    public ItemShelf(int itemId, int pageNumber) {
+    public ItemShelf(int itemShelfId,int itemId, int pageNumber) {
+        this.itemShelfId=itemShelfId;
         this.itemId = itemId;
         this.pageNumber = pageNumber;
+    }
+
+    public int getItemShelfId() {
+        return itemShelfId;
+    }
+
+    public void setItemShelfId(int itemShelfId) {
+        this.itemShelfId = itemShelfId;
     }
 
     public int getItemId() {

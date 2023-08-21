@@ -2,13 +2,51 @@ package learn.tcslibrary.domain;
 
 
 import learn.tcslibrary.data.ItemRepository;
+import learn.tcslibrary.models.Item;
+import learn.tcslibrary.models.ItemShelf;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ItemService {
-    public ItemRepository repository;
+    private ItemRepository repository;
 
-    //Is it really necessary to do a validate if each item may vary in what it does/doesnt have? -CN
+    public ItemService(ItemRepository repository) {
+        this.repository = repository;
+    }
 
+    public Item findItemByItemId(int itemId){
+        Item item= repository.findByItemId(itemId);
+        Result result=validate(item);
+        return (result.isSuccess() ? item : null);
+    }
+    public Item findByTopic(String topic){
+        Item item =repository.findByTopic(topic);
+        Result result=validate(item);
+        return (result.isSuccess() ? item : null);
+    }
 
+    public Item findByTitle(String title){
+        Item item =repository.findByTitle(title);
+        Result result=validate(item);
+        return (result.isSuccess() ? item : null);
+    }
+
+    public Result validate(Item item){
+        Result result= new Result();
+        if(item==null||item.getItemId()<1){
+            result.addErrorMessage("Item is null",ResultType.INVALID);
+            return result;
+        }
+        if(item.getInternetArchiveIdentifier()==null){
+            result.addErrorMessage("Unable to find IA Identifier",ResultType.INVALID);
+            return result;
+        }
+        return result;
+    }
+
+    public List<Item> findItemsByItemShelf(ItemShelf itemShelf){
+        return repository.findItemsByItemShelf(itemShelf);
+    }
 }

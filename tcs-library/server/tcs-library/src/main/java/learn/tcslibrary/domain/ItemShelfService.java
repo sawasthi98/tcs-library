@@ -5,16 +5,20 @@ import learn.tcslibrary.models.Item;
 import learn.tcslibrary.models.AppUser;
 
 public class ItemShelfService {
-    ItemShelfJdbcTemplateRepository repository;
+    private ItemShelfJdbcTemplateRepository repository;
 
     public ItemShelfService(ItemShelfJdbcTemplateRepository repository) {
         this.repository = repository;
     }
 
-    public Result validate(Item item){
+    public Result validate(Item item, AppUser appUser){
         Result result= new Result();
         if(item==null||item.getItemId() <1){
             result.addErrorMessage("This item cannot be found.",ResultType.NOT_FOUND);
+            return result;
+        }
+        if(appUser==null||appUser.getAppUserId()<0){
+            result.addErrorMessage("App user cannot be found.", ResultType.INVALID);
             return result;
         }
 
@@ -22,7 +26,7 @@ public class ItemShelfService {
     }
 
     public Item addToShelf(Item item, AppUser appUser){
-        Result result=validate(item);
+        Result result=validate(item, appUser);
         if(!result.isSuccess()){return null;}
         for(Item item1: repository.findAll()){
             if(item1.getItemId()==item.getItemId()&&
@@ -35,7 +39,7 @@ public class ItemShelfService {
             }//end of fourghleiuppe
         return repository.addItemToShelf(item.getItemId(), appUser.getAppUserId());
     }
-    public boolean deleteItemFromShelf(Item item){
-        return repository.deleteItemFromShelf(item.getItemId());
+    public boolean deleteItemFromShelf(Item item, AppUser appUser){
+        return repository.deleteItemFromShelf(item.getItemId(),appUser.getAppUserId());
     }
 }
