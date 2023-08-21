@@ -1,8 +1,11 @@
+/* Landing Page Styling */
+
 #landing-book-collection{
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  
+  align-items: center;
 }
 
 #searchResult {
@@ -27,4 +30,10 @@
 #dracula {
   height: 400px;
   width: 400px;
+}
+
+@media(max-width: 800px) {
+  #landing-book-collection{ 
+    width: 60%;
+  }
 }
