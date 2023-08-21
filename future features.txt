@@ -1,0 +1,4 @@
+future features?
+
+- add admin privileges to moderate reviews/comments
+- allow audiobook capability

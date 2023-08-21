@@ -85,10 +85,10 @@ class ReviewJdbcTemplateRepositoryTest {
 
     @Test
     void updateReview() {
-        Review reviewToUpdate = new Review("this is a test review",1,2);
+        Review reviewToUpdate = new Review(2,"this is a test review",1,2);
         repository.addReview(reviewToUpdate);
         assertNotNull(reviewToUpdate);
-        Review updatedReview = new Review("this is an updated review",1,2);
+        Review updatedReview = new Review(2,"this is an updated review",1,2);
         reviewToUpdate = repository.updateReview(updatedReview);
         assertNotNull(updatedReview);
         assertEquals(reviewToUpdate.getItemId(), updatedReview.getItemId());
@@ -100,7 +100,7 @@ class ReviewJdbcTemplateRepositoryTest {
 
     @Test
     void deleteReview() {
-        Review reviewToDelete = new Review("this is a test review", 1, 2);
+        Review reviewToDelete = new Review(1,"this is a test review", 1, 2);
         repository.addReview(reviewToDelete);
         assertNotNull(reviewToDelete);
 
