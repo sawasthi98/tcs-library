@@ -75,12 +75,8 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//            ps.setString(1, item.getTitle());
             ps.setString(1, internetArchiveId);
-//            ps.setString(3,item.getDescription());
-//            ps.setString(4,item.getSubject());
-            ps.setString(2,filename);
-//            ps.setString(6,item.getImgLink());
+            ps.setString(2, filename);
             return ps;
         }, keyHolder);
 

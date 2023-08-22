@@ -31,21 +31,25 @@ public class ReviewController {
 
     private ReviewService reviewService;
     private UserDetailsService userDetailsService;
+    private ItemService itemService;
 
-    public ReviewController(ReviewService reviewService, UserDetailsService userDetailsService) {
+
+    public ReviewController(ReviewService reviewService, UserDetailsService userDetailsService, ItemService itemService) {
         this.reviewService = reviewService;
         this.userDetailsService = userDetailsService;
+        this.itemService = itemService;
     }
 
-    @GetMapping("/reviews/{itemId}")
-    public ResponseEntity<?> getAllReviewsPerReadingItem(@PathVariable int itemId) {
+    @GetMapping("/reviews/{internetArchiveIdentifier}")
+    public ResponseEntity<?> getAllReviewsPerReadingItem(@PathVariable String internetArchiveIdentifier) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
 //        how to add user to review so we can display username
 
+        Item item = itemService.findByInternetArchiveId(internetArchiveIdentifier);
+
         // grabbing reviews from db
-        List<Review> allReviews = reviewService.findReviewsByItemId(itemId);
-//        find by ia identifier
+        List<Review> allReviews = reviewService.findReviewsByItemId(item.getItemId());
 
         if (allReviews != null) {
             return new ResponseEntity<>(allReviews, HttpStatus.OK);

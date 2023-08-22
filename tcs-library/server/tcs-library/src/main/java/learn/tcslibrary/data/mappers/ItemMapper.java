@@ -20,12 +20,8 @@ public class ItemMapper implements RowMapper<Item> {
     public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
         Item item = new Item();
         item.setItemId(rs.getInt("item_id"));
-//        item.setTitle(rs.getString("title"));
         item.setInternetArchiveIdentifier(rs.getString("identifier"));
-//        item.setDescription(rs.getString("description"));
-//        item.setSubject(rs.getString("subject"));
         item.setFileName(rs.getString("filename"));
-//        item.setImgLink(rs.getString("img_link"));
         return item;
     }
 }

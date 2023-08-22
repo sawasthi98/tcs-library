@@ -84,13 +84,7 @@ function App() {
 
         <Route path="/readingitem/:identifier/filename/:filename" element={<ReadingItem />} />
         <Route path="/search/:searchText" element={<SearchResults />} />
-        <Route path="/review-form/:identifier" element={<ReviewForm />} />
-        {/* include wild card for identifier */}
-
-        {/* Search results wild card for search term */}
-
-        
-
+        <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} />
 
         {/* Logged OUT */}
         

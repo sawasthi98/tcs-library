@@ -98,7 +98,7 @@ insert into app_user_role
     
 insert into item (identifier, filename) 
 	values
-    ("623abcdef","book.pdf");
+    ("pride-and-prejudice_201907","pride-and-prejudice.pdf");
     
 insert into item_shelf (page_number, item_id, app_user_id)
 	values
@@ -108,11 +108,19 @@ insert into item_shelf (page_number, item_id, app_user_id)
 insert into review(review, item_id, app_user_id)
 	values
     ("Book was pretty cool ngl", 1, 1),
-    ("Test review", 2, 2);
+    ("Test review", 1, 1);
 
 insert into comments(comment_text, app_user_id, review_id)
 	values
     ("Yeah I thought so too", 1, 1);
 
-select * from review;
+select * from item_shelf;
+SELECT * FROM item;
+SELECT * FROM review;
 
+
+select i.item_id, shelf.page_number, shelf.app_user_id 
+                from item i inner join item_shelf shelf on i.item_id = shelf.item_id
+                 where shelf.app_user_id = 1; 
+
+SELECT * FROM item_shelf;

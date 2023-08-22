@@ -1,7 +1,7 @@
-POST http://localhost:8080/create_account
+POST http://localhost:8080/authenticate
 Content-Type: application/json
 
 {
-    "username": "test23@test.com",
+    "username": "john@smith.com",
     "password": "P@ssw0rd!"
 }

@@ -22,15 +22,17 @@ const ReadingItem = () => {
 	};
 
   const goToPrevPage = () => {
-		setPageNumber(pageNumber - 1 <= 1 ? 1 : pageNumber - 1);
-    // pageUpdate();
+    const newPage = pageNumber - 1 <= 1 ? 1 : pageNumber - 1
+		setPageNumber(newPage);
+    pageUpdate(newPage);
   }
 
 
 	const goToNextPage = () => {
-		setPageNumber(
-			pageNumber + 1 >= numPages ? numPages : pageNumber + 1,
-		);
+    const newPage = pageNumber + 1 >= numPages ? numPages : pageNumber + 1
+
+		setPageNumber(newPage);
+    pageUpdate(newPage);
 
   }
 
@@ -39,56 +41,88 @@ const ReadingItem = () => {
     if (!isNaN(newPage) && newPage >= 1 && newPage <= numPages) {
       setPageNumber(newPage);
     }
+    pageUpdate(newPage);
   };
-
-  // page number `${}`
   
-  // Want to grab last read page of this shelf item
 
-    // ask backend what page user was on 
-// useeffect separate from pdf data 
-// backend endpoint - identifier and user token as pathvariable
-// look up shelf item 
+  useEffect( () => {
+    const loadWithPageNumber = async () => {
+      try {
+        const response = await fetch(
 
-  // useEffect( () => {
-  //   const fetchReviews = async () => {
-  //     try {
-  //       const response = await fetch(
+          `http://localhost:8080/tcslibrary/reading-item/${params.identifier}/filename/${params.filename}/page`,
 
-  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: "Bearer " + auth.user.token
+            },            
+          }
+        );
 
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Accept: "application/json",
-  //             Authorization: "Bearer " + auth.user.token
-  //           },
-  //           body: {
-  //             identifier: identifier
-  //           }
-  //         }
-  //       );
+        
 
-  //       if (!response.ok) {
-  //         throw new Error("Request failed");
-  //       }
 
-  //       const data = await response.json();
-  //       setReviews(data);
+        if (!response.ok) {
+          throw new Error("Request failed");
+        } else {
+          const json = await response.json();
+          setPageNumber(json.pageNumber)
+          console.log(pageNumber);
+        }
 
-  //     } catch (error) {
-  //       console.error("Request error:", error);
-  //     }
-  //   }
+      } catch (error) {
+        console.error("Request error:", error);
+      }
+    }
+    loadWithPageNumber();
 
-  //   fetchReviews();
+  }, [params.identifier,params.filename, auth])
 
-  // }, [params.identifier, auth])
+
+
+  useEffect( () => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+
+          `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: "Bearer " + auth.user.token
+            },            
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+        setReviews(data);
+
+      } catch (error) {
+        console.error("Request error:", error);
+      }
+    }
+    console.log(reviews);
+
+    fetchReviews();
+
+  }, [params.identifier, auth])
 
   // how to call 
-  // useEffect(() => {
-    const pageUpdate = async () => {
+  
+    const pageUpdate = async (arg) => {
+      if (arg === 1) {
+        return
+      }
       try {
+        console.log(arg);
         const response = await fetch(
 
           `http://localhost:8080/tcslibrary/reading-item/${params.identifier}`,
@@ -96,12 +130,16 @@ const ReadingItem = () => {
           {
             method: "PUT",
             headers: {
+              "Content-Type": "application/json",
               Accept: "application/json",
               Authorization: "Bearer " + auth.user.token
             },
-            body: {
-              pageNumber: pageNumber
-            }
+            body: 
+              JSON.stringify(
+                {
+              pageNumber: arg
+                }
+              )
           }
         );
 
@@ -114,10 +152,7 @@ const ReadingItem = () => {
       }
     }
 
-    pageUpdate();
     //  what page was this item shelf on? 
-
-  // },[params.identifier, auth])
 
   useEffect(() => {
     const fetchPdf = async () => {
@@ -182,7 +217,7 @@ const ReadingItem = () => {
           <button onClick={goToInputPage}>Go</button>
 
           <div>
-            <Link to="/review-form">
+            <Link to={`/review-form/${params.identifier}/filename/${params.filename}`}>
               <button>Add a Review</button>
             </Link>
         </div>

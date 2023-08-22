@@ -23,9 +23,11 @@ public class ItemShelfService {
         this.appUserRepository = appUserRepository;
     }
 
-    public Result<Item> findOrAddToShelf(String internetArchiveId, int appUserId){
+    public Result<ItemShelf> findOrAddToShelf(String internetArchiveId, int appUserId){
         Item item = itemRepository.findByInternetArchiveId(internetArchiveId);
         AppUser appUser = appUserRepository.findUserByAppUserId(appUserId);
+
+
 
         Result result = validate(item, appUser);
 
@@ -33,42 +35,40 @@ public class ItemShelfService {
             return result;
         }
 
-        List<Item> itemsList = itemShelfRepository.findByAppUserId(appUserId);
-        if (itemsList != null) {
-            for (Item i : itemsList) {
+        ItemShelf itemShelf = itemShelfRepository.findByAppUserIdAndItemId(appUserId, item.getItemId());
 
-                if(i.getItemId() == item.getItemId() &&
-                        i.getInternetArchiveIdentifier().equals(item.getInternetArchiveIdentifier())) {
-
-                    result.setPayload(item);
-                    return result; // this one already exists
-                }
-
-            } //end of fourghleiuppe
+        if(itemShelf == null) {
+            ItemShelf addedItem = itemShelfRepository.addItemToShelf(item.getItemId(), appUser.getAppUserId());
+            result.setPayload(addedItem);
         }
-
-        Item addedItem = itemShelfRepository.addItemToShelf(item.getItemId(), appUser.getAppUserId());
-        result.setPayload(addedItem);
 
         return result;
     }
 
-    public boolean updatePageNumber(int appUserId, int itemId, int pageNumber) {
+    public Result updatePageNumber(int appUserId, int itemId, int pageNumber) {
+        Result result = new Result();
+        //new repo method  where appuser id = ? and item id = ?
 
-        List<Item> bookshelf = itemShelfRepository.findByAppUserId(appUserId);
-        for (Item item : bookshelf) {
-            if (item.getItemId() == itemId) {
-                boolean result = itemShelfRepository.updatePageNumber(pageNumber,itemId);
-                return result;
+        ItemShelf bookshelf = itemShelfRepository.findByAppUserIdAndItemId(appUserId, itemId);
 
-            }
+        boolean updated = itemShelfRepository.updatePageNumber(pageNumber,itemId, appUserId);
+        if (updated) {
+            result.setPayload(bookshelf);
         }
-        return false;
+
+
+
+        return result;
     }
 
 
     public boolean deleteItemFromShelf(Item item, AppUser appUser){
         return itemShelfRepository.deleteItemFromShelf(item.getItemId(),appUser.getAppUserId());
+    }
+
+    public ItemShelf findByAppUserIdAndItemId(AppUser appUser, int itemId) {
+        //new user?
+        return itemShelfRepository.findByAppUserIdAndItemId(appUser.getAppUserId(), itemId);
     }
 
 

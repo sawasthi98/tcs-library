@@ -71,7 +71,7 @@ const ReviewForm = (props) => {
       </fieldset>
 
       <button type="submit">Submit Review</button>
-      <Link to={`/reading-item/${params.identifier}/filename/${params.filename}`}>
+      <Link to={`/readingitem/${params.identifier}/filename/${params.filename}`}>
         <button>Cancel</button>
       </Link>
     </form>

@@ -8,10 +8,6 @@ import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 
 
-  
-    
-
-
 
 const Nav = () => {
   const auth = useContext(AuthContext);
@@ -65,7 +61,6 @@ const Nav = () => {
 
           </>
         )}
-        
 
         {/* LOGGED OUT */}
 

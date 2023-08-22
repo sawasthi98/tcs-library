@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.tcslibrary.data.ItemJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemRepository;
 import learn.tcslibrary.data.ItemShelfRepository;
+import learn.tcslibrary.domain.AppUserService;
 import learn.tcslibrary.domain.ItemService;
 import learn.tcslibrary.domain.ItemShelfService;
+import learn.tcslibrary.domain.Result;
 import learn.tcslibrary.models.AppUser;
 import learn.tcslibrary.models.Item;
+import learn.tcslibrary.models.ItemShelf;
 import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +21,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,11 +33,13 @@ public class ItemsController {
     private ItemService itemService;
     private ItemShelfService itemShelfService;
     private UserDetailsService userDetailsService;
+    private AppUserService appUserService;
 
-    public ItemsController(ItemService itemService, ItemShelfService itemShelfService, UserDetailsService userDetailsService) {
+    public ItemsController(ItemService itemService, ItemShelfService itemShelfService, UserDetailsService userDetailsService, AppUserService appUserService) {
         this.itemService = itemService;
         this.itemShelfService = itemShelfService;
         this.userDetailsService = userDetailsService;
+        this.appUserService = appUserService;
     }
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
@@ -189,15 +195,33 @@ public class ItemsController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
+    public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
+
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AppUser user = appUserService.loadUserByUsername(username);
+        Item item = itemService.findByInternetArchiveId(iaIdentifier);
+
+        ItemShelf shelfItem = itemShelfService.findByAppUserIdAndItemId(user, item.getItemId());
+
+        return new ResponseEntity<>(shelfItem, HttpStatus.OK);
+    }
+
     @PutMapping("/reading-item/{identifier}")
-    public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody int pageNumber) {
+    public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody HashMap<String, Integer> pageNumber) {
 
         Item item = itemService.findByInternetArchiveId(identifier);
-        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        boolean updatedPageNumber = itemShelfService.updatePageNumber(user.getAppUserId(),item.getItemId(),pageNumber);
+        //find user ID by user name
+        AppUser user = appUserService.loadUserByUsername(username);
 
-        if (updatedPageNumber) {
+
+        Integer number = pageNumber.get("pageNumber");
+
+        Result updatedPageNumber = itemShelfService.updatePageNumber(user.getAppUserId(),item.getItemId(),number);
+
+        if (updatedPageNumber.isSuccess()) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
 

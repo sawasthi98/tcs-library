@@ -1,6 +1,7 @@
 package learn.tcslibrary.data;
 
 import learn.tcslibrary.models.Item;
+import learn.tcslibrary.models.ItemShelf;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,10 +10,8 @@ import java.util.List;
 public interface ItemShelfRepository {
 
     public Item findByitemId(int itemId);
-    // sorting purposes
-//    public List<Item> findByIncomplete();
-    public boolean updatePageNumber(int pageNumber, int itemId);
-    public Item addItemToShelf(int itemId, int appUserId);
+    public boolean updatePageNumber(int pageNumber, int itemId, int appUserId);
+    public ItemShelf addItemToShelf(int itemId, int appUserId);
     public boolean deleteItemFromShelf(int itemId,int appUserId);
 
 }
