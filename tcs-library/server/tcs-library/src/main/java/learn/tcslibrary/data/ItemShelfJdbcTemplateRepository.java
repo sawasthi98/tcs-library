@@ -24,7 +24,8 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     @Override
     public Item findByitemId(int itemId) {
         final String sql = " select i.item_id, i.identifier " +
-                "from item i inner join item_shelf shelf on i.item_id = shelf.item_id where shelf.item_id = ?;";
+                "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
+                "where shelf.item_id = ?;";
 
         List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate), itemId);
         return (itemList == null || itemList.isEmpty()) ? null : itemList.get(0);
@@ -77,8 +78,8 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     }
 
     public List<Item> findByAppUserId(int appUserId){
-        final String sql = "select i.item_id, shelf.app_user_id " +
-                "from item i inner join item_shelf shelf on i.item_id = shelf.item_id" +
+        final String sql = "select i.item_id, i.identifier, i.filename, shelf.page_number, shelf.app_user_id " +
+                "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
                 " where shelf.app_user_id = ? ; ";
 
         List<Item> items = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),appUserId);

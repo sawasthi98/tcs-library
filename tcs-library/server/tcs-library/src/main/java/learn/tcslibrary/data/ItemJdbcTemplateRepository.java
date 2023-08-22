@@ -24,7 +24,7 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
 
     @Override
     public Item findByItemId(int itemId) {
-        final String sql = "select item_id, title, identifier, `description`, `subject`, filename, img_link " +
+        final String sql = "select item_id, identifier, filename " +
                 "from item where item_id = ? ;";
 
         List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),itemId);
@@ -52,7 +52,7 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
 
     @Override
     public Item findByInternetArchiveId(String iaId){
-        final String sql="select item_id, title, identifier, `description`, `subject`, filename, img_link " +
+        final String sql="select item_id, identifier, filename " +
                 "from item where identifier = ?;";
         List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),iaId);
         return(itemList == null||itemList.size()==0 ? null : itemList.get(0));
@@ -60,7 +60,7 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
 
     @Override
     public List<Item> findItemsByItemShelf(ItemShelf itemShelf){
-        final String sql = "  select i.item_id, i.title, i.identifier, i.filename, i.img_link from item i " +
+        final String sql = "  select i.item_id, i.identifier, i.filename from item i " +
                 "inner join item_shelf shelf on i.item_id = shelf.item_id " +
                 "where shelf.item_id = ?;";
 

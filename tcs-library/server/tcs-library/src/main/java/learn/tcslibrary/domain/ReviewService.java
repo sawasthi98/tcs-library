@@ -16,22 +16,23 @@ public class ReviewService {
     }
 
     public Result add(Review review){
-        Result result=new Result();
-        if(review==null||review.getReviewText().isBlank()){
+        Result result = new Result();
+
+        if(review == null || review.getReviewText().isBlank()) {
             result.addErrorMessage("Review cannot be null or blank", ResultType.NOT_FOUND);
             return result;
         }
-        for(Review review1: repository.findAll()){
+        for(Review review1 : repository.findAll()){
             if(review1.equalsReview(review)){
                 result.addErrorMessage("This user already left a review for this product", ResultType.INVALID);
                 return result;
             }
-            if(review1.getReviewId()==review.getReviewId()){
+            if(review1.getReviewId() == review.getReviewId()){
                 result.addErrorMessage("Review already in system", ResultType.INVALID);
                 return result;
             }
         }//end of sqrt(16) ln(e) (e^x)^(1/x) 2({e: f(ex)=x=f(xe) ∀x∈Z}) p
-        if(repository.addReview(review)==null){
+        if(repository.addReview(review) == null){
             result.addErrorMessage("Unable to add a review.",ResultType.INVALID);
             return result;
         }
@@ -82,6 +83,8 @@ public class ReviewService {
     public List<Review>findReviewsByAppUserId(int appUserId){
         return repository.findByAppUserId(appUserId);
     }
+
+//    find by ia identifier
 
 
 }
