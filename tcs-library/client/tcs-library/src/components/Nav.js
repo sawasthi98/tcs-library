@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
 
 
-import Stack from 'react-bootstrap/Stack';
+//import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 
 
@@ -41,17 +41,18 @@ const Nav = () => {
         {user &&(
           <>        
           <div className="navLink">
-            <Link to="/" className="p-2">My Profile</Link>
+            <Link to="/" className="p-2" style={{ marginLeft: '1650%' }}>My Profile</Link>
           </div>
 
           <div className="navLink">
-            <button className="p-2" onClick={auth.logout}>Logout</button>
+            
+            <Link to="/" className="p-2" onClick={auth.logout} style={{ marginLeft: '2210%' }}>Logout</Link>
             </div>
-          {/* Search bar */}
-        <div className="searchContainer">
-          {/* <form onClick={handleSearch}> */}
+          {/* Search bar 
+        <div className="searchContainer" >
+           <form onClick={handleSearch}> */}
             {/* make it as form 
-          on submit on the form, not button */} 
+          on submit on the form, not button  
             <input
               className="searchBar"
               type="text"
@@ -60,8 +61,8 @@ const Nav = () => {
               onChange={(evt) => setSearchText(evt.target.value)}
               />
             <button className="homeSearch" type="submit" onClick={handleSearch}>Search</button>
-          {/* </form> */}
-        </div>
+          {/* </form> 
+        </div>*/}
 
           </>
         )}

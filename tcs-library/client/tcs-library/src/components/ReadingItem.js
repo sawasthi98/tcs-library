@@ -168,10 +168,10 @@ const ReadingItem = () => {
         </Document>
       )}
         <nav id="pagination">
-          <button id="prev-btn" onClick={goToPrevPage}>Prev</button>
+          <button id="prev-btn" onClick={goToPrevPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Prev</button>
           {/* request to the backend with the current page, send user ID and current page and the item ID also in the text input helper function */}
-          <button id="next-btn" onClick={goToNextPage}>Next</button>
-          <p>
+          <button id="next-btn" onClick={goToNextPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Next</button>
+          <p style={{ fontSize: '26px' }}>
             Page {pageNumber} of {numPages}
           </p>
           <input
@@ -179,6 +179,7 @@ const ReadingItem = () => {
             value={inputPage}
             onChange={(e) => setInputPage(e.target.value)}
           />
+
           <button onClick={goToInputPage}>Go</button>
 
           <div>
@@ -186,6 +187,7 @@ const ReadingItem = () => {
               <button>Add a Review</button>
             </Link>
         </div>
+
         </nav>
 
         {/* map the reviews */}
