@@ -48,4 +48,8 @@ public class Review {
     public void setAppUserId(int appUserId) {
         this.appUserId = appUserId;
     }
+
+    public boolean equalsReview(Review review) {
+        return this.appUserId == review.getAppUserId() && this.itemId == review.getItemId();
+    }
 }

@@ -1,6 +1,8 @@
 package learn.tcslibrary.data;
 
+import learn.tcslibrary.data.mappers.CommentMapper;
 import learn.tcslibrary.data.mappers.ReviewMapper;
+import learn.tcslibrary.models.Comment;
 import learn.tcslibrary.models.Review;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -54,10 +56,10 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository{
     }
 
     @Override
-    public Review updateReview(Review review) {
+    public boolean updateReview(Review review) {
         final String sql = "update review set review = ? where app_user_id = ? and item_id = ?;";
         int rowsChanged = jdbcTemplate.update(sql, review.getReviewText(), review.getAppUserId(), review.getItemId());//only updates review text
-        return(rowsChanged>0 ? review : null);
+        return rowsChanged>0;
     }
 
     @Override
@@ -65,6 +67,20 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository{
         final String sql = "delete from review where app_user_id= ? and item_id= ?;";
         int rowsChanged = jdbcTemplate.update(sql, review.getAppUserId(), review.getItemId());
         return rowsChanged>0;
+    }
+
+    @Override
+    public Review findByReviewId(int reviewId){
+        final String sql="select review, app_user_id,item_id from review where review_id = ?;";
+        List<Review>reviews= jdbcTemplate.query(sql,new ReviewMapper(),reviewId);
+        return (reviews !=null&&reviews.size()>0 ? reviews.get(0):null);
+    }
+
+    @Override
+    public boolean hasComments(Review review){
+        final String sql="select comment_text,app_user_id,review_id from comments where review_id=?;";
+        List<Comment>comments=jdbcTemplate.query(sql,new CommentMapper(),review.getReviewId());
+        return comments.size()>0;
     }
 
 }

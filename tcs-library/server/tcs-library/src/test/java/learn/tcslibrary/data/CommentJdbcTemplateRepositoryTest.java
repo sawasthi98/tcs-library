@@ -44,9 +44,9 @@ class CommentJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAllCommentsByAppUserId() {
-        List<Comment> comments = repository.findByAppUserId(1);
+        List<Comment> comments = repository.findByAppUserId(2);
         assertNotNull(comments);
-        assertEquals(comments,1);
+        assertEquals(comments.size(),2);
     }
 
 //    @Test
@@ -76,10 +76,12 @@ class CommentJdbcTemplateRepositoryTest {
         comment.setReviewId(1);
         comment.setCommentText("Updated comment");
 
+        Comment shouldUpdate=repository.updateComment(comment);
         Comment updatedComment = repository.findByCommentId(1);
 
         assertNotNull(updatedComment);
-        assertEquals("Updated comment", updatedComment.getCommentText());
+        assertNotNull(shouldUpdate);
+        assertEquals("Updated comment", shouldUpdate.getCommentText(),updatedComment.getCommentText());
     }
 
     @Test
