@@ -7,8 +7,11 @@ import learn.tcslibrary.data.ItemRepository;
 import learn.tcslibrary.data.ItemShelfRepository;
 import learn.tcslibrary.domain.ItemService;
 import learn.tcslibrary.domain.ItemShelfService;
+import learn.tcslibrary.models.AppUser;
 import learn.tcslibrary.models.Item;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -23,27 +26,30 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-    private ItemRepository itemRepository;
-    private ItemShelfRepository itemShelfRepository;
+//    private ItemRepository itemRepository;
+//    private ItemShelfRepository itemShelfRepository;
 
     private ItemService itemService;
     private ItemShelfService itemShelfService;
+    private UserDetailsService userDetailsService;
 
-    public ItemsController(ItemRepository itemRepository, ItemShelfRepository itemShelfRepository, ItemService itemService, ItemShelfService itemShelfService) {
-        this.itemRepository = itemRepository;
-        this.itemShelfRepository = itemShelfRepository;
+    public ItemsController(ItemService itemService, ItemShelfService itemShelfService, UserDetailsService userDetailsService) {
         this.itemService = itemService;
         this.itemShelfService = itemShelfService;
+        this.userDetailsService = userDetailsService;
     }
+//    get recent page and here is token as login when clicked on
+    // followup request for page number
+//
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
     public ResponseEntity<Object> getBookPdf(@PathVariable String iaIdentifier, @PathVariable String filename) throws IOException {
 
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
+
         itemService.findOrCreate(iaIdentifier,filename);
-        // after creating, then add itme to shelf with usertoken
-        // we're not really doing anything with this in this method...
-        // do we need to do something else? this method is purely for fetching the pdf and read it
-        // we want to make sure it gets saved everytime to db
+        itemShelfService.findOrAddToShelf(iaIdentifier,user.getAppUserId());
 
         String document = filename;
         // Replace spaces with %20
@@ -187,6 +193,22 @@ public class ItemsController {
     }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PutMapping("/reading-item/{identifier}")
+    public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody int pageNumber) {
+
+        Item item = itemService.findByInternetArchiveId(identifier);
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        boolean updatedPageNumber = itemShelfService.updatePageNumber(user.getAppUserId(),item.getItemId(),pageNumber);
+
+        if (updatedPageNumber) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
 
     private static byte[] readInputStream(InputStream inputStream) throws IOException {

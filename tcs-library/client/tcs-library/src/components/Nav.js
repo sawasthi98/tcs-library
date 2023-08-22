@@ -41,6 +41,8 @@ const Nav = () => {
 
         {/* Search bar */}
     <div>
+       {/* make it as form 
+      on click on the form, not button */} 
       <input
         className="searchBar"
         type="text"

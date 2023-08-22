@@ -54,7 +54,7 @@ create table item_shelf (
     constraint fk_item_shelf_item_id
 		foreign key (item_id)
 		references item(item_id),
-	constraint fk_item__shelf_app_user_id
+	constraint fk_item_shelf_app_user_id
 		foreign key (app_user_id)
         references app_user(app_user_id)
 );
@@ -122,9 +122,9 @@ insert into item (title, identifier, `description`, `subject`, filename, imgLink
     ("Pride and Prejudice", "623abcdef", "a classic", "literature", "book.pdf", "images.com/p&p"),
     ("Sherlock Holmes Mysteries", "asdflkj", "cool description", "mystery", "book.pdf", "picture of sherlock holmes.com");
     
-insert into item_shelf (page_number, item_id)
+insert into item_shelf (page_number, item_id,app_user_id)
 	values
-    (303, 1);    
+    (303, 1, 2);    
 
 insert into review(review, item_id, app_user_id)
 	values

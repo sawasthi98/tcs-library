@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
 import { useParams } from "react-router-dom";
 import { pdfjs } from "react-pdf";
-
+import AuthContext from "../contexts/AuthContext";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -12,11 +12,12 @@ const ReadingItem = () => {
   const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
   const [inputPage, setInputPage] = useState("");
+  const auth = useContext(AuthContext);
   
   const params = useParams();
 
 	const onDocumentLoadSuccess = ({ numPages }) => {
-		setNumPages(numPages);
+		setNumPages(numPages); // display
 	};
 
   const goToPrevPage = () =>
@@ -34,18 +35,14 @@ const ReadingItem = () => {
     }
   };
 
-
-  // use that to findByTitle on backend
-  // This will request back end with doc and id
-  // find or create ITem in the back
-  // and item shelf for user
-  // request IA with doc and id
-  // Then send back the PDF
+  // page number `${}`
   
   // Want to grab last read page of this shelf item
 
-  // Checkity check check
-
+    // ask backend what page user was on 
+// useeffect separate from pdf data 
+// backend endpoint - identifier and user token as pathvariable
+// look up shelf item 
 
   useEffect(() => {
     const fetchPdf = async () => {
@@ -58,6 +55,7 @@ const ReadingItem = () => {
             method: "GET",
             headers: {
               Accept: "application/pdf",
+              Authorization: "Bearer " + auth.user.token
             },
           }
         );
@@ -76,7 +74,10 @@ const ReadingItem = () => {
     };
 
     fetchPdf();
-  }, [params.identifier, params.filename]);
+
+        // put request to backend with this identifier/filename's metadata to save in db using params
+
+  }, [params.identifier, params.filename, auth]);
   
 
   return (

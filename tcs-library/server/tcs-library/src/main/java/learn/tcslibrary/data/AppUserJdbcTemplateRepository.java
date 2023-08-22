@@ -29,7 +29,9 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     public AppUser findByUsername(String username){
         List<String> roles=findRolesByUsername(username);
         final String sql = "select app_user_id, username, password_hash, enabled from app_user where username = ?;";
-        List<AppUser> users=jdbcTemplate.query(sql, new AppUserMapper(roles), username);
+
+        List<AppUser> users = jdbcTemplate.query(sql, new AppUserMapper(roles), username);
+
         return users.isEmpty() ? null : users.get(0);
     }
 
@@ -78,6 +80,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     @Override
     public List<AppUser>findAll(){
         final String sql = "select app_user_id, username, password_hash, enabled from app_user;";
+
         List<String> roles = findAllRoles();
         return jdbcTemplate.query(sql, new AppUserMapper(roles));
     }
@@ -96,7 +99,35 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         return user.getAppUserId();
     }
 
+    @Override
+    public AppUser findUserByAppUserId(int appUserId) {
+//        final String sql = "select app_user_id " +
+//                "from app_user " +
+//                "where app_user_id = ?;";
+//
+//        List<String> roles = findAllRoles();
+//
+//        List<AppUser> users = jdbcTemplate.query(sql, new AppUserMapper(roles));
+//        return users.isEmpty() ? null : users.get(0);
 
+        final String sql = "select app_user_id, username, password_hash, enabled " +
+                "from app_user " +
+                "where app_user_id = ?;";
+
+        List<String> roles = findAllRoles();
+
+        List<AppUser> users = jdbcTemplate.query(sql, new AppUserMapper(roles), appUserId);
+
+        if (users.isEmpty()) {
+            return null;
+        }
+
+        // Manually create the AppUser object with only app_user_id field
+        AppUser user = new AppUser();
+        user.setAppUserId(appUserId);
+
+        return user;
+    }
 
 
 }
