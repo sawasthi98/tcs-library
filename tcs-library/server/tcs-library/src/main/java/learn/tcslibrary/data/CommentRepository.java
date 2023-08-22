@@ -1,9 +1,11 @@
 package learn.tcslibrary.data;
 
 import learn.tcslibrary.models.Comment;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CommentRepository {
 
     public List<Comment> findAll(int reviewId); // this will findByReviewId
