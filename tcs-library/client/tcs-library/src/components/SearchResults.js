@@ -44,6 +44,9 @@ const SearchResults = () => {
   return (
     
     <>
+    {/* Book Search Result of Title
+    "Search Results for {whatever user typed in}" */}
+    <h1 className="searchResultHeader">Search Results for "{params.searchText}"</h1>
     <div id='searchResult'>
       {results.map((result) => (
         <div className="book" key={result.id}>
@@ -52,7 +55,7 @@ const SearchResults = () => {
           </Link>
           <h2>{result.title}</h2>
           <p>{result.description}</p>
-          {/* Capital links, take you to reading item page */}
+          {/* how to change this to "read more"? if we want that */}
         </div>
       ))}
     </div>
