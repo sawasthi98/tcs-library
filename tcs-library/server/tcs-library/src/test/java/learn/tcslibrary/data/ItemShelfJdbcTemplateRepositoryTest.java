@@ -67,13 +67,6 @@ class ItemShelfJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void findAll() {
-        List<Item> allItemShelf = repository.findAll();
-        assertNotNull(allItemShelf);
-        assertFalse(allItemShelf.isEmpty());
-        assertEquals(2,allItemShelf.size());
-    }
-    @Test
     void findByAppUserId() {
         List<Item> items = repository.findByAppUserId(1);
         assertNotNull(items);

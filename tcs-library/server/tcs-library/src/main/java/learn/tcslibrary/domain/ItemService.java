@@ -22,6 +22,13 @@ public class ItemService {
         return (result.isSuccess() ? item : null);
     }
 
+    public Item findByInternetArchiveId(String internetArchiveId) {
+        Item item = repository.findByInternetArchiveId(internetArchiveId);
+
+        Result result = validate(item);
+        return (result.isSuccess() ? item : null);
+    }
+
     public Item findByTitle(String title){
         Item item = repository.findByTitle(title);
         Result result = validate(item);
@@ -42,11 +49,11 @@ public class ItemService {
 
     public Result validate(Item item){
         Result result= new Result();
-        if(item==null||item.getItemId()<1){
+        if(item == null || item.getItemId() < 1){
             result.addErrorMessage("Item is null",ResultType.INVALID);
             return result;
         }
-        if(item.getInternetArchiveIdentifier()==null){
+        if(item.getInternetArchiveIdentifier() == null){
             result.addErrorMessage("Unable to find IA Identifier",ResultType.INVALID);
             return result;
         }

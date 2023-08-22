@@ -25,14 +25,7 @@ public class ItemMapper implements RowMapper<Item> {
         item.setDescription(rs.getString("description"));
         item.setSubject(rs.getString("subject"));
         item.setFileName(rs.getString("filename"));
-        item.setImgLink(rs.getString("imgLink"));
+        item.setImgLink(rs.getString("img_link"));
         return item;
     }
-
-    public List<String> findTopicsByItemId(int itemId){
-        final String sql = "select topic from item where item_id= ? ;";
-        return jdbcTemplate.queryForList(sql, String.class, itemId);
-    }
-
-
 }

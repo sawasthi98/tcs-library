@@ -42,16 +42,20 @@ create table item (
     `description` text,
     `subject` text,
     filename text,
-    imgLink text
+    img_link text
 );
 
 create table item_shelf (
 	item_shelf_id int primary key auto_increment,
-    page_number int,
+    page_number int default 1,
     item_id int,
+    app_user_id int,
     constraint fk_item_shelf_item_id
 		foreign key (item_id)
-		references item(item_id)
+		references item(item_id),
+	constraint fk_item_shelf_app_user_id
+		foreign key (app_user_id)
+        references app_user(app_user_id)
 );
 
 create table review (
@@ -96,13 +100,13 @@ insert into app_user_role
     (2, 1);    
 
     
-insert into item (title, identifier, `description`, `subject`, filename, imgLink) 
+insert into item (title, identifier, `description`, `subject`, filename, img_link) 
 	values
     ("Pride and Prejudice", "623abcdef", "a classic", "literature", "book.pdf", "images.com/p&p");
     
-insert into item_shelf (page_number, item_id)
+insert into item_shelf (page_number, item_id, app_user_id)
 	values
-    (303, 1);    
+    (303, 1, 2);    
 
 insert into review(review, item_id, app_user_id)
 	values
@@ -118,5 +122,5 @@ FROM review r
 JOIN item i ON r.item_id = i.item_id;
 
 
-SELECT * FROM app_user;
+SELECT * FROM item_shelf;
 

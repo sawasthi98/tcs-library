@@ -28,6 +28,6 @@ public interface AppUserRepository {
 
     @Transactional
     public int findAppIdByUsername(String username);
-
+    public AppUser findUserByAppUserId(int appUserId);
 
 }
