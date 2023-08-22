@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { pdfjs } from "react-pdf";
 import AuthContext from "../contexts/AuthContext";
 
@@ -12,6 +12,7 @@ const ReadingItem = () => {
   const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
   const [inputPage, setInputPage] = useState("");
+  const [reviews, setReviews] = useState("");
   const auth = useContext(AuthContext);
   
   const params = useParams();
@@ -20,13 +21,18 @@ const ReadingItem = () => {
 		setNumPages(numPages); // display
 	};
 
-  const goToPrevPage = () =>
+  const goToPrevPage = () => {
 		setPageNumber(pageNumber - 1 <= 1 ? 1 : pageNumber - 1);
+    // pageUpdate();
+  }
 
-	const goToNextPage = () =>
+
+	const goToNextPage = () => {
 		setPageNumber(
 			pageNumber + 1 >= numPages ? numPages : pageNumber + 1,
 		);
+
+  }
 
     const goToInputPage = () => {
     const newPage = parseInt(inputPage);
@@ -43,6 +49,75 @@ const ReadingItem = () => {
 // useeffect separate from pdf data 
 // backend endpoint - identifier and user token as pathvariable
 // look up shelf item 
+
+  // useEffect( () => {
+  //   const fetchReviews = async () => {
+  //     try {
+  //       const response = await fetch(
+
+  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Accept: "application/json",
+  //             Authorization: "Bearer " + auth.user.token
+  //           },
+  //           body: {
+  //             identifier: identifier
+  //           }
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("Request failed");
+  //       }
+
+  //       const data = await response.json();
+  //       setReviews(data);
+
+  //     } catch (error) {
+  //       console.error("Request error:", error);
+  //     }
+  //   }
+
+  //   fetchReviews();
+
+  // }, [params.identifier, auth])
+
+  // how to call 
+  // useEffect(() => {
+    const pageUpdate = async () => {
+      try {
+        const response = await fetch(
+
+          `http://localhost:8080/tcslibrary/reading-item/${params.identifier}`,
+
+          {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              Authorization: "Bearer " + auth.user.token
+            },
+            body: {
+              pageNumber: pageNumber
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+      } catch (error) {
+        console.error("Request error:", error);
+      }
+    }
+
+    pageUpdate();
+    //  what page was this item shelf on? 
+
+  // },[params.identifier, auth])
 
   useEffect(() => {
     const fetchPdf = async () => {
@@ -69,13 +144,10 @@ const ReadingItem = () => {
         setPdfUrl(pdfBlobUrl);
       } catch (error) {
         console.error("Request error:", error);
-        // Handle error here
       }
     };
 
     fetchPdf();
-
-        // put request to backend with this identifier/filename's metadata to save in db using params
 
   }, [params.identifier, params.filename, auth]);
   
@@ -108,7 +180,23 @@ const ReadingItem = () => {
             onChange={(e) => setInputPage(e.target.value)}
           />
           <button onClick={goToInputPage}>Go</button>
+
+          <div>
+            <Link to="/review-form">
+              <button>Add a Review</button>
+            </Link>
+        </div>
         </nav>
+
+        {/* map the reviews */}
+        {/* <div className="reviews">
+          {reviews.map((review) => {
+            <div className="singleReview" key={review.id}>
+              <h3>{review.review}</h3>
+              <span>{auth.user.username}</span>
+            </div>
+          })}
+        </div> */}
     </div>
   );
 };

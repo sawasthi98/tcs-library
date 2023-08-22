@@ -37,12 +37,8 @@ create table app_user_role (
 
 create table item (
 	item_id int primary key auto_increment,
-    title text,
     identifier text,
-    `description` text,
-    `subject` text,
-    filename text,
-    img_link text
+    filename text
 );
 
 create table item_shelf (
@@ -100,27 +96,23 @@ insert into app_user_role
     (2, 1);    
 
     
-insert into item (title, identifier, `description`, `subject`, filename, img_link) 
+insert into item (identifier, filename) 
 	values
-    ("Pride and Prejudice", "623abcdef", "a classic", "literature", "book.pdf", "images.com/p&p");
+    ("623abcdef","book.pdf");
     
 insert into item_shelf (page_number, item_id, app_user_id)
 	values
-    (303, 1, 2);    
+    (303, 1, 2),
+    (200, 1, 1);
 
 insert into review(review, item_id, app_user_id)
 	values
-    ("Book was pretty cool ngl", 1, 1);
+    ("Book was pretty cool ngl", 1, 1),
+    ("Test review", 2, 2);
 
 insert into comments(comment_text, app_user_id, review_id)
 	values
     ("Yeah I thought so too", 1, 1);
 
-
-SELECT r.review_id, r.review, i.title
-FROM review r
-JOIN item i ON r.item_id = i.item_id;
-
-
-SELECT * FROM item_shelf;
+select * from review;
 

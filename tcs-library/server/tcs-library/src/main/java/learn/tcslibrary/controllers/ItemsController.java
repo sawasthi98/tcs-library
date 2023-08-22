@@ -26,9 +26,6 @@ import java.util.List;
 @CrossOrigin
 public class ItemsController {
 
-//    private ItemRepository itemRepository;
-//    private ItemShelfRepository itemShelfRepository;
-
     private ItemService itemService;
     private ItemShelfService itemShelfService;
     private UserDetailsService userDetailsService;
@@ -38,9 +35,6 @@ public class ItemsController {
         this.itemShelfService = itemShelfService;
         this.userDetailsService = userDetailsService;
     }
-//    get recent page and here is token as login when clicked on
-    // followup request for page number
-//
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}")
     public ResponseEntity<Object> getBookPdf(@PathVariable String iaIdentifier, @PathVariable String filename) throws IOException {
