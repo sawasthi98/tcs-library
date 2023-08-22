@@ -6,11 +6,12 @@ function Landing(){
 
     return(
       <>
-        <div className="Landing">
+        <div className="landing">
             <h1>Byte Sized Books!</h1>
             <p>Enhancing countless reading experiences since 2023</p>
-            
+            <p>Click on any of the books below or search to get your reading on!</p>
         </div>
+
         <div id="landing-book-collection">
           <div>
             <Link to="readingitem/pride-and-prejudice_201907/filename/pride-and-prejudice.pdf">
@@ -40,7 +41,7 @@ function Landing(){
         </div>
 
             
-          </>
+      </>
 
 
     );

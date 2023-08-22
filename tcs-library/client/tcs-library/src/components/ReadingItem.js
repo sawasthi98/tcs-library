@@ -84,7 +84,7 @@ const ReadingItem = () => {
     <div>
 
       {pdfUrl && (
-        <Document
+        <Document id="readBook"
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
         loading={<div>Loading...</div>}
@@ -95,10 +95,10 @@ const ReadingItem = () => {
           <Page pageNumber={pageNumber} renderAnnotationLayer={false} renderTextLayer={false}/>
         </Document>
       )}
-        <nav>
-          <button onClick={goToPrevPage}>Prev</button>
+        <nav id="pagination">
+          <button id="prev-btn" onClick={goToPrevPage}>Prev</button>
           {/* request to the backend with the current page, send user ID and current page and the item ID also in the text input helper function */}
-          <button onClick={goToNextPage}>Next</button>
+          <button id="next-btn" onClick={goToNextPage}>Next</button>
           <p>
             Page {pageNumber} of {numPages}
           </p>

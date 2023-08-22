@@ -68,7 +68,8 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
-    <h1>Byte Sized Books</h1>
+    <h1>Byte Sized Books</h1> 
+    {/* replace h1 with logo that can be used as home button also */}
     <Nav />
       
       <Routes>
