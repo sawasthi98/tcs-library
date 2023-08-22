@@ -1,5 +1,10 @@
 /* Landing Page Styling */
 
+body{
+  background: rgb(255,182,119);
+  background: linear-gradient(180deg, rgba(255,182,119,1) 0%, rgba(255,231,154,1) 50%, rgba(255,182,119,1) 100%);
+}
+
 #landing-book-collection{
   width: 100%;
   display: flex;
@@ -20,6 +25,14 @@
   width: 33%;
 }
 
+.navLink{  
+  
+}
+
+.p-2{
+  font-size: 5rem;
+}
+
 .react-pdf__Page__textContent{
   /* display: none; */
 }
@@ -29,12 +42,14 @@
 }
 .landing-book{
   margin-right: 90px;
+  height: 40rem;
+  width: 30rem;
 }
 
-#dracula {
+/* #dracula {
   height: 400px;
   width: 400px;
-}
+} */
 
 @media(max-width: 800px) {
   #landing-book-collection{ 

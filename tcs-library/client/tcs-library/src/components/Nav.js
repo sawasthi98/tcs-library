@@ -4,6 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
 
 
+import Stack from 'react-bootstrap/Stack';
+import Button from 'react-bootstrap/Button';
+
+
+  
+    
+
+
 
 const Nav = () => {
   const auth = useContext(AuthContext);
@@ -14,35 +22,35 @@ const Nav = () => {
 
   
     const handleSearch = (event) => {
-
-      navigate(`/search/${searchText}`)
-
-      
-      
-      // map each one into links
-
+      navigate(`/search/${searchText}`)   
     };
   
 
 
   return (
+    <>
     <nav>
       {/* ALWAYS */}
-      <Link to="/">Home</Link>
-      {" "}
+      <div className="navLink">
+        <Link to="/" className="p-2" >Home</Link>
+      </div>
+      
 
 
       {/* LOGGED IN */}
       {user &&(
-        <>
-        <Link to="/">My Profile</Link>        
-        {" "}
-        <button onClick={auth.logout}>Logout</button>
+        <>        
+        <div className="navLink">
+          <Link to="/" className="p-2">My Profile</Link>
+        </div>
 
+        <div className="navLink">
+          <button className="p-2" onClick={auth.logout}>Logout</button>
+          </div>
         {/* Search bar */}
     <div>
-       {/* make it as form 
-      on click on the form, not button */} 
+      {/* make it as form 
+      on submit on the form, not button */} 
       <input
         className="searchBar"
         type="text"
@@ -50,19 +58,23 @@ const Nav = () => {
         value={searchText}
         onChange={(evt) => setSearchText(evt.target.value)}
         />
-      <button type="submit" onClick={handleSearch}>Search</button>
+      <button className="homeSearch" type="submit" onClick={handleSearch}>Search</button>
     </div>
 
         </>
       )}
+      
 
       {/* LOGGED OUT */}
 
       {!user && (
-        <Link to="/login">Log In</Link>
+        <div className="navLink">
+          <Link to="/login" className="">Log In</Link>
+        </div>
       )} 
-
     </nav>
+      
+    </>
   )
 }
 

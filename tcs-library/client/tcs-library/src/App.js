@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Document, Page } from 'react-pdf';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css';
 import Landing from './components/Landing';
 import NotFound from './components/NotFound';
