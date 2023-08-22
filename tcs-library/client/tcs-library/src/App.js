@@ -13,6 +13,7 @@ import Nav from './components/Nav';
 import Login from './components/Login';
 import ReadingItem from './components/ReadingItem';
 import SearchResults from './components/SearchResults';
+import ReviewForm from './components/ReviewForm';
 
 
 function App() {
@@ -83,6 +84,8 @@ function App() {
 
         <Route path="/readingitem/:identifier/filename/:filename" element={<ReadingItem />} />
         <Route path="/search/:searchText" element={<SearchResults />} />
+        <Route path="/review-form/:identifier" element={<ReviewForm />} />
+        {/* include wild card for identifier */}
 
         {/* Search results wild card for search term */}
 

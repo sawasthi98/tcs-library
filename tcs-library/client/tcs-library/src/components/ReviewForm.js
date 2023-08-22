@@ -25,7 +25,7 @@ const ReviewForm = (props) => {
       // Make the review object here
     }
   
-      fetch("http://localhost:8080/api/tcslibrary", {
+      fetch("http://localhost:8080/api/tcslibrary/reviews/add-review/${identifier", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,10 +67,13 @@ const ReviewForm = (props) => {
         value={review}
         onChange={(evt) => 
           setReview(evt.target.value)} />
+          {/* keep track of identifier */}
       </fieldset>
 
-      <button type="submit">Submit Comment</button>
-      <Link to="/questions">Cancel</Link>
+      <button type="submit">Submit Review</button>
+      <Link to={`/reading-item/${params.identifier}/filename/${params.filename}`}>
+        <button>Cancel</button>
+      </Link>
     </form>
   )}
 

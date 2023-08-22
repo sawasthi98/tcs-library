@@ -128,6 +128,11 @@ body{
   /* display: none; */
 }
 
+.react-pdf__Page {
+  display: flex;
+  justify-content: center;
+}
+
 /* @media(max-width: 800px) {
   #landing-book-collection{ 
     width: 60%;

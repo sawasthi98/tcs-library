@@ -37,14 +37,9 @@ create table app_user_role (
 
 create table item (
 	item_id int primary key auto_increment,
-    title text,
     identifier text,
-    `description` text,
-    `subject` text,
-    filename text,
-    imgLink text
+    filename text
 );
-
 
 create table item_shelf (
 	item_shelf_id int primary key auto_increment,
@@ -117,10 +112,10 @@ insert into app_user_role
     (1, 2),
     (2, 1);   
     
-insert into item (title, identifier, `description`, `subject`, filename, imgLink) 
+insert into item (identifier, filename) 
 	values
-    ("Pride and Prejudice", "623abcdef", "a classic", "literature", "book.pdf", "images.com/p&p"),
-    ("Sherlock Holmes Mysteries", "asdflkj", "cool description", "mystery", "book.pdf", "picture of sherlock holmes.com");
+    ("623abcdef","book.pdf"),
+    ("asdflkj", "book.pdf");
     
 insert into item_shelf (page_number, item_id,app_user_id)
 	values
