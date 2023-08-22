@@ -1,7 +1,19 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../contexts/AuthContext";
+import Nav from "./Nav";
 
 function Landing(){
+  const auth = useContext(AuthContext);
+  const user = auth.user;
+  const navigate = useNavigate();
+
+  const [searchText, setSearchText] = useState('');
+
+  
+    const handleSearch = (event) => {
+      navigate(`/search/${searchText}`)   
+    };
 
 
     return(
@@ -11,6 +23,22 @@ function Landing(){
             <p>Enhancing countless reading experiences since 2023</p>
             <p>Click on any of the books below or search to get your reading on!</p>
         </div>
+
+        {user && 
+        <div className="searchContainer" >
+        {/* <form onClick={handleSearch}> */}
+          {/* make it as form 
+        on submit on the form, not button */} 
+          <input
+            className="searchBar"
+            type="text"
+            placeholder="Search for a book"
+            value={searchText}
+            onChange={(evt) => setSearchText(evt.target.value)}
+            />
+          <button className="homeSearch" type="submit" onClick={handleSearch}>Search</button>
+        {/* </form> */}
+      </div>}
 
         <div id="landing-book-collection">
           <div>
