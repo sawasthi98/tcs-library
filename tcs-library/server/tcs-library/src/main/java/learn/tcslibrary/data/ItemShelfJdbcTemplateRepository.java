@@ -73,6 +73,9 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
         int itemShelfId = keyHolder.getKey().intValue();
         ItemShelf itemShelf = new ItemShelf();
         itemShelf.setItemShelfId(itemShelfId);
+        itemShelf.setPageNumber(1);
+        itemShelf.setItemId(itemId);
+        itemShelf.setAppUserId(appUserId);
 
         return (itemShelf);
     }
@@ -106,7 +109,7 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
                 "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
                 " where shelf.app_user_id = ? and i.item_id = ?; ";
 
-        ItemShelf itemShelf = jdbcTemplate.queryForObject(sql, new ItemShelfMapper(jdbcTemplate), appUserId, itemId);
+        ItemShelf itemShelf = jdbcTemplate.queryForObject(sql, new ItemShelfMapper(), appUserId, itemId);
 
 
 

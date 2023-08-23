@@ -32,6 +32,7 @@ public class SecurityConfig {
         http.authorizeRequests()
 
                 .antMatchers("/authenticate").permitAll()
+                .antMatchers("/tcslibrary/reading-item/*").permitAll()
                 .antMatchers("/**").permitAll()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(authConfig), converter))

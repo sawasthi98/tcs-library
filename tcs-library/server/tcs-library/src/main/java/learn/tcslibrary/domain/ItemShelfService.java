@@ -6,6 +6,7 @@ import learn.tcslibrary.data.ItemShelfJdbcTemplateRepository;
 import learn.tcslibrary.models.Item;
 import learn.tcslibrary.models.AppUser;
 import learn.tcslibrary.models.ItemShelf;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,13 +35,21 @@ public class ItemShelfService {
         if(!result.isSuccess()) {
             return result;
         }
-
-        ItemShelf itemShelf = itemShelfRepository.findByAppUserIdAndItemId(appUserId, item.getItemId());
-
-        if(itemShelf == null) {
-            ItemShelf addedItem = itemShelfRepository.addItemToShelf(item.getItemId(), appUser.getAppUserId());
-            result.setPayload(addedItem);
+        System.out.println("App user ID: "+appUserId);
+        System.out.println("Item ID: "+item.getItemId());
+        try {
+            ItemShelf itemShelf = itemShelfRepository.findByAppUserIdAndItemId(appUserId, item.getItemId());
         }
+        catch (EmptyResultDataAccessException a){//app user doesnt have this in their shelf
+            ItemShelf itemShelf=itemShelfRepository.addItemToShelf(item.getItemId(),appUserId);
+
+            if(itemShelf == null) {
+                ItemShelf addedItem = itemShelfRepository.addItemToShelf(item.getItemId(), appUser.getAppUserId());
+                result.setPayload(addedItem);
+            }
+        }
+
+
 
         return result;
     }

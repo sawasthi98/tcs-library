@@ -3,6 +3,7 @@ import { Document, Page } from "react-pdf";
 import { Link, useParams } from "react-router-dom";
 import { pdfjs } from "react-pdf";
 import AuthContext from "../contexts/AuthContext";
+import { identifier } from "@babel/types";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -55,11 +56,12 @@ const ReadingItem = () => {
           {
             method: "GET",
             headers: {
-              Accept: "application/json",
+              Accept: "application/pdf",
               Authorization: "Bearer " + auth.user.token
             },            
           }
         );
+
 
         if (!response.ok) {
           throw new Error("Request failed");
@@ -83,6 +85,14 @@ const ReadingItem = () => {
   //       const response = await fetch(
 
   //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+
+  // useEffect( () => {
+  //   const fetchReviews = async () => {
+  //     try {
+  //       const response = await fetch(
+
+  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+
 
   //         {
   //           method: "GET",
@@ -150,6 +160,8 @@ const ReadingItem = () => {
     //  what page was this item shelf on? 
 
   useEffect(() => {
+    console.log(`ID: `,params.identifier);
+    console.log(`filename: `,params.filename);
     const fetchPdf = async () => {
       try {
         const response = await fetch(

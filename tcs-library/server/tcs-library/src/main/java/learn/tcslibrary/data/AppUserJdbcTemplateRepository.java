@@ -66,8 +66,8 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         }
         int appUserId = keyHolder.getKey().intValue();
         user.setAppUserId(appUserId);
-        int appRoleId = user.getAuthorities().contains(new SimpleGrantedAuthority("USER")) ? 1 : 2;
-        insertUserRole(appUserId, appRoleId);
+        //int appRoleId = user.getAuthorities().contains(new SimpleGrantedAuthority("USER")) ? 1 : 2;
+        insertUserRole(appUserId, 2);
 
         return user;
     }
