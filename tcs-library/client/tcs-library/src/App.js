@@ -86,11 +86,11 @@ function App() {
         {/* Add the My profile and search bar functionality here
             also add the log out here */}
 
-        <Route path="/readingitem/:identifier/filename/:filename" element={<ReadingItem />} />
-        <Route path="/search/:searchText" element={<SearchResults />} />
-        {/* <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} /> */}
+        <Route path="/readingitem/:identifier/filename/:filename" element={ user ? <ReadingItem /> : <Login />} />
+        <Route path="/search/:searchText" element={ user ? <SearchResults /> : <Login />} />
+        <Route path="/review-form/:identifier/filename/:filename" element={ user ? <ReviewForm /> : <Login />} />
 
-        <Route path="/my-bookshelf" element={<MyProfile />} />
+        <Route path="/my-bookshelf" element={user ? <MyProfile /> : <Login />} />
 
         {/* Logged OUT */}
         

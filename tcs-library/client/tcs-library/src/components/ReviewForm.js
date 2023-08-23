@@ -1,31 +1,30 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, json, useNavigate, useParams } from "react-router-dom"
 import AuthContext from "../contexts/AuthContext";
 
 
 
-const ReviewForm = (props) => {
+const ReviewForm = () => {
   const params = useParams();
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
   const [errors, setErrors] = useState([]);
-
   
-  const [review, setReview] = useState("");
+  const [reviewText, setReviewText] = useState("");
 
   const resetState = () => {
-    setReview("");
+    setReviewText("");
   }
 
   const handleSubmit = (evt) => {
 
     evt.preventDefault()
     const newReview = {
-      // Make the review object here
+      reviewText    
     }
   
-      fetch("http://localhost:8080/api/tcslibrary/reviews/add-review/${identifier", {
+      fetch(`http://localhost:8080/tcslibrary/reviews/add-review/${params.identifier}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,44 +35,50 @@ const ReviewForm = (props) => {
       })
       .then(response => {
         if (response.ok) {
-          // Navigate to where?
-          navigate("/")
-          resetState()
-          props.loadQuestions()
-
+            navigate("/");
+            resetState();
         } else {
-          response.json()
-          .then(errors => {
-            if (Array.isArray(errors)) {
-              setErrors(errors)
-            } else {
-              setErrors([errors])
-            }
-          })
+            response.json().then(data => {
+                if (Array.isArray(data)) {
+                    setErrors(data);
+                } else {
+                    setErrors([data]);
+                }
+            });
         }
       })
-    }
+    
+    };
 
   return (
     
-    <form onSubmit={handleSubmit}>
+    <form className="addReviewForm" onSubmit={handleSubmit}>
       <ul>
-        {errors.map(error => <li key={error}>{error}</li>)}
+        {errors.map(error => <li key={error}>{typeof error==="string" ? error : error.message}</li>)}
       </ul>
 
-      <fieldset class="form-input">
-        <label htmlFor="review-input">Leave a Review: </label>
-        <textarea id="review-input"
-        value={review}
-        onChange={(evt) => 
-          setReview(evt.target.value)} />
-          {/* keep track of identifier */}
+      <div className="reviewLabelContainer">
+        <label id="reviewLabel" htmlFor="review-input">
+          Leave a Review
+        </label>
+      </div>
+      <fieldset className="form-input">
+        <textarea
+          id="review-input"
+          value={reviewText}
+          onChange={(evt) => setReviewText(evt.target.value)}
+        />
       </fieldset>
 
-      <button type="submit">Submit Review</button>
-      <Link to={`/readingitem/${params.identifier}/filename/${params.filename}`}>
-        <button>Cancel</button>
-      </Link>
+      <div className="buttonContainer">
+        <Link to="/">
+          <button className="p-2" type="submit">Submit Review</button>
+          </Link>
+        <Link to={`/readingitem/${params.identifier}/filename/${params.filename}`}>
+          <button className="p-2">Cancel</button>
+          </Link>
+      </div>
+      
     </form>
   )}
 

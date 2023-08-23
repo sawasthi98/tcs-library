@@ -67,8 +67,8 @@ function Landing(){
           </div>
         </div>
 
-        <footer>
-          footer
+        <footer className="footer">
+          Copyright: TCS Enterprises®
         </footer>
       </div>
 

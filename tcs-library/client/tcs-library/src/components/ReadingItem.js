@@ -13,7 +13,7 @@ const ReadingItem = () => {
   const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
   const [inputPage, setInputPage] = useState("");
-  const [reviews, setReviews] = useState("");
+  const [reviews, setReviews] = useState([]);
   const auth = useContext(AuthContext);
   
   const params = useParams();
@@ -79,48 +79,45 @@ const ReadingItem = () => {
 
   }, [params.identifier,params.filename, auth])
 
-  // useEffect( () => {
-  //   const fetchReviews = async () => {
-  //     try {
-  //       const response = await fetch(
+  useEffect( () => {
 
-  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+    if (!auth){
+      return;
+  }
+    
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
 
-  // useEffect( () => {
-  //   const fetchReviews = async () => {
-  //     try {
-  //       const response = await fetch(
-
-  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+          `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
 
 
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Accept: "application/json",
-  //             Authorization: "Bearer " + auth.user.token
-  //           },            
-  //         }
-  //       );
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: "Bearer " + auth.user.token
+            },            
+          }
+        );
 
-  //       if (!response.ok) {
-  //         throw new Error("Request failed");
-  //       }
+        if (!response.ok) {
+          throw new Error("Request failed");
+        } else {
+          const data = await response.json();
+            setReviews(data);
+            console.log(data);
+        }
 
-  //       const data = await response.json();
-  //       setReviews(data);
+      } catch (error) {
+        console.error("Request error:", error);
+      }
+    }
 
-  //     } catch (error) {
-  //       console.error("Request error:", error);
-  //     }
-  //   }
-  //   console.log(reviews);
+    fetchReviews();
 
-  //   fetchReviews();
+  }, [params.identifier, auth])
 
-  // }, [params.identifier, auth])
-
-  // how to call 
   
     const pageUpdate = async (arg) => {
       if (arg === 1) {
@@ -157,7 +154,6 @@ const ReadingItem = () => {
       }
     }
 
-    //  what page was this item shelf on? 
 
   useEffect(() => {
     console.log(`ID: `,params.identifier);
@@ -196,13 +192,17 @@ const ReadingItem = () => {
 
   return (
     <div className="readingItem">
-
+      {/* ternary to !pdfUrl&&loadingDiv -> make spinner or something */}
+      { !pdfUrl && 
+      <div className="div-containing-spinner">
+        <div className="loading-div" id="spinner">Loading...</div>
+      </div>}
     <div className="pdfStyle">
       {pdfUrl && (
         <Document id="readBook"
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
-        loading={<div>Loading...</div>}
+        loading={<div className="loading-div">Loading...</div>}
         >
           {/* Once page num is grabbed set pageNum state to it
           PDF will display on page 1 and trigger redraw bc state change
@@ -212,37 +212,38 @@ const ReadingItem = () => {
       )}
       </div>
         <nav id="pagination">
-          <button id="prev-btn" onClick={goToPrevPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Prev</button>
+          <button id="prev-btn" className="p-2" onClick={goToPrevPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Prev</button>
           {/* request to the backend with the current page, send user ID and current page and the item ID also in the text input helper function */}
-          <button id="next-btn" onClick={goToNextPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Next</button>
+          <button id="next-btn" className="p-2" onClick={goToNextPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Next</button>
           <p style={{ fontSize: '26px' }}>
             Page {pageNumber} of {numPages}
           </p>
-          <input
+          <input 
+            className="page-input"
             type="text"
             value={inputPage}
             onChange={(e) => setInputPage(e.target.value)}
           />
 
-          <button onClick={goToInputPage}>Go</button>
-{/* 
+          <button className="p-2 go-btn" onClick={goToInputPage}>Go</button>
+
           <div>
             <Link to={`/review-form/${params.identifier}/filename/${params.filename}`}>
-              <button>Add a Review</button>
+              <button className="p-2">Add a Review</button>
             </Link>
-        </div> */}
+        </div>
 
         </nav>
 
         {/* map the reviews */}
-        {/* <div className="reviews">
-          {reviews.map((review) => {
-            <div className="singleReview" key={review.id}>
-              <h3>{review.review}</h3>
-              <span>{auth.user.username}</span>
+        <div className="reviews">
+          {reviews.map((review) => (
+            <div className="singleReview" key={review.reviewId} >
+              <h3>{review.reviewText}</h3>
+              <span>{auth?.user?.username}</span>
             </div>
-          })}
-        </div> */}
+          ))}
+        </div>
     </div>
   );
 };

@@ -1,0 +1,35 @@
+pres
+
+16 mins
+3 mins for questions
+
+time the rehearsal 
+
+who are we? 1min 
+- introduce yourselves
+- major
+- how you came to be with dev10
+
+why - what problem did your app solve? 1min
+- hard to form a book club
+- you can see reviews for books on goodreads
+
+what 5-7 mins
+- show us the app
+- depart from the slides and use app live on screenshare
+- can show some code in the file
+
+how 5mins
+- what tech
+- in slides, not scrolling
+- break down cool things
+- new technologies not part of the curriculum (majority)
+ - and any non-tech adds that were still new (api rendering from the backend)
+ - testing with postman
+- how did we use these technologies in our app (minority)
+
+3 mins for questions
+- and future vision, given more time 
+- be able to share with friends? 
+- highlighting functionality? 
+

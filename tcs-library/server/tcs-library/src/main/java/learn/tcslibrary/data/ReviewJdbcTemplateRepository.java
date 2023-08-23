@@ -24,19 +24,19 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository{
     // i think we should also include a findByReviewId method
     @Override
     public List<Review> findAll() {
-        final String sql= "select review, app_user_id,item_id from review;";
+        final String sql= "select review_id, review, app_user_id, item_id from review;";
         return jdbcTemplate.query(sql,new ReviewMapper());
     }
 
     @Override
     public List<Review> findByItemId(int itemId) {
-        final String sql= "select review, app_user_id,item_id from review where item_id = ?;";
+        final String sql= "select review_id, review, app_user_id, item_id from review where item_id = ?;";
         return jdbcTemplate.query(sql,new ReviewMapper(),itemId);
     }
 
     @Override
     public List<Review> findByAppUserId(int appUserId) {
-        final String sql= "select review, app_user_id,item_id from review where app_user_id = ?;";
+        final String sql= "select review_id, review, app_user_id,item_id from review where app_user_id = ?;";
         return jdbcTemplate.query(sql,new ReviewMapper(),appUserId);
     }
 

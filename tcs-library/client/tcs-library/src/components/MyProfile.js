@@ -37,7 +37,7 @@ const MyProfile = () => {
             } else {
               const json = await response.json();
                 setBooks(json);
-                console.log(json);
+                // console.log(json);
             }
     
           } catch (error) {

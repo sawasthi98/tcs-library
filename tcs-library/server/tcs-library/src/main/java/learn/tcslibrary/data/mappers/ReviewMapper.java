@@ -10,6 +10,7 @@ public class ReviewMapper implements RowMapper<Review> {
     @Override
     public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
         Review review=new Review();
+        review.setReviewId(rs.getInt("review_id"));
         review.setReviewText(rs.getString("review"));
         review.setAppUserId(rs.getInt("app_user_id"));
         review.setItemId(rs.getInt("item_id"));
