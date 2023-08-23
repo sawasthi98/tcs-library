@@ -20,7 +20,7 @@ function Landing(){
         <div className="landing">
             <h1>Byte Sized Books!</h1>
             <p>Enhancing countless reading experiences since 2023</p>
-            <p>Click on any of the books below or search to get your reading on!</p>
+            <p>Click on any of the books below or login to search and get your reading on!</p>
         </div>
 
         {user && 

@@ -27,6 +27,7 @@ body{
 
 .landing p {
   font-size: 1.7rem;
+  font-weight: 500;
 }
 
 .landing p + p {
