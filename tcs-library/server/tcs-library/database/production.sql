@@ -117,3 +117,7 @@ insert into comments(comment_text, app_user_id, review_id)
 select * from item_shelf;
 SELECT * FROM item;
 SELECT * FROM review;
+
+select i.item_id, shelf.page_number, shelf.app_user_id
+from item i inner join item_shelf shelf on i.item_id = shelf.item_id
+where shelf.app_user_id = 1;

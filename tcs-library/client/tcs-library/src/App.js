@@ -90,7 +90,7 @@ function App() {
         <Route path="/search/:searchText" element={<SearchResults />} />
         {/* <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} /> */}
 
-        {/* <Route path="/my-bookshelf" element={<MyProfile />} /> */}
+        <Route path="/my-bookshelf" element={<MyProfile />} />
 
         {/* Logged OUT */}
         

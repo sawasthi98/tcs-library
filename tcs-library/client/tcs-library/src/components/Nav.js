@@ -37,7 +37,7 @@ const Nav = () => {
           {user &&(
             <>        
             <div className="navLink">
-              <Link to="/" className="p-2 profileLink" >My Profile</Link>
+              <Link to="/my-bookshelf" className="p-2 profileLink" >My Bookshelf</Link>
             </div>
 
             <div className="navLink">

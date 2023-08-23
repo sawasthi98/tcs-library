@@ -10,8 +10,8 @@ import java.util.List;
 public interface ItemRepository {
     public Item findByItemId(int itemId);
     public Item findByTitle(String title);
-    public Item findByInternetArchiveId(String iaId);
+    public Item findByIdentifier(String identifier);
     public List<Item> findItemsByItemShelf(ItemShelf itemShelf);
-    public Item addItemMetadata (String internetArchiveId, String filename);
+    public Item addItemMetadata (String identifier, String filename);
 
 }

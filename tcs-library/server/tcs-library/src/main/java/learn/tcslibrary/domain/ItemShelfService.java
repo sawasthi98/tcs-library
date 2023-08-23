@@ -25,8 +25,8 @@ public class ItemShelfService {
         this.appUserRepository = appUserRepository;
     }
 
-    public Result<ItemShelf> findOrAddToShelf(String internetArchiveId, int appUserId){
-        Item item = itemRepository.findByInternetArchiveId(internetArchiveId);
+    public Result<ItemShelf> findOrAddToShelf(String identifier, int appUserId){
+        Item item = itemRepository.findByIdentifier(identifier);
         AppUser appUser = appUserRepository.findUserByAppUserId(appUserId);
 
         Result result = validate(item, appUser);

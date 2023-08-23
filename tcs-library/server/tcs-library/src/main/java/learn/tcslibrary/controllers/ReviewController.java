@@ -40,13 +40,13 @@ public class ReviewController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/reviews/{internetArchiveIdentifier}")
-    public ResponseEntity<?> getAllReviewsPerReadingItem(@PathVariable String internetArchiveIdentifier) {
+    @GetMapping("/reviews/{identifier}")
+    public ResponseEntity<?> getAllReviewsPerReadingItem(@PathVariable String identifier) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
 //        how to add user to review so we can display username
 
-        Item item = itemService.findByInternetArchiveId(internetArchiveIdentifier);
+        Item item = itemService.findByIdentifier(identifier);
 
         // grabbing reviews from db
         List<Review> allReviews = reviewService.findReviewsByItemId(item.getItemId());
@@ -58,8 +58,8 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PostMapping("/reviews/add-review/{internetArchiveId}")
-    public ResponseEntity<?> addNewReview(@PathVariable String internetArchiveId, @RequestBody Review review) {
+    @PostMapping("/reviews/add-review/{identifier}")
+    public ResponseEntity<?> addNewReview(@PathVariable String identifier, @RequestBody Review review) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
 
