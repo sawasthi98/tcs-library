@@ -3,9 +3,6 @@ package learn.tcslibrary.controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
-import learn.tcslibrary.data.ItemJdbcTemplateRepository;
-import learn.tcslibrary.data.ItemRepository;
-import learn.tcslibrary.data.ItemShelfRepository;
 import learn.tcslibrary.domain.AppUserService;
 import learn.tcslibrary.domain.ItemService;
 import learn.tcslibrary.domain.ItemShelfService;
@@ -73,20 +70,6 @@ public class ItemsController {
         inputStream.close();
 
         return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
-
-        // return bytearray in response entity
-        // get to postman before react
-        // accept app/pdf
-
-        // Use a token to see who is making request
-        // IA ID should be able to find the item in our item DB "find by IA ID"
-        // Item shelf repo method find or create by IA ID and User ID
-
-        // Pull user ID from token, pass the IA ID and User ID into service method that will find or create
-        // item shelf, then we have page number
-
-        // Might belong in its own method two sep methods, two sep fetches on page load
-        // one to get PDF one to get last read page
     }
 
     @GetMapping("/search/{title}")
@@ -116,7 +99,6 @@ public class ItemsController {
         // Parse JSON response
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonResponse = objectMapper.readTree(responseContent.toString());
-
 
         // Process the metadata, for example:
         JsonNode items = jsonResponse.get("response").get("docs");
@@ -167,8 +149,6 @@ public class ItemsController {
                         break;
                     }
                 }
-
-
                 // Create metadata object and add it to the list
                 metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename,imgLink));
 
@@ -176,32 +156,23 @@ public class ItemsController {
                 if (idx > 8) { // grabbed the first 9 listings
                     break;
                 }
-
-                // items saved in database
-                // send to service findOrCreate
-
         }
-
-            // send to front end
-            // links go to read items
 
         // Return the metadata list
         return new ResponseEntity<>(metadataList, HttpStatus.OK);
     } catch (Exception ex) {
         System.out.println(ex);
     }
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-
 
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
     public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Authentication: " + authentication);
+//        System.out.println("Authentication: " + authentication);
         String username1 = (String) authentication.getPrincipal();
-        System.out.println("Username: " + username1);
+//        System.out.println("Username: " + username1);
 
         //String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = appUserService.loadUserByUsername(username1);
@@ -211,7 +182,6 @@ public class ItemsController {
 
         return new ResponseEntity<>(shelfItem, HttpStatus.OK);
     }
-
 
     @PutMapping("/reading-item/{identifier}")
     public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody HashMap<String, Integer> pageNumber) {
@@ -232,7 +202,23 @@ public class ItemsController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
+    @GetMapping("/my-bookshelf")
+    public ResponseEntity<?> getPersonalBookshelf() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //find user ID by user name
+        AppUser user = appUserService.loadUserByUsername(username);
+
+        // service find by app user id
+        List<ItemShelf> bookshelf = itemShelfService.findByAppUserId(user.getAppUserId());
+
+        if (bookshelf != null) {
+            return new ResponseEntity<>(bookshelf, HttpStatus.OK);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     private static byte[] readInputStream(InputStream inputStream) throws IOException {

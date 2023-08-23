@@ -15,6 +15,7 @@ import Login from './components/Login';
 import ReadingItem from './components/ReadingItem';
 import SearchResults from './components/SearchResults';
 import ReviewForm from './components/ReviewForm';
+import MyProfile from './components/MyProfile';
 
 
 function App() {
@@ -89,9 +90,12 @@ function App() {
         <Route path="/search/:searchText" element={<SearchResults />} />
         {/* <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} /> */}
 
+        {/* <Route path="/my-bookshelf" element={<MyProfile />} /> */}
+
         {/* Logged OUT */}
         
         <Route path="/login" element={ user ? <Navigate to="/" /> : <Login />} />
+        {/* route protect to redirect to login paged when logged out */}
 
         
 
@@ -100,8 +104,8 @@ function App() {
       </div>
     </BrowserRouter>
 
-    
     </AuthContext.Provider>
+    
   );
 }
 

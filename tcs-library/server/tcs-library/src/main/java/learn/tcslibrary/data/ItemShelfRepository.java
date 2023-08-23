@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ItemShelfRepository {
 
-    public Item findByitemId(int itemId);
+    public List<ItemShelf> findByAppUserId(int appUserId);
     public boolean updatePageNumber(int pageNumber, int itemId, int appUserId);
     public ItemShelf addItemToShelf(int itemId, int appUserId);
     public boolean deleteItemFromShelf(int itemId,int appUserId);

@@ -37,7 +37,7 @@ class ItemJdbcTemplateRepositoryTest {
         item.setItemId(1);
 
         item.setTitle("Pride and Prejudice");
-        item.setInternetArchiveIdentifier("623abcdef");
+        item.setIdentifier("623abcdef");
         item.setSubject("literature");
         item.setDescription("a classic");
 
@@ -45,7 +45,7 @@ class ItemJdbcTemplateRepositoryTest {
 
         assertEquals(foundItem.getItemId(),1);
         assertEquals(foundItem.getTitle(),item.getTitle());
-        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
+        assertEquals(foundItem.getIdentifier(),item.getIdentifier());
     }
 
     @Test
@@ -54,7 +54,7 @@ class ItemJdbcTemplateRepositoryTest {
         item.setItemId(1);
 
         item.setTitle("Pride and Prejudice");
-        item.setInternetArchiveIdentifier("623abcdef");
+        item.setIdentifier("623abcdef");
         item.setSubject("literature");
         item.setDescription("a classic");
 
@@ -63,7 +63,7 @@ class ItemJdbcTemplateRepositoryTest {
 
         assertEquals(foundItem.getItemId(),1);
         assertTrue(foundItem.getTitle().contains(item.getTitle()));
-        assertEquals(foundItem.getInternetArchiveIdentifier(),item.getInternetArchiveIdentifier());
+        assertEquals(foundItem.getIdentifier(),item.getIdentifier());
     }
 
     @Test

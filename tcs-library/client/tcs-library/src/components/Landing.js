@@ -67,7 +67,9 @@ function Landing(){
           </div>
         </div>
 
-            
+        <footer>
+          footer
+        </footer>
       </div>
 
 
