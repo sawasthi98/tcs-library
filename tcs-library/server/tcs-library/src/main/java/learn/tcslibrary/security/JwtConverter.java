@@ -24,7 +24,7 @@ public class JwtConverter {
     private final String ISSUER = "tcslibrary";
 
     private final int EXPIRATION_MINUTES = 15;
-    private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
+    private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 10000000;
 
     private final String BEARER_PREFIX = "Bearer ";
 

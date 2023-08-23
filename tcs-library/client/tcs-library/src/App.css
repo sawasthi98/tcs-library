@@ -1,19 +1,15 @@
 /* Landing Page Styling */
 
 body{
-  background: rgb(201, 225, 248);
+  background-image: url("https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGJvb2t8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60");
+  background-repeat: no-repeat;
+  background-size: cover;
   font-family: 'Roboto' bold;
 }
 
 /* make smaller */
 .logo {
   height: 20%;
-}
-
-.homePage {
-  background-image: url("https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGJvb2t8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .landing {
@@ -46,7 +42,8 @@ body{
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: rgb(183, 195,189);background: linear-gradient(180deg, rgba(183,195,189,1) 0%, rgba(238,237,255,1) 33%, rgba(162,215,226,1) 100%, rgba(141,236,255,0.9374124649859944) 100%);
+  background-color: rgb(183, 195,189);
+  background: linear-gradient(180deg, rgba(183,195,189) 0%, rgba(238,237,255) 33%, rgba(162,215,226) 100%, rgba(141,236,255,0.9374124649859944) 100%);
 }
 
 .landing-book{
@@ -148,7 +145,13 @@ body{
 .book h2{
   font-size: 1.5rem;
   text-decoration: underline;
+  font-weight: 800;
 }
+
+.book p{
+  font-size: 1.4rem;
+}
+
 
 .react-pdf__Page__textContent{
   /* display: none; */

@@ -23,38 +23,19 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     }
 
     @Override
-    public Item findByitemId(int itemId) {
-        final String sql = " select i.item_id, i.identifier " +
+    public List<ItemShelf> findByAppUserId(int appUserId) {
+        final String sql = " select i.item_id, shelf.app_user_id " +
                 "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
-                "where shelf.item_id = ?;";
+                "where shelf.app_user_id = ?;";
 
-        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate), itemId);
-        return (itemList == null || itemList.isEmpty()) ? null : itemList.get(0);
+        List<ItemShelf> itemShelfList = jdbcTemplate.query(sql, new ItemShelfMapper(), appUserId);
+        return itemShelfList;
     }
-
-    // for sorting purposes
-    // will need an order by in the sql?
-    // will likely need to do the calculation in this repo (last page read divided by page amount (from item pagecount))
-//    @Override
-//    public List<Item> findByIncomplete() {
-//        final String sql = "SELECT item_id, title, author, published, publisher, topic, pages, `language`, ia_id " +
-//                "FROM item " +
-//                "WHERE title IS NULL OR title = '' " +
-//                "   OR author IS NULL OR author = ''" +
-//                "   OR topic IS NULL OR topic = ''" +
-//                "   OR `language` IS NULL OR `language` = ''" +
-//                "   OR ia_id IS NULL OR ia_id = '';";
-//       List<Item> items= jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate));
-//       return(items==null||items.size()==0 ? null : items);
-//    }
 
     @Override
     public ItemShelf addItemToShelf(int itemId, int appUserId) {
 
-
         final String sql = "insert into item_shelf (page_number, item_id, app_user_id) VALUES (?, ?, ?)";
-
-
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 

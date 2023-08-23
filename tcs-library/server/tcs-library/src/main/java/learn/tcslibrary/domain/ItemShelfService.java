@@ -3,6 +3,7 @@ package learn.tcslibrary.domain;
 import learn.tcslibrary.data.AppUserJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemShelfJdbcTemplateRepository;
+import learn.tcslibrary.data.ItemShelfRepository;
 import learn.tcslibrary.models.Item;
 import learn.tcslibrary.models.AppUser;
 import learn.tcslibrary.models.ItemShelf;
@@ -28,15 +29,13 @@ public class ItemShelfService {
         Item item = itemRepository.findByInternetArchiveId(internetArchiveId);
         AppUser appUser = appUserRepository.findUserByAppUserId(appUserId);
 
-
-
         Result result = validate(item, appUser);
 
         if(!result.isSuccess()) {
             return result;
         }
-        System.out.println("App user ID: "+appUserId);
-        System.out.println("Item ID: "+item.getItemId());
+//        System.out.println("App user ID: "+appUserId);
+//        System.out.println("Item ID: "+item.getItemId());
         try {
             ItemShelf itemShelf = itemShelfRepository.findByAppUserIdAndItemId(appUserId, item.getItemId());
         }
@@ -49,9 +48,11 @@ public class ItemShelfService {
             }
         }
 
-
-
         return result;
+    }
+
+    public List<ItemShelf> findByAppUserId(int appUserId) {
+        return itemShelfRepository.findByAppUserId(appUserId);
     }
 
     public Result updatePageNumber(int appUserId, int itemId, int pageNumber) {
@@ -64,8 +65,6 @@ public class ItemShelfService {
         if (updated) {
             result.setPayload(bookshelf);
         }
-
-
 
         return result;
     }

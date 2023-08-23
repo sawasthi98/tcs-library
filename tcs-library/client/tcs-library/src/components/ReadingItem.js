@@ -56,7 +56,7 @@ const ReadingItem = () => {
           {
             method: "GET",
             headers: {
-              Accept: "application/pdf",
+              Accept: "application/json",
               Authorization: "Bearer " + auth.user.token
             },            
           }
@@ -68,7 +68,7 @@ const ReadingItem = () => {
         } else {
           const json = await response.json();
           setPageNumber(json.pageNumber)
-          console.log(pageNumber);
+          // console.log(pageNumber);
         }
 
       } catch (error) {
@@ -127,7 +127,7 @@ const ReadingItem = () => {
         return
       }
       try {
-        console.log(arg);
+        // console.log(arg);
         const response = await fetch(
 
           `http://localhost:8080/tcslibrary/reading-item/${params.identifier}`,
