@@ -56,9 +56,6 @@ public class ItemsController {
         document = document.replaceAll(" ", "%20");
 
         String fetchUrl = "https://archive.org/download/" + iaIdentifier + "/" + document;
-//        run through service method findOrCreate
-//        if exists in database, fetch using identifier and document name
-//        if does not exist, grab identifier based on which one was clicked as well as the file name ending in .pdf
 
         URL url = new URL(fetchUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -170,8 +167,7 @@ public class ItemsController {
                     }
                 }
 
-
-                // Create your metadata object and add it to the list
+                // Create metadata object and add it to the list
                 metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename,imgLink));
                 idx++;
                 if (idx > 8) { // grabbed the first 9 listings
@@ -194,18 +190,18 @@ public class ItemsController {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-
-    @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
-    public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
-
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser user = appUserService.loadUserByUsername(username);
-        Item item = itemService.findByInternetArchiveId(iaIdentifier);
-
-        ItemShelf shelfItem = itemShelfService.findByAppUserIdAndItemId(user, item.getItemId());
-
-        return new ResponseEntity<>(shelfItem, HttpStatus.OK);
-    }
+//
+//    @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
+//    public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
+//
+//        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        AppUser user = appUserService.loadUserByUsername(username);
+//        Item item = itemService.findByInternetArchiveId(iaIdentifier);
+//
+//        ItemShelf shelfItem = itemShelfService.findByAppUserIdAndItemId(user, item.getItemId());
+//
+//        return new ResponseEntity<>(shelfItem, HttpStatus.OK);
+//    }
 
     @PutMapping("/reading-item/{identifier}")
     public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody HashMap<String, Integer> pageNumber) {
