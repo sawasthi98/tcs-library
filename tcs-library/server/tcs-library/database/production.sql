@@ -108,7 +108,8 @@ insert into item_shelf (page_number, item_id, app_user_id)
 insert into review(review, item_id, app_user_id)
 	values
     ("Book was pretty cool ngl", 1, 1),
-    ("Test review", 1, 1);
+    ("Test review", 1, 1),
+    ("I think this was a pretty good book", 1 , 2);
 
 insert into comments(comment_text, app_user_id, review_id)
 	values

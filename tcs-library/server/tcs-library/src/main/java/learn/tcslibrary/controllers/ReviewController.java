@@ -62,15 +62,18 @@ public class ReviewController {
     public ResponseEntity<?> addNewReview(@PathVariable String identifier, @RequestBody Review review) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
+        Item item = itemService.findByIdentifier(identifier);
+
+        review.setItemId(item.getItemId());
+        review.setAppUserId(user.getAppUserId());
 
         Result result = reviewService.add(review);
 
         if (result.isSuccess()) {
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-
+        return new ResponseEntity<>(result.getErrorMessages(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

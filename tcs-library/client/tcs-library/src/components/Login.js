@@ -72,34 +72,36 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       {errors.map((error, i) => (
         <div key={i}>{error} </div>
       ))}
-      <div>
-        <div>
+      <div className="login-input">
+        <div className="input-container">
           <label htmlFor="username">Username: </label>
           <input
             type="text"
             onChange={(event) => setUsername(event.target.value)}
             value={username}
             id="username"
+            className="input-field"
           />
         </div>
-        <div>
+        <div className="input-container">
           <label htmlFor="password">Password: </label>
           <input
             type="password"
             onChange={(event) => setPassword(event.target.value)}
             value={password}
             id="password"
+            className="input-field"
           />
         </div>
-        <div>
-          <button onClick={handleLogin}>Sign in</button>
-          <button onClick={handleSignUp}>Sign up</button>
-          <Link to="/">Cancel</Link>
+        <div className="buttonContainer">
+          <button className="p-2" onClick={handleLogin}>Sign in</button>
+          <button className="p-2"onClick={handleSignUp}>Sign up</button>
+          <Link to="/"><button className="p-2">Cancel</button></Link>
         </div>
       </div>
     </div>

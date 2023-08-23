@@ -66,7 +66,8 @@ body{
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  margin: 12px 10px 0 10px;
+  margin: 12px 0;
+  background-color: rgb(109, 159, 182);
 }
 
 .p-2 {
@@ -83,6 +84,10 @@ body{
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 .profileAndLogin{
   display: flex;
   flex-direction: row;
@@ -90,7 +95,6 @@ body{
   align-items: flex-end;
   gap: 10px;
 }
-
 
 #homeLink {
   align-self: flex-start;
@@ -110,6 +114,7 @@ body{
 .searchResultHeader{ 
   margin: 1% 0 2% 1%;
 }
+
 .searchBar {
   font-size: 32px;
   width: 80%; 
@@ -183,6 +188,7 @@ body{
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 15px;
 }
 
 #pagination * {
@@ -191,6 +197,15 @@ body{
 
 #pagination > button {
   margin: 0 5px; 
+}
+
+.go-btn {
+  width: 50px;
+}
+
+.page-input {
+  height: 55px;
+  font-size: 1.6rem;
 }
 
 .pdfStyle {
@@ -204,3 +219,123 @@ body{
 .readingItem {
   height: 20%;
 }
+
+.loading-div {
+    width: 400px;
+    height: 400px;
+    font-size: 40px;
+    font-weight: 200;
+    background-image: url('https://th.bing.com/th/id/OIP.3KqqB3Xcal-w0R5LzMTR1QHaH_?w=183&h=197&c=7&r=0&o=5&pid=1.7');
+    background-size: cover;
+    animation: spin 5s linear infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-containing-spinner {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Review Form */
+
+.addReviewForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.reviewLabelContainer {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center; 
+  gap: 10px; 
+}
+
+#reviewLabel {
+  font-size: 2rem;
+  font-weight: 500; 
+}
+
+#review-input {
+  width: 100%;
+  /* height: 250px; */
+  font-size: 1.2rem;
+}
+
+/* .buttonContainer .p-2 {
+  text-decoration: none;
+} */
+
+/* Login Page Styling */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.login-container .buttonContainer button {
+  /* height: 20px; */
+  width: 133px;
+  font-size: 1.3rem;
+}
+
+.login-input div + div {
+  margin-bottom: 25px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.input-field {
+  width: 100%;
+  height: 40px; 
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.login-input label {
+  font-size: 1.6rem;
+}
+
+
+/* Footer Styling */
+
+.footer {
+  height: 85px;
+  font-size: 1.3rem;
+  margin-left: 10px;
+  background-color: rgb(109, 159, 182);
+}
+
