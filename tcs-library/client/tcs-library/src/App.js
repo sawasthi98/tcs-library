@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Document, Page } from 'react-pdf';
+import logo from './logo.png'; 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -56,7 +57,7 @@ function App() {
   useEffect(() => {
     console.log("useEffect App");
     const token = localStorage.getItem("auth-token");
-    console.log("Token from useEffect:", token);
+    // console.log("Token from useEffect:", token);
   
     if (token) {
       login(token);
@@ -70,7 +71,8 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
     <BrowserRouter>
-    <h1>Byte Sized Books</h1> 
+    <div className="homePage">
+      <div className="logo"><img src={logo} alt="byte sized books logo"/></div>
     {/* replace h1 with logo that can be used as home button also */}
     <Nav />
       
@@ -85,7 +87,7 @@ function App() {
 
         <Route path="/readingitem/:identifier/filename/:filename" element={<ReadingItem />} />
         <Route path="/search/:searchText" element={<SearchResults />} />
-        <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} />
+        {/* <Route path="/review-form/:identifier/filename/:filename" element={<ReviewForm />} /> */}
 
         {/* Logged OUT */}
         
@@ -95,6 +97,7 @@ function App() {
 
 
       </Routes>
+      </div>
     </BrowserRouter>
 
     
