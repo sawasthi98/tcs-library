@@ -14,42 +14,6 @@ public class Item {
     private String imgLink;
     public Item() {
     }
-//
-//    public Item(int itemId, String identifier, String fileName) {
-//        this.itemId = itemId;
-//        this.identifier = identifier;
-//        this.fileName = fileName;
-//    }
-//
-//    public Item(String identifier, String fileName) {
-//        this.identifier = identifier;
-//        this.fileName = fileName;
-//    }
-//
-//    public int getItemId() {
-//        return itemId;
-//    }
-//
-//    public void setItemId(int itemId) {
-//        this.itemId = itemId;
-//    }
-//
-//    public String getIdentifier() {
-//        return identifier;
-//    }
-//
-//    public void setIdentifier(String identifier) {
-//        this.identifier = identifier;
-//    }
-//
-//    public String getFileName() {
-//        return fileName;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName;
-//    }
-
         public Item(String title, String identifier, String description, String subject, String filename, String imgLink) {
         this.title = title;
         this.identifier = identifier;

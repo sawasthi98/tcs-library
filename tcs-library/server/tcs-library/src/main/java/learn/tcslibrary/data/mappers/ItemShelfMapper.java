@@ -26,6 +26,8 @@ public class ItemShelfMapper implements RowMapper<ItemShelf> {
         itemShelf.setPageNumber(rs.getInt("page_number"));
         itemShelf.setItemId(rs.getInt("item_id"));
         itemShelf.setAppUserId(rs.getInt("app_user_id"));
+        itemShelf.setIdentifier(rs.getString("identifier"));
+        itemShelf.setFilename(rs.getString("filename"));
 
         return itemShelf;
     }

@@ -1,17 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
-import { useParams, useSearchParams } from "react-router-dom";
-
-
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { getByDisplayValue } from "@testing-library/react";
 
 
 const MyProfile = () => { 
     
     const params = useParams();
     const auth = useContext(AuthContext);
-    const [books, setBooks] = useState("");
+    const [books, setBooks] = useState([]);
 
     useEffect( () => {
+
+        if (!auth){
+            return;
+        }
+
         const getBookshelf = async () => {
         try {
             const response = await fetch(
@@ -33,38 +37,39 @@ const MyProfile = () => {
             } else {
               const json = await response.json();
                 setBooks(json);
+                console.log(json);
             }
     
           } catch (error) {
             console.error("Request error:", error);
           }
 
-
     }
-    })
+
+        getBookshelf();
+    },[auth])
     
-
-    // have user and bookshelf 
-    // fetching from backend - useEffect() 
-    // click on book redirects to readingItem
-    // links rendered for all like search fetch
-
-    // linked with appUserId to fetch proper ItemShelf
-
     // protect routes
 
+    return (
+        <>
+            <h1 className="bookshelfTitle">{auth?.user?.username}'s Bookshelf</h1>
+            <div id="myBookshelf">
+                {books.map((book) => (
+                    <div className="bookshelfBook" >
+                        <p>{book.itemId}</p>
+                        <Link to={`/readingitem/${book.identifier}/filename/${book.filename}`}>
+                            <img src={`https://archive.org/services/img/${book.identifier}`} alt='Cover art for selected book' />
+                        </Link>
+                        <p>{book.pageNumber}</p>
+                    </div>
+                ))}
 
+            </div>
 
-
-
-
-
-
-
-
-
-
-    return (<h1>teehee</h1>);
+        </>
+        
+    );
 }
 
 

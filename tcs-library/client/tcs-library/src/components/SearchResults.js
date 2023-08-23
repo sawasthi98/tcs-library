@@ -39,8 +39,6 @@ const SearchResults = () => {
   fetchResults();
   }, [params.searchText])
 
-
-
   return (
     
     <>
@@ -50,7 +48,7 @@ const SearchResults = () => {
     <div id='searchResult'>
       {results.map((result) => (
         <div className="book" key={result.id}>
-          <Link to={`/readingitem/${result.internetArchiveIdentifier}/filename/${result.fileName}`}>
+          <Link to={`/readingitem/${result.identifier}/filename/${result.fileName}`}>
             <img src={result.imgLink} alt='Cover art for selected book' />
           </Link>
           <h2>{result.title}</h2>

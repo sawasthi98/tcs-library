@@ -5,15 +5,19 @@ public class ItemShelf {
     private int itemId;
     private int pageNumber;
     private int appUserId;
+    private String identifier;
+    private String filename;
 
     public ItemShelf() {
     }
 
-    public ItemShelf(int itemShelfId, int itemId, int pageNumber, int appUserId) {
+    public ItemShelf(int itemShelfId, int itemId, int pageNumber, int appUserId, String identifier, String filename) {
         this.itemShelfId = itemShelfId;
         this.itemId = itemId;
         this.pageNumber = pageNumber;
         this.appUserId = appUserId;
+        this.identifier = identifier;
+        this.filename = filename;
     }
 
     public int getItemShelfId() {
@@ -46,5 +50,21 @@ public class ItemShelf {
 
     public void setAppUserId(int appUserId) {
         this.appUserId = appUserId;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

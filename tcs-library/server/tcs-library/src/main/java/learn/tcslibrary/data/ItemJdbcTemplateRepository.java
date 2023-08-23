@@ -51,10 +51,10 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
     }
 
     @Override
-    public Item findByInternetArchiveId(String iaId){
+    public Item findByIdentifier(String identifier){
         final String sql="select item_id, identifier, filename " +
                 "from item where identifier = ?;";
-        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate),iaId);
+        List<Item> itemList = jdbcTemplate.query(sql, new ItemMapper(jdbcTemplate), identifier);
         return(itemList == null||itemList.size()==0 ? null : itemList.get(0));
     }
 
@@ -69,13 +69,13 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
     }
 
     @Override
-    public Item addItemMetadata(String internetArchiveId, String filename) {
+    public Item addItemMetadata(String identifier, String filename) {
         final String sql = "insert into item (identifier, filename) values (?, ?);";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, internetArchiveId);
+            ps.setString(1, identifier);
             ps.setString(2, filename);
             return ps;
         }, keyHolder);
@@ -87,7 +87,7 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
         int itemId = keyHolder.getKey().intValue();
         Item item = new Item();
         item.setItemId(itemId);
-        item.setIdentifier(internetArchiveId);
+        item.setIdentifier(identifier);
         item.setFileName(filename);
 
         return item;

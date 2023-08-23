@@ -166,8 +166,8 @@ public class ItemsController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
-    public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
+    @GetMapping("/reading-item/{identifier}/filename/{filename}/page")
+    public ResponseEntity<?> loadPageNumber(@PathVariable String identifier, @PathVariable String filename) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        System.out.println("Authentication: " + authentication);
@@ -176,7 +176,7 @@ public class ItemsController {
 
         //String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = appUserService.loadUserByUsername(username1);
-        Item item = itemService.findByInternetArchiveId(iaIdentifier);
+        Item item = itemService.findByIdentifier(identifier);
 
         ItemShelf shelfItem = itemShelfService.findByAppUserIdAndItemId(user, item.getItemId());
 
@@ -186,12 +186,11 @@ public class ItemsController {
     @PutMapping("/reading-item/{identifier}")
     public ResponseEntity<?> updatePageNumber(@PathVariable String identifier, @RequestBody HashMap<String, Integer> pageNumber) {
 
-        Item item = itemService.findByInternetArchiveId(identifier);
+        Item item = itemService.findByIdentifier(identifier);
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //find user ID by user name
         AppUser user = appUserService.loadUserByUsername(username);
-
 
         Integer number = pageNumber.get("pageNumber");
 

@@ -24,7 +24,7 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
 
     @Override
     public List<ItemShelf> findByAppUserId(int appUserId) {
-        final String sql = " select i.item_id, shelf.app_user_id " +
+        final String sql = " select shelf.item_shelf_id, i.item_id, shelf.page_number, shelf.app_user_id, i.identifier, i.filename " +
                 "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
                 "where shelf.app_user_id = ?;";
 
@@ -86,7 +86,7 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
     //Make a find by APp user for just personal bookshelf
 
     public ItemShelf findByAppUserIdAndItemId(int appUserId, int itemId){
-        final String sql = "select i.item_id, shelf.page_number, shelf.app_user_id, shelf.item_shelf_id " +
+        final String sql = "select i.item_id, shelf.page_number, shelf.app_user_id, shelf.item_shelf_id, i.identifier, i.filename " +
                 "from item i inner join item_shelf shelf on i.item_id = shelf.item_id " +
                 " where shelf.app_user_id = ? and i.item_id = ?; ";
 

@@ -22,8 +22,8 @@ public class ItemService {
         return (result.isSuccess() ? item : null);
     }
 
-    public Item findByInternetArchiveId(String internetArchiveId) {
-        Item item = repository.findByInternetArchiveId(internetArchiveId);
+    public Item findByIdentifier(String identifier) {
+        Item item = repository.findByIdentifier(identifier);
 
         Result result = validate(item);
         return (result.isSuccess() ? item : null);
@@ -35,16 +35,16 @@ public class ItemService {
         return (result.isSuccess() ? item : null);
     }
 
-    public Item findOrCreate(String internetArchiveId, String filename) {
+    public Item findOrCreate(String identifier, String filename) {
         // check if exists
-        Item item = repository.findByInternetArchiveId(internetArchiveId);
+        Item item = repository.findByIdentifier(identifier);
 
         if (item != null) {
             // send to frontend
             return item;
         }
             // save to database
-           return repository.addItemMetadata(internetArchiveId, filename);
+           return repository.addItemMetadata(identifier, filename);
     }
 
     public Result validate(Item item){
