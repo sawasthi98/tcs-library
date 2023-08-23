@@ -43,8 +43,8 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
 
     @Override
     public Item findByTitle(String title) {
-        final String sql = "select item_id, title, identifier, `description`, `subject`, filename, img_link " +
-                " from item where title = ?;";
+        final String sql = "select item_id, identifier, filename " +
+                " from item where filename = ?;";
         //List<String>topics=findTopicsByTitle(title);
         List<Item>items=jdbcTemplate.query(sql,new ItemMapper(jdbcTemplate),title);
         return(items == null||items.size()==0 ? null : items.get(0));
@@ -80,13 +80,15 @@ public class ItemJdbcTemplateRepository implements ItemRepository {
             return ps;
         }, keyHolder);
 
-        if (rowsAffected <= 0) {
+        if (rowsAffected == 0) {
             return null;
         }
 
         int itemId = keyHolder.getKey().intValue();
         Item item = new Item();
         item.setItemId(itemId);
+        item.setIdentifier(internetArchiveId);
+        item.setFileName(filename);
 
         return item;
     }

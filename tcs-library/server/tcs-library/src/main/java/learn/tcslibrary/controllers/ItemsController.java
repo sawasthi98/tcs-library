@@ -2,6 +2,7 @@ package learn.tcslibrary.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.core.Authentication;
 import learn.tcslibrary.data.ItemJdbcTemplateRepository;
 import learn.tcslibrary.data.ItemRepository;
 import learn.tcslibrary.data.ItemShelfRepository;
@@ -172,7 +173,7 @@ public class ItemsController {
 
 
                 // Create your metadata object and add it to the list
-                metadataList.add(new Item(titleOfSearch,identifier,description,subject,filename,imgLink));
+                metadataList.add(new Item(identifier,filename));
                 idx++;
                 if (idx > 8) { // grabbed the first 9 listings
                     break;
@@ -198,8 +199,13 @@ public class ItemsController {
     @GetMapping("/reading-item/{iaIdentifier}/filename/{filename}/page")
     public ResponseEntity<?> loadPageNumber(@PathVariable String iaIdentifier, @PathVariable String filename) {
 
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AppUser user = appUserService.loadUserByUsername(username);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authentication: " + authentication);
+        String username1 = (String) authentication.getPrincipal();
+        System.out.println("Username: " + username1);
+
+        //String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AppUser user = appUserService.loadUserByUsername(username1);
         Item item = itemService.findByInternetArchiveId(iaIdentifier);
 
         ItemShelf shelfItem = itemShelfService.findByAppUserIdAndItemId(user, item.getItemId());

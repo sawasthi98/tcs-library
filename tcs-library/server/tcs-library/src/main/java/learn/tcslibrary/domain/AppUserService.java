@@ -31,7 +31,7 @@ public class AppUserService implements UserDetailsService {
         AppUser appUser = repository.findByUsername(username);
 
         if (appUser == null || !appUser.isEnabled()) {
-            throw new UsernameNotFoundException(username + " not found");
+            throw new UsernameNotFoundException(username + " not found!");
         }
 
         return appUser;

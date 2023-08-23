@@ -54,6 +54,7 @@ function App() {
 
 
   useEffect(() => {
+    console.log("useEffect App");
     const token = localStorage.getItem("auth-token");
     console.log("Token from useEffect:", token);
   

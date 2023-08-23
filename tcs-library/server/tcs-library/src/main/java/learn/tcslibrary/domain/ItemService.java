@@ -53,7 +53,7 @@ public class ItemService {
             result.addErrorMessage("Item is null",ResultType.INVALID);
             return result;
         }
-        if(item.getInternetArchiveIdentifier() == null){
+        if(item.getIdentifier() == null){
             result.addErrorMessage("Unable to find IA Identifier",ResultType.INVALID);
             return result;
         }

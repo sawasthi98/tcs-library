@@ -12,11 +12,11 @@ import java.util.List;
 
 public class ItemShelfMapper implements RowMapper<ItemShelf> {
 
-    private JdbcTemplate jdbcTemplate;
+   // private JdbcTemplate jdbcTemplate;
 
-    public ItemShelfMapper(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+   // public ItemShelfMapper(JdbcTemplate jdbcTemplate) {
+   //     this.jdbcTemplate = jdbcTemplate;
+    //}
 
     @Override
     public ItemShelf mapRow(ResultSet rs, int rowNum) throws SQLException {
