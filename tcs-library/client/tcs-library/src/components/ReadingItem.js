@@ -61,9 +61,6 @@ const ReadingItem = () => {
           }
         );
 
-        
-
-
         if (!response.ok) {
           throw new Error("Request failed");
         } else {
@@ -80,40 +77,38 @@ const ReadingItem = () => {
 
   }, [params.identifier,params.filename, auth])
 
+  // useEffect( () => {
+  //   const fetchReviews = async () => {
+  //     try {
+  //       const response = await fetch(
 
+  //         `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
 
-  useEffect( () => {
-    const fetchReviews = async () => {
-      try {
-        const response = await fetch(
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Accept: "application/json",
+  //             Authorization: "Bearer " + auth.user.token
+  //           },            
+  //         }
+  //       );
 
-          `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
+  //       if (!response.ok) {
+  //         throw new Error("Request failed");
+  //       }
 
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: "Bearer " + auth.user.token
-            },            
-          }
-        );
+  //       const data = await response.json();
+  //       setReviews(data);
 
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
+  //     } catch (error) {
+  //       console.error("Request error:", error);
+  //     }
+  //   }
+  //   console.log(reviews);
 
-        const data = await response.json();
-        setReviews(data);
+  //   fetchReviews();
 
-      } catch (error) {
-        console.error("Request error:", error);
-      }
-    }
-    console.log(reviews);
-
-    fetchReviews();
-
-  }, [params.identifier, auth])
+  // }, [params.identifier, auth])
 
   // how to call 
   
@@ -188,8 +183,9 @@ const ReadingItem = () => {
   
 
   return (
-    <div>
+    <div className="readingItem">
 
+    <div className="pdfStyle">
       {pdfUrl && (
         <Document id="readBook"
         file={pdfUrl}
@@ -202,6 +198,7 @@ const ReadingItem = () => {
           <Page pageNumber={pageNumber} renderAnnotationLayer={false} renderTextLayer={false}/>
         </Document>
       )}
+      </div>
         <nav id="pagination">
           <button id="prev-btn" onClick={goToPrevPage} style={{ height: '50px', width: '60px', fontSize: '22px' }}>Prev</button>
           {/* request to the backend with the current page, send user ID and current page and the item ID also in the text input helper function */}
@@ -216,12 +213,12 @@ const ReadingItem = () => {
           />
 
           <button onClick={goToInputPage}>Go</button>
-
+{/* 
           <div>
             <Link to={`/review-form/${params.identifier}/filename/${params.filename}`}>
               <button>Add a Review</button>
             </Link>
-        </div>
+        </div> */}
 
         </nav>
 

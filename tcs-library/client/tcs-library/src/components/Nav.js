@@ -27,49 +27,34 @@ const Nav = () => {
     <>
       <nav className="navContainer">
         {/* ALWAYS */}
-        <div className="navLink">
+        <div className="navLink" id="homeLink">
           <Link to="/" className="p-2" >Home</Link>
         </div>
         
 
-
-        {/* LOGGED IN */}
-        {user &&(
-          <>        
-          <div className="navLink">
-            <Link to="/" className="p-2" style={{ marginLeft: '1650%' }}>My Profile</Link>
-          </div>
-
-          <div className="navLink">
-            
-            <Link to="/" className="p-2" onClick={auth.logout} style={{ marginLeft: '2210%' }}>Logout</Link>
+        <div className="profileAndLogin">
+          {/* LOGGED IN */}
+          {user &&(
+            <>        
+            <div className="navLink">
+              <Link to="/" className="p-2 profileLink" >My Profile</Link>
             </div>
-          {/* Search bar 
-        <div className="searchContainer" >
-           <form onClick={handleSearch}> */}
-            {/* make it as form 
-          on submit on the form, not button  
-            <input
-              className="searchBar"
-              type="text"
-              placeholder="Search for a book"
-              value={searchText}
-              onChange={(evt) => setSearchText(evt.target.value)}
-              />
-            <button className="homeSearch" type="submit" onClick={handleSearch}>Search</button>
-          {/* </form> 
-        </div>*/}
 
-          </>
-        )}
+            <div className="navLink">
+              
+              <Link to="/" className="p-2 logoutLink" onClick={auth.logout} >Logout</Link>
+              </div>
+            </>
+          )}
 
-        {/* LOGGED OUT */}
+          {/* LOGGED OUT */}
 
-        {!user && (
-          <div className="navLink">
-            <Link to="/login" className="p-2">Log In</Link>
-          </div>
-        )} 
+          {!user && (
+            <div className="navLink">
+              <Link to="/login" className="p-2">Log In</Link>
+            </div>
+          )} 
+        </div>
         
       </nav>
       

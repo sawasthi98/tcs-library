@@ -9,7 +9,6 @@ function Landing(){
   const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState('');
-
   
     const handleSearch = (event) => {
       navigate(`/search/${searchText}`)   
@@ -17,7 +16,7 @@ function Landing(){
 
 
     return(
-      <>
+      <div>
         <div className="landing">
             <h1>Byte Sized Books!</h1>
             <p>Enhancing countless reading experiences since 2023</p>
@@ -58,7 +57,7 @@ function Landing(){
           </div>
           <div>
             <Link to="readingitem/heidi0000unse_u3i9/filename/heidi0000unse_u3i9.pdf">
-              <img src='https://m.media-amazon.com/images/I/51Po+Z03NyL._SY344_BO1,204,203,200_.jpg' alt='Heidi Girl of the Alps book cover' className="landing-book" id='Heidi' />
+              <img src='https://m.media-amazon.com/images/I/51Po+Z03NyL._SY344_BO1,204,203,200_.jpg' alt='Heidi Girl of the Alps book cover' className="landing-book" id='heidi' />
             </Link>
           </div>
           <div>
@@ -69,7 +68,7 @@ function Landing(){
         </div>
 
             
-      </>
+      </div>
 
 
     );
