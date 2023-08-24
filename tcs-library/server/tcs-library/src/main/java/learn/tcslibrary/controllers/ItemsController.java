@@ -77,7 +77,7 @@ public class ItemsController {
         title = title.replaceAll(" ", "%20");
 
         String fetchUrl = "https://archive.org/advancedsearch.php?q=" + title + "%20pdf&output=json";
-        // returns all listings - need to limit to 6/9 however many
+        // returns all listings
 
         try {
         URL url = new URL(fetchUrl);
@@ -135,7 +135,7 @@ public class ItemsController {
 
                 // loop through the items to find the ones that contain .pdf
                 JsonNode listOfItems = jsonResponse2.get("files");
-//                List<String> files = new ArrayList<>();
+                List<String> files = new ArrayList<>();
                 String filename = null;
                 Iterator<String> fieldNames = listOfItems.fieldNames();
                 while (fieldNames.hasNext()) {

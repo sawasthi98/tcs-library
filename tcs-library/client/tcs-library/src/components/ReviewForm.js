@@ -54,7 +54,7 @@ const ReviewForm = () => {
     
     <form className="addReviewForm" onSubmit={handleSubmit}>
       <ul>
-        {errors.map(error => <li key={error}>{typeof error==="string" ? error : error.message}</li>)}
+        {errors.map(error => <li className="error" key={error}>{typeof error==="string" ? error : error.message}</li>)}
       </ul>
 
       <div className="reviewLabelContainer">
@@ -62,13 +62,16 @@ const ReviewForm = () => {
           Leave a Review
         </label>
       </div>
-      <fieldset className="form-input">
+      <div className="form-input">
+        <fieldset className="form-input">
         <textarea
           id="review-input"
           value={reviewText}
           onChange={(evt) => setReviewText(evt.target.value)}
         />
       </fieldset>
+      </div>
+      
 
       <div className="buttonContainer">
         <Link to="/">
