@@ -75,7 +75,7 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       {errors.map((error, i) => (
-        <div key={i}>{error} </div>
+        <div className="error" key={i}>{error} </div>
       ))}
       <div className="login-input">
         <div className="input-container">

@@ -9,4 +9,4 @@ future features implementation
 
 - friends list to follow other people
 
-- click on the username to go to all their reviews
+-higjhlighting 
