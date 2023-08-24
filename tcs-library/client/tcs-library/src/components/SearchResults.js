@@ -5,7 +5,6 @@ const SearchResults = () => {
 
   const params = useParams();
   const [results, setResults] = useState([]);
-  const [hasFinishedLoading, setHasFinishedLoading] = useState(false);
 
   useEffect (() => {
     const fetchResults = async () => {
@@ -30,6 +29,7 @@ const SearchResults = () => {
       const data = await response.json();
         setResults(data);
 
+
     } catch (error) {
       console.error("Request error:", error);
       // Handle error here
@@ -46,10 +46,6 @@ const SearchResults = () => {
     "Search Results for {whatever user typed in}" */}
     <h1 className="searchResultHeader">Search Results for "{params.searchText}"</h1>
     <div id='searchResult'>
-    {/* { 
-      <div className="div-containing-spinner">
-        <div className="loading-div" id="spinner">Loading...</div>
-      </div>} */}
       {results.map((result) => (
         <div className="book" key={result.id}>
           <Link to={`/readingitem/${result.identifier}/filename/${result.fileName}`}>

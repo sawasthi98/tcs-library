@@ -227,20 +227,13 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  border-radius: 100px;
-
-}
-
-#spinner {
-  border-radius: 100px;
 }
 
 .div-containing-spinner {
-
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes spin {
