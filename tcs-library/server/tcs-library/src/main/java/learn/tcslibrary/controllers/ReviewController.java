@@ -44,7 +44,6 @@ public class ReviewController {
     public ResponseEntity<?> getAllReviewsPerReadingItem(@PathVariable String identifier) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser user = (AppUser) userDetailsService.loadUserByUsername(username);
-//        how to add user to review so we can display username
 
         Item item = itemService.findByIdentifier(identifier);
 

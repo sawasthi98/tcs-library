@@ -143,6 +143,5 @@ SELECT * FROM item;
 SELECT * FROM review;
 select * from app_user;
 
-select i.item_id, shelf.page_number, shelf.app_user_id
-from item i inner join item_shelf shelf on i.item_id = shelf.item_id
-where shelf.app_user_id = 1;
+select au.username, r.review, au.app_user_id, r.item_id
+from app_user au inner join review r on r.app_user_id = au.app_user_id;

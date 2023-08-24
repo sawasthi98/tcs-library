@@ -92,8 +92,6 @@ public class ItemShelfJdbcTemplateRepository implements ItemShelfRepository {
 
         ItemShelf itemShelf = jdbcTemplate.queryForObject(sql, new ItemShelfMapper(), appUserId, itemId);
 
-
-
         return(itemShelf);
     }
 
