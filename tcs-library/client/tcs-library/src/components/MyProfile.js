@@ -37,7 +37,7 @@ const MyProfile = () => {
             } else {
               const json = await response.json();
                 setBooks(json);
-                // console.log(json);
+                console.log(json);
             }
     
           } catch (error) {
@@ -45,23 +45,22 @@ const MyProfile = () => {
           }
 
     }
-
         getBookshelf();
+        
     },[auth])
     
     // protect routes
 
     return (
         <>
-            <h1 className="bookshelfTitle">{auth?.user?.username}'s Bookshelf</h1>
+          <h1 className="bookshelfTitle">{auth?.user?.username}'s Bookshelf</h1>
             <div id="myBookshelf">
                 {books.map((book) => (
                     <div className="bookshelfBook" >
-                        <p>{book.itemId}</p>
                         <Link to={`/readingitem/${book.identifier}/filename/${book.filename}`}>
-                            <img src={`https://archive.org/services/img/${book.identifier}`} alt='Cover art for selected book' />
+                            <img className="bookShelfBookImg" src={`https://archive.org/services/img/${book.identifier}`} alt='Cover art for selected book' />
                         </Link>
-                        <p>{book.pageNumber}</p>
+                        <p>Continue reading on page {book.pageNumber}</p>
                     </div>
                 ))}
 

@@ -104,7 +104,7 @@ insert into item_shelf (page_number, item_id, app_user_id)
     (303, 1, 2),
     (200, 1, 1);
 
-insert into review(review, item_id, app_user_id)
+insert into review (review, item_id, app_user_id)
 	values
     ("Book was pretty cool ngl", 1, 1),
     ("One of my favorites to read on a slow summer evening :)", 1, 5),
