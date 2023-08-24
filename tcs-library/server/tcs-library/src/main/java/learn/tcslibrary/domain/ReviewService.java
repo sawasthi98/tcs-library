@@ -84,7 +84,5 @@ public class ReviewService {
         return repository.findByAppUserId(appUserId);
     }
 
-//    find by ia identifier
-
 
 }

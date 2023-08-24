@@ -27,14 +27,13 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     @Override
     @Transactional
     public AppUser findByUsername(String username){
-        List<String> roles=findRolesByUsername(username);
+        List<String> roles = findRolesByUsername(username);
         final String sql = "select app_user_id, username, password_hash, enabled from app_user where username = ?;";
 
         List<AppUser> users = jdbcTemplate.query(sql, new AppUserMapper(roles), username);
 
         return users.isEmpty() ? null : users.get(0);
     }
-
 
     @Override
     @Transactional

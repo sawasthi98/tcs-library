@@ -359,7 +359,20 @@ a {
 }
 
 .bookshelfBook {
-  height: 100%;
+  width: 14%; 
+  padding: 20px;
+  text-align: center;
+  background-color: rgb(109, 159, 182);
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bookshelfBook img {
+  width: 100%; 
+  max-height: 200px; 
+  object-fit: contain; 
 }
 
 .bookShelfBookImg {
@@ -377,4 +390,5 @@ a {
 .bookshelfBook p {
   font-size: 1.2rem;
   font-weight: 500;
+  margin-top: 10px;
 }

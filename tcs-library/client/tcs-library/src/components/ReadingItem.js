@@ -42,7 +42,6 @@ const ReadingItem = () => {
     }
     pageUpdate(newPage);
   };
-  
 
   useEffect( () => {
     const loadWithPageNumber = async () => {
@@ -59,7 +58,6 @@ const ReadingItem = () => {
             },            
           }
         );
-
 
         if (!response.ok) {
           throw new Error("Request failed");
@@ -102,7 +100,7 @@ const ReadingItem = () => {
         } else {
           const data = await response.json();
             setReviews(data);
-            console.log(data);
+            // console.log(data);
         }
 
       } catch (error) {
@@ -236,7 +234,7 @@ const ReadingItem = () => {
           {reviews.map((review) => (
             <div className="singleReview" key={review.reviewId} >
               <h4>{review.reviewText}</h4>
-              <span>{review.appUserId}</span>
+              <span>ByteSizedUser{review.appUserId}</span>
             </div>
           ))}
         </div>
