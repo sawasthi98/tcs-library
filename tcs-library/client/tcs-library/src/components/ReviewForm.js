@@ -9,6 +9,7 @@ const ReviewForm = () => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
+
   const [errors, setErrors] = useState([]);
   
   const [reviewText, setReviewText] = useState("");
@@ -20,6 +21,7 @@ const ReviewForm = () => {
   const handleSubmit = (evt) => {
 
     evt.preventDefault()
+    console.log(`FORM SUBMIT PARAMS ID: `,params.identifier);
     const newReview = {
       reviewText    
     }
@@ -71,12 +73,8 @@ const ReviewForm = () => {
       </fieldset>
 
       <div className="buttonContainer">
-        <Link to="/">
-          <button className="p-2" type="submit">Submit Review</button>
-          </Link>
-        <Link to={`/readingitem/${params.identifier}/filename/${params.filename}`}>
-          <button className="p-2">Cancel</button>
-          </Link>
+      <button className="p-2" type="submit">Submit Review</button>
+    <button className="p-2" onClick={() => navigate(`/readingitem/${params.identifier}/filename/${params.filename}`)}>Cancel</button>
       </div>
       
     </form>
