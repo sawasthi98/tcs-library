@@ -31,10 +31,8 @@ const ReadingItem = () => {
 
 	const goToNextPage = () => {
     const newPage = pageNumber + 1 >= numPages ? numPages : pageNumber + 1
-
 		setPageNumber(newPage);
     pageUpdate(newPage);
-
   }
 
     const goToInputPage = () => {
@@ -68,7 +66,6 @@ const ReadingItem = () => {
         } else {
           const json = await response.json();
           setPageNumber(json.pageNumber)
-          // console.log(pageNumber);
         }
 
       } catch (error) {
@@ -90,7 +87,6 @@ const ReadingItem = () => {
         const response = await fetch(
 
           `http://localhost:8080/tcslibrary/reviews/${params.identifier}`,
-
 
           {
             method: "GET",
@@ -231,16 +227,16 @@ const ReadingItem = () => {
             <Link to={`/review-form/${params.identifier}/filename/${params.filename}`}>
               <button className="p-2">Add a Review</button>
             </Link>
-        </div>
+          </div>
 
         </nav>
 
         {/* map the reviews */}
-        <div className="reviews">
+        <div className="reviews-container">
           {reviews.map((review) => (
             <div className="singleReview" key={review.reviewId} >
-              <h3>{review.reviewText}</h3>
-              <span>{auth?.user?.username}</span>
+              <h4>{review.reviewText}</h4>
+              <span>{review.appUserId}</span>
             </div>
           ))}
         </div>

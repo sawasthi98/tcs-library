@@ -1,0 +1,12 @@
+future features implementation 
+
+- add sorting by on personal bookshelf 
+ - by title, by incomplete, by author
+
+- audiobooks, other media support
+
+- add comments to provide discussion opportunities
+
+- friends list to follow other people
+
+- click on the username to go to all their reviews
